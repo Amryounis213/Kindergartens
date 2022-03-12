@@ -22,7 +22,7 @@ class EmployeesController extends Controller
      */
     public function index(EmployeesDataTable $dataTable)
     {
-       
+        
         return $dataTable->render('pages.employees.index.index');
 
     }
@@ -103,7 +103,7 @@ class EmployeesController extends Controller
     public function update(Request $request, $id)
     {
         $employee = Employee::find($id);
-
+        
         if($request->bth_date)
         {
             $request->merge([

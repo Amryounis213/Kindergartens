@@ -61,11 +61,49 @@ array_walk($menu, function ($val) {
     }
 });
 
-// Documentations pages
-Route::prefix('documentation')->group(function () {
-    Route::get('getting-started/references', [ReferencesController::class, 'index']);
-    Route::get('getting-started/changelog', [PagesController::class, 'index']);
-});
+
+
+//الروضات
+Route::resource('kindergarden', KindergardenController::class);
+Route::post('kindergarden/status', [KindergardenController::class, 'status'])->name('kindergarden.status');
+
+//الموظفين
+Route::resource('employees', EmployeesController::class);
+Route::get('jobplacement/employees/{id?}', [EmployeesController::class , 'jobPlacementView'])->name('jobplacement.create');
+Route::post('jobplacement/employees', [EmployeesController::class , 'jobPlacementStore'])->name('jobplacement.store');
+
+//المستويات
+Route::resource('levels' , LevelsController::class);
+
+//الشعب الدراسية
+Route::resource('divisions' , DivisionController::class);
+Route::post('divisions/status', [DivisionController::class, 'status'])->name('divisions.status');
+
+//اولياء الامور
+Route::resource('fathers' , FatherController::class);
+//الاطفال
+Route::resource('childrens' , ChildrenController::class);
+Route::get('classplacement/childrens/{id?}', [ChildrenController::class , 'classPlacementView'])->name('classplacement.create');
+Route::post('classplacement/childrens', [ChildrenController::class , 'classPlacementStore'])->name('classplacement.store');
+//الحضور والغياب
+Route::resource('employees/attendance' , EmployeesAttendanceController::class);
+
+
+
+
+
+
+
+
+
+
+
+
+// // Documentations pages
+// Route::prefix('documentation')->group(function () {
+//     Route::get('getting-started/references', [ReferencesController::class, 'index']);
+//     Route::get('getting-started/changelog', [PagesController::class, 'index']);
+// });
 
 Route::middleware('auth')->group(function () {
     // Account
@@ -145,31 +183,7 @@ Route::middleware('auth')->group(function () {
     // Patient
     Route::post('patient/status', [PatientsController::class, 'status'])->name('patient.status');
     Route::resource('patient', PatientsController::class);
-    //الروضات
-    Route::resource('kindergarden', KindergardenController::class);
-    Route::post('kindergarden/status', [KindergardenController::class, 'status'])->name('kindergarden.status');
-
-    //الموظفين
-    Route::resource('employees', EmployeesController::class);
-    Route::get('jobplacement/employees/{id?}', [EmployeesController::class , 'jobPlacementView'])->name('jobplacement.create');
-    Route::post('jobplacement/employees', [EmployeesController::class , 'jobPlacementStore'])->name('jobplacement.store');
-
-    //المستويات
-    Route::resource('levels' , LevelsController::class);
-
-    //الشعب الدراسية
-    Route::resource('divisions' , DivisionController::class);
-    Route::post('divisions/status', [DivisionController::class, 'status'])->name('divisions.status');
-
-    //اولياء الامور
-    Route::resource('fathers' , FatherController::class);
-    //الاطفال
-    Route::resource('childrens' , ChildrenController::class);
-    Route::get('classplacement/childrens/{id?}', [ChildrenController::class , 'classPlacementView'])->name('classplacement.create');
-    Route::post('classplacement/childrens', [ChildrenController::class , 'classPlacementStore'])->name('classplacement.store');
-    //الحضور والغياب
-    Route::resource('employees/attendance' , EmployeesAttendanceController::class);
-
+    
     // Medicine
     Route::post('medicine/status', [MedicinesController::class, 'status'])->name('medicine.status');
     Route::resource('medicine', MedicinesController::class);

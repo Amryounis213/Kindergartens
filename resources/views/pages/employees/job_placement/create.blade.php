@@ -39,7 +39,7 @@
                                             <option value="">اختر المسمى الوظيفي...</option>
                                             @foreach ($employees as $item)
                                                 <option value="{{ $item->id }}"
-                                                    {{ $item->id == old('employee_id') || ($emp->id ?? null ) ?  'selected' : '' }}>
+                                                    {{ $item->id == ($emp->id ?? old('employee_id'))  ?  'selected' : '' }}>
                                                     {{ $item->name }}</option>
                                             @endforeach
                                         </select>
@@ -90,10 +90,55 @@
                                 </div>
                                
 
-                                
+                                <div class="row mb-6">
+                                    <label class="col-lg-4 col-form-label required fw-bold fs-6">مربية شعبة</label>
+                                    <div class="col-lg-8 fv-row align-items-center">
+                                        <div class="col-9 col-form-label">
+                                            <div class="checkbox-list">
+                                                <label class="checkbox">
+                                                    <input type="checkbox"  name="Checkboxes4"/>
+                                                    <span></span>
+                                                    
+                                                </label>
+                                            </div>
+                                        </div>
+                                           
+                                    </div>
+                                </div>
 
 
-                               
+                                {{-- <div class="row mb-6">
+                                    <label class="col-lg-4 col-form-label required fw-bold fs-6">المستوى</label>
+                                    <div class="col-lg-8 fv-row">
+                                        <select name="period_id" aria-label="اختر فترة الدوام." data-control="select2"
+                                            data-placeholder="اختر فترة الدوام..."
+                                            class="form-select form-select-solid form-select-lg period_id">
+                                            <option value="">اختر فترة الدوام....</option>
+                                            @foreach ($periods as $item)
+                                                <option value="{{ $item->id }}"
+                                                    {{ $item->id == old('period_id') ? 'selected' : '' }}>
+                                                    {{ $item->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
+
+                                <div class="row mb-6">
+                                    <label class="col-lg-4 col-form-label required fw-bold fs-6">الشعبة</label>
+                                    <div class="col-lg-8 fv-row">
+                                        <select name="division_id" aria-label="اختر فترة الدوام." data-control="select2"
+                                            data-placeholder="اختر فترة الدوام..."
+                                            class="form-select form-select-solid form-select-lg period_id">
+                                            <option value="">اختر فترة الدوام....</option>
+                                            @foreach ($periods as $item)
+                                                <option value="{{ $item->id }}"
+                                                    {{ $item->id == old('division_id') ? 'selected' : '' }}>
+                                                    {{ $item->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div> --}}
 
 
 
@@ -213,49 +258,42 @@
                 FormValidation.formValidation(
                     document.getElementById('details_form'), {
                         fields: {
-                            name: {
+                            employee_id: {
                                 validators: {
                                     notEmpty: {
-                                        message: 'الاسم مطلوب',
+                                        message: 'اسم الموظف مطلوب',
                                     },
                                 },
                             },
-                            identity: {
+                            year: {
                                 validators: {
                                     notEmpty: {
-                                        message: 'رقم الهوية مطلوب',
+                                        message: 'السنة الدراسية مطلوبة',
                                     },
                                     stringLength: {
                                         min: 9,
                                         max: 9,
-                                        message: 'رقم الهوية يتكون من 9 خانات',
+                                        message: 'اكتب التسلسل بشكل صحيح',
                                     },
-                                    regexp: {
-                                        regexp: /^[0-9]+$/,
-                                        message: 'رقم الهوية فقط أرقام',
-                                    },
+                                    // regexp: {
+                                    //     regexp: /^[0-9]+$/,
+                                    //     message: 'رقم الهوية فقط أرقام',
+                                    // },
                                 },
                             },
-                            mobile: {
+                            job_id: {
                                 validators: {
                                     notEmpty: {
-                                        message: 'رقم الجوال مطلوب',
+                                        message: 'المسمى الوظيفي مطلوب',
                                     },
-                                    stringLength: {
-                                        min: 10,
-                                        max: 10,
-                                        message: 'رقم الجوال يتكون من 10 خانات',
-                                    },
-                                    regexp: {
-                                        regexp: /^[0-9]+$/,
-                                        message: 'رقم الجوال فقط أرقام',
-                                    },
+                                    
+                                   
                                 },
                             },
-                            dob: {
+                            period_id: {
                                 validators: {
                                     notEmpty: {
-                                        message: 'تاريخ الميلاد مطلوب',
+                                        message: 'فترة الدوام مطلوبة',
                                     },
                                 },
                             },

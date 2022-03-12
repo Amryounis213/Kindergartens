@@ -106,20 +106,7 @@
                                 <!--end::Col-->
                             </div>
                             <!--end::Input group-->
-                            <!--begin::Input group-->
-                            <div class="row mb-2">
-                                <!--begin::Col-->
-                                <div class="col-lg-12">
-                                    <!--begin::Row-->
-                                    <div class="row">
-
-
-                                    </div>
-                                    <!--end::Row-->
-                                </div>
-                                <!--end::Col-->
-                            </div>
-                            <!--end::Input group-->
+                            
                             <!--begin::Input group-->
                             <div class="row mb-2">
                                 <!--begin::Col-->
@@ -163,7 +150,30 @@
                                 <!--end::Col-->
                             </div>
                             <!--end::Input group-->
+                            <!--begin::Input group-->
+                            <div class="row mb-2">
+                                <!--begin::Col-->
+                                <div class="col-lg-12">
+                                    <!--begin::Row-->
+                                    <div class="row fv-plugins-icon-container">
+                                        <label class="col-lg-2 col-form-label  fw-bold fs-6">الحالة</label>
+                                        <div class="col-lg-4 d-flex align-items-center">
+                                            <div class="form-check form-check-solid form-switch fv-row">
+                                                <input type="hidden" name="status" value="0">
+                                                <input class="form-check-input w-45px h-30px" type="checkbox" id="status" name="status" value="1" checked>
+                                                <label class="form-check-label" for="status"></label>
+                                            </div>
+                                        </div>
 
+
+
+                                       
+                                    </div>
+                                    <!--end::Row-->
+                                </div>
+                                <!--end::Col-->
+                            </div>
+                            <!--end::Input group-->
                             <!--begin::Actions-->
                             <div class="card-footer d-flex justify-content-end py-6 px-9">
                                 <button type="reset" id="btn-dscrd"

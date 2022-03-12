@@ -76,7 +76,18 @@ class ChildrenController extends Controller
      */
     public function edit($id)
     {
-        //
+        $children = Children::find($id);
+        $fathers = Father::select('id' , 'name')->get();
+        $kinder = Kindergarten::select('id' , 'name')->get();
+
+        return view('pages.childrens.edit.edit' , [
+
+            'children'=>$children ,
+            'fathers'=>$fathers , 
+            'kindergartens'=>$kinder
+            
+        ]);
+
     }
 
     /**

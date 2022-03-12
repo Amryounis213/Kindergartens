@@ -205,7 +205,7 @@ return array(
          // روضات
          array(
             'title'      => 'ادارة الروضات',
-            'permission' => array('orders.show','orders.create','orders.edit','orders.delete'),
+            'permission' => array('kindergarten.show','kindergarten.create','kindergarten.edit','kindergarten.delete'),
             'icon'       => array(
                 'svg'  => theme()->getSvgIcon("demo1/media/icons/duotune/general/gen055.svg", "svg-icon-2"),
                 'font' => '<i class="bi bi-person fs-2"></i>',
@@ -222,12 +222,12 @@ return array(
                         'title'  => 'عرض',
                         'path'   => 'kindergarden',
                         'classes'    => array('item' => 'show-menu-bdg'),
-                        'permission' => 'orders.show',
+                        'permission' => 'kindergarten.show',
                         'bullet' => '<span class="bullet bullet-dot"></span>',
                     ),
                     array(
                         'title'  => 'إضافة',
-                        'permission' => 'orders.create',
+                        'permission' => 'kindergarten.create',
                         'path'   => 'kindergarden/create',
                         'bullet' => '<span class="bullet bullet-dot"></span>',
                     ),
@@ -278,7 +278,7 @@ return array(
         // الموظفين
         array(
             'title'      => 'الموظفين',
-            'permission' => array('orders.show','orders.create','orders.edit','orders.delete'),
+            'permission' => array('employees.show','employees.create','employees.edit','employees.delete'),
             'icon'       => array(
                 'svg'  => theme()->getSvgIcon("demo1/media/icons/duotune/general/gen055.svg", "svg-icon-2"),
                 'font' => '<i class="bi bi-person fs-2"></i>',
@@ -300,13 +300,13 @@ return array(
                     ),
                     array(
                         'title'  => 'إضافة',
-                        'permission' => 'orders.create',
+                        'permission' => 'employees.create',
                         'path'   => 'employees/create',
                         'bullet' => '<span class="bullet bullet-dot"></span>',
                     ),
                     array(
                         'title'  => 'التسكين الوظيفي',
-                        'permission' => 'orders.create',
+                        'permission' => 'employees.create',
                         'path'   => 'jobplacement.create',
                         'bullet' => '<span class="bullet bullet-dot"></span>',
                     ),
@@ -334,24 +334,24 @@ return array(
                         'title'  => 'عرض الأطفال',
                         'path'   => 'childrens',
                         'classes'    => array('item' => 'show-menu-bdg'),
-                        'permission' => 'orders.create',
+                        'permission' => 'childrens.show',
                         'bullet' => '<span class="bullet bullet-dot"></span>',
                     ),
                     array(
                         'title'  => 'إضافة طفل جديد',
-                        'permission' => 'orders.create',
+                        'permission' => 'childrens.show',
                         'path'   => 'childrens/create',
                         'bullet' => '<span class="bullet bullet-dot"></span>',
                     ),
                     array(
                         'title'  => 'التسكين الصفي',
-                        'permission' => 'orders.create',
-                        'path'   => 'jobplacement.create',
+                        'permission' => 'childrens.create',
+                       // 'path'   => 'classplacement/childrens',
                         'bullet' => '<span class="bullet bullet-dot"></span>',
                     ),
                     array(
                         'title'  => 'عرض أولياء الأمور',
-                        'permission' => 'orders.create',
+                        'permission' => 'childrens.create',
                         'path'   => 'fathers',
                         'bullet' => '<span class="bullet bullet-dot"></span>',
                     ),

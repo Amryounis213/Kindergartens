@@ -8,13 +8,13 @@
                      style="background-position: right top; background-size: 30% auto; background-image: url({{'/demo1/media/svg/shapes/abstract-4.svg'}})">
                     <!--begin::Body-->
                     <div class="card-body">
-                        <a @can('orders.show') href="{{route('order.index')}}" @endcan
-                        class="card-title fw-bolder text-muted text-hover-primary fs-4 show-menu-bdg">طلبات الفحص الطبي</a>
+                        <a @can('orders.show') href="{{route('employees.index')}}" @endcan
+                        class="card-title fw-bolder text-muted text-hover-primary fs-4 show-menu-bdg">عدد الموظفين</a>
                         <span class="home-crd-bdg"></span>
                         <div class="fw-bolder text-primary fs-3qx" data-kt-countup="true"
                              data-kt-countup-value="{{$ordersCount}}">0
                         </div>
-                        <br>عدد طلبات العلاج المسجلة اليوم</p>
+                        <br>عدد موظفين جميع الروضات</p>
                     </div>
                     <!--end::Body-->
                 </div>
@@ -27,11 +27,11 @@
                     <!--begin::Body-->
                     <div class="card-body">
                         <a @can('patients.show') href="{{route('patient.index')}}" @endcan
-                        class="card-title fw-bolder text-muted text-hover-primary fs-4">ملفات المرضى</a>
+                        class="card-title fw-bolder text-muted text-hover-primary fs-4">عدد الطلاب </a>
                         <div class="fw-bolder text-primary fs-3qx" data-kt-countup="true"
                              data-kt-countup-value="{{$patientsCount}}">0
                         </div>
-                        <br>عدد ملفات المرضى المدخلة على النظام</p>
+                        <br>عدد الطلاب المدخلة على النظام</p>
                     </div>
                     <!--end::Body-->
                 </div>

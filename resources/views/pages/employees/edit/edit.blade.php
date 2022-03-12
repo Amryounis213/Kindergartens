@@ -215,7 +215,9 @@
                                                         id="clinic_id"
                                                         data-control="select2"
                                                         data-placeholder="{{ __('Select') }} الروضة .."
-                                                        class="form-select form-select-solid form-select-lg fw-bold">
+                                                        class="form-select form-select-solid form-select-lg fw-bold"
+                                                        {{ Auth::user()->kindergarten_id !=null ? 'disabled' :'' }}
+                                                        >
                                                     <option value="-1">{{ __('Select') }} الروضة...
                                                     </option>
                                                     @foreach($kinder as $item)
@@ -319,7 +321,7 @@
                 var id = doctor.value;
                 var sdid = $("#s_doctor_id").val();
                 $.ajax({
-                    url: "{{ route('doctors.getByClinic') }}",
+                    url: "{{-- route('doctors.getByClinic') --}}",
                     method: 'GET',
                     data: {'id': id},
                     dataType: "JSON",

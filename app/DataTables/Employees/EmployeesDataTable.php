@@ -56,6 +56,10 @@ class EmployeesDataTable extends DataTable
      */
     public function query(Employee $model)
     {
+        if(Auth::user()->kindergarten_id != null)
+        {
+            return $model->where('kindergartens' , Auth::user()->kindergarten_id)->newQuery();
+        }
         return $model->newQuery();
     }
 

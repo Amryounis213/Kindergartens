@@ -35,7 +35,7 @@
                         {{-- @include('modals.filter_popup_menu') --}}
                         {{--                @include('modals.add_modal')--}}
                                        {{-- @include('modals.export_modal') --}}
-                        @can('patients.create')
+                        @can('division.create')
                         <!--begin::Add-->
                         <a href="{{ route('divisions.create') }}" type="button" class="btn btn-primary">
                         <span class="svg-icon svg-icon-2">

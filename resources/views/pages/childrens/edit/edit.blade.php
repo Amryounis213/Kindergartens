@@ -1,56 +1,62 @@
 <x-base-layout>
     <div id="kt_content" class="content d-flex flex-column flex-column-fluid">
         <div>
-            <!--begin::Form-->
-            <form id="details_form" class="form" method="POST" action="{{ route('order.update', $order) }}"
-                  enctype="multipart/form-data">
-            @csrf
-            @method('PUT')
             <!--begin::Patient info-->
-                <div class="card mb-5 mb-xl-10">
-                    <!--begin::Card header-->
-                    <div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse"
-                         data-bs-target="#kt_account_profile_details" aria-expanded="true"
-                         aria-controls="kt_account_profile_details">
-                        <!--begin::Card title-->
-                        <div class="card-title m-0">
-                            <h6 class="fw-bolder m-0">{{ __('edit') }} {{ __('order') }}</h6>
-                            <span class="h-20px border-gray-200 border-start mx-4"></span>
-                            <h3 class="fw-bolder m-0">{{$order->name}}</h3>
-                        </div>
-                        <!--end::Card title-->
+            <div class="card mb-5 mb-xl-10">
+                <!--begin::Card header-->
+                <div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse"
+                    data-bs-target="#kt_account_profile_details" aria-expanded="true"
+                    aria-controls="kt_account_profile_details">
+                    <!--begin::Card title-->
+                    <div class="card-title m-0">
+                        <h3 class="fw-bolder m-0">تعديل طفل |{{$children->name}} </h3>
                     </div>
-                    <!--begin::Card header-->
-                    <!--begin::Content-->
-                    <div id="kt_account_profile_details" class="collapse show">
-                        <!--begin::Card body-->
-                        <div class="card-body border-top p-9 item">
+                    <!--end::Card title-->
+                </div>
+                <!--begin::Card header-->
+                <!--begin::Content-->
+                <div id="kt_account_profile_details" class="collapse show">
+                    <!--begin::Card body-->
+                    <div class="card-body border-top p-9 item">
+                        <form id="details_form" class="form" method="POST"
+                            action="{{ route('childrens.store') }}" enctype="multipart/form-data">
+                            @csrf
+                            @method('POST')
                             <!--begin::Input group-->
-                            <div class="row mb-6">
+                            <div class="row mb-2">
                                 <!--begin::Col-->
                                 <div class="col-lg-12">
                                     <!--begin::Row-->
                                     <div class="row">
+
                                         <label
-                                            class="col-lg-1 col-form-label required fw-bold fs-6">{{ __('identity no.') }}</label>
+                                        class="col-lg-2 col-form-label required fw-bold fs-6">{{ __('Full Name') }}</label>
+
+                                    <div class="col-lg-4">
+                                        <input type="text" name="name"
+                                            class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 name"
+                                            placeholder="{{ __('Full Name') }}" value="{{ $children->name }}" />
+
+                                    </div>
+
+
+                                        <label class="col-lg-2 col-form-label required fw-bold fs-6">ولي الأمر</label>
+
                                         <div class="col-lg-4">
-                                            <input type="text" name="identity"
-                                                   class="form-control form-control-lg form-control-solid item_no patient_search"
-                                                   placeholder="{{ __('identity no.') }}"
-                                                   value="{{ old('name', $order->identity ?? '') }}"
-                                                   disabled
-                                            />
-                                            <input type="hidden" value="{{$order->patient_id}}" name="patient_id"
-                                                   class="search-val">
+                                            <select name="father_id" aria-label="{{ __('Select') }} ولي الأمر"
+                                                id="father_id" data-control="select2"
+                                                data-placeholder="{{ __('Select') }} ولي الأمر .."
+                                                class="form-select form-select-solid form-select-lg fw-bold">
+                                                <option value="-1">{{ __('Select') }} ولي الأمر...
+                                                </option>
+                                                @foreach ($fathers as $father)
+                                                    <option value="{{ $father->id }}"
+                                                        {{ $father->id ==  $children->father_id ? 'selected' : '' }}>
+                                                        {{ $father->name }} </option>
+                                                @endforeach
+                                            </select>
                                         </div>
-                                        <label
-                                            class="col-lg-2 col-form-label required fw-bold fs-6">{{ __('Full Name') }}</label>
-                                        <div class="col-lg-4">
-                                            <input type="text" name="name"
-                                                   class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 name"
-                                                   placeholder="{{ __('Full Name') }}"
-                                                   value="{{ old('website', $order->name ?? '') }}"/>
-                                        </div>
+                                       
                                     </div>
                                     <!--end::Row-->
                                 </div>
@@ -58,77 +64,38 @@
                             </div>
                             <!--end::Input group-->
                             <!--begin::Input group-->
-                            <div class="row mb-6">
+                            <div class="row mb-2">
                                 <!--begin::Col-->
                                 <div class="col-lg-12">
                                     <!--begin::Row-->
                                     <div class="row">
-                                        <label
-                                            class="col-lg-1 col-form-label required fw-bold fs-6">{{ __('mobile no.') }}</label>
-                                        <div class="col-lg-4">
-                                            <input type="text" name="mobile"
-                                                   class="form-control form-control-lg form-control-solid mobile"
-                                                   placeholder="{{ __('mobile no.') }}"
-                                                   value="{{ old('mobile', $order->patient ? $order->patient->mobile : '') }}"/>
-                                        </div>
+
                                         <label
                                             class="col-lg-2 col-form-label required fw-bold fs-6">{{ __('dob') }}</label>
                                         <div class="col-lg-4">
                                             <div class="position-relative d-flex align-items-center">
-                                                <!--begin::Icon-->
-                                                <!--begin::Svg Icon | path: icons/duotune/general/gen014.svg-->
-                                            {!! theme()->getSvgIcon("icons/duotune/general/gen014.svg", "svg-icon svg-icon-2 position-absolute mx-4") !!}
-                                            <!--end::Svg Icon-->
-                                                <!--end::Icon-->
-                                                <!--begin::Datepicker-->
+                                                {!! theme()->getSvgIcon('icons/duotune/general/gen014.svg', 'svg-icon svg-icon-2 position-absolute mx-4') !!}
                                                 <input class="form-control form-control-solid ps-12 flatpickr-input dob"
-                                                       value="{{ old('dob', $order->patient ? $order->patient->dob : '') }}"
-                                                       placeholder="{{ __('Select a date')}}" name="dob" type="text"
-                                                       readonly="readonly">
-                                                <!--end::Datepicker-->
+                                                    placeholder="{{ __('Select a date') }}" name="bth_date"
+                                                    type="text" value="{{ $children->bth_date }}" readonly="readonly">
                                             </div>
                                         </div>
-                                    </div>
-                                    <!--end::Row-->
-                                </div>
-                                <!--end::Col-->
-                            </div>
-                            <!--end::Input group-->
-                            <!--begin::Input group-->
-                            <div class="row mb-6">
-                                <!--begin::Col-->
-                                <div class="col-lg-12">
-                                    <!--begin::Row-->
-                                    <div class="row">
-                                        <label
-                                            class="col-lg-1 col-form-label required fw-bold fs-6">{{ __('State') }}</label>
+
+
+
+                                        <label class="col-lg-2 col-form-label required fw-bold fs-6"> الروضة </label>
+
                                         <div class="col-lg-4">
-                                            <select name="states_id" aria-label="{{ __('Select a State') }}"
-                                                    data-control="select2"
-                                                    data-placeholder="{{ __('Select a State') }}.."
-                                                    class="form-select form-select-solid form-select-lg states_id">
-                                                <option value="">{{ __('Select a State') }}...</option>
-                                                @foreach($states as $item)
-                                                    <option
-                                                        value=" {{$item->id}}" {{ $item->id == old('states_id', $order->patient->states_id ?? '') ? 'selected' :'' }}>
-                                                        {{$item->name}}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <label
-                                            class="col-lg-2 col-form-label required fw-bold fs-6">{{ __('City') }}</label>
-                                        <div class="col-lg-4">
-                                            <select name="cities_id" aria-label="{{ __('Select a City') }}"
-                                                    data-control="select2"
-                                                    data-placeholder="{{ __('Select a City') }}.."
-                                                    class="form-select form-select-solid form-select-lg cities_id">
-                                                <option value="">{{ __('Select a City') }}...</option>
-                                                @foreach($cities as $item)
-                                                    <option
-                                                        value=" {{$item->id}}" {{ $item->id == old('cities_id', $order->patient->cities_id ?? '') ? 'selected' :'' }}>
-                                                        {{$item->name}}
-                                                    </option>
+                                            <select name="kindergarten_id" aria-label="{{ __('Select') }} الروضة"
+                                                id="kindergarten_id" data-control="select2"
+                                                data-placeholder="{{ __('Select') }} الروضة .."
+                                                class="form-select form-select-solid form-select-lg fw-bold">
+                                                <option value="-1">{{ __('Select') }} الروضة...
+                                                </option>
+                                                @foreach ($kindergartens as $kindergartens)
+                                                    <option value="{{ $kindergartens->id }}"
+                                                        {{ $kindergartens->id == $children->kindergarten_id ? 'selected' : '' }}>
+                                                        {{ $kindergartens->name }} </option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -138,19 +105,19 @@
                                 <!--end::Col-->
                             </div>
                             <!--end::Input group-->
+                           
                             <!--begin::Input group-->
-                            <div class="row mb-6">
+                            <div class="row mb-2">
                                 <!--begin::Col-->
                                 <div class="col-lg-12">
                                     <!--begin::Row-->
                                     <div class="row">
                                         <label
-                                            class="col-lg-1 col-form-label fw-bold fs-6">{{ __('Address') }}</label>
+                                            class="col-lg-2 col-form-label required fw-bold fs-6">{{ __('Address') }}</label>
                                         <div class="col-lg-4">
                                             <input type="text" name="address"
-                                                   class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 address"
-                                                   placeholder="{{ __('Address') }}"
-                                                   value="{{ old('dob', $order->patient ? $order->patient->address : '') }}"/>
+                                                class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 address"
+                                                placeholder="{{ __('Address') }}" value="{{ $children->address }}" />
                                         </div>
                                         <label
                                             class="col-lg-2 col-form-label required fw-bold fs-6">{{ __('Gender') }}</label>
@@ -160,16 +127,16 @@
                                                 <!--begin::Option-->
                                                 <label class="form-check form-check-inline form-check-solid me-5">
                                                     <input class="form-check-input" name="gender" type="radio"
-                                                           id="gender-male"
-                                                           value="1" {{ old('gender', $order->patient ? $order->patient->gender : '') == 1 ? 'checked' : '' }}/>
+                                                        id="gender-male" value="1"
+                                                        {{ $children->gender == 1 ? 'checked' : '' }} />
                                                     <span class="fw-bold ps-2 fs-6 gender">{{ __('Male') }} </span>
                                                 </label>
                                                 <!--end::Option-->
                                                 <!--begin::Option-->
                                                 <label class="form-check form-check-inline form-check-solid">
                                                     <input class="form-check-input" name="gender" type="radio"
-                                                           id="gender-female"
-                                                           value="2" {{ old('gender', $order->patient ? $order->patient->gender : '') == 2 ? 'checked' : '' }}/>
+                                                        id="gender-female" value="2"
+                                                        {{ $children->gender == 2 ? 'checked' : '' }} />
                                                     <span class="fw-bold ps-2 fs-6">{{ __('Female') }}</span>
                                                 </label>
                                                 <!--end::Option-->
@@ -182,84 +149,50 @@
                                 <!--end::Col-->
                             </div>
                             <!--end::Input group-->
-                        </div>
-                        <!--end::Card body-->
-                    </div>
-                    <!--end::Content-->
-                </div>
-                <!--end::Patient info-->
-                <!--begin::Order info-->
-                <div class="card mb-5 mb-xl-10">
-                    <!--begin::Card header-->
-                    <div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse"
-                         data-bs-target="#kt_order_profile_details" aria-expanded="true"
-                         aria-controls="kt_order_profile_details">
-                        <!--begin::Card title-->
-                        <div class="card-title m-0">
-                            <h3 class="fw-bolder m-0">{{ __('info') }} {{ __('Reservation') }} </h3>
-                        </div>
-                        <!--end::Card title-->
-                    </div>
-                    <!--begin::Card header-->
-                    <!--begin::Content-->
-                    <div id="kt_order_profile_details" class="collapse show">
-                        <!--begin::Card body-->
-                        <div class="card-body border-top p-9">
                             <!--begin::Input group-->
-                            <div class="row mb-6">
+                            <div class="row mb-2">
                                 <!--begin::Col-->
                                 <div class="col-lg-12">
                                     <!--begin::Row-->
-                                    <div class="row">
-                                        <label
-                                            class="col-lg-1 col-form-label required fw-bold fs-6">{{ __('Clinic') }}</label>
-                                        <div class="col-lg-4">
-                                            <select name="clinic_id" aria-label="{{ __('Select') }} {{ __('Clinic') }}"
-                                                    data-control="select2"
-                                                    id="clinic_id"
-                                                    data-placeholder="{{ __('Select') }} {{ __('Clinic') }} .."
-                                                    class="form-select form-select-solid form-select-lg fw-bold">
-                                                <option value="">{{ __('Select') }} {{ __('Clinic') }} ...</option>
-                                                @foreach($clinics as $item)
-                                                    <option
-                                                        value="{{$item->id}}" {{ $item->id == old('clinic_id', $order->clinic_id) ? 'selected' :'' }}> {{$item->name}}  </option>
-                                                @endforeach
-                                            </select>
+                                    <div class="row fv-plugins-icon-container">
+                                        <label class="col-lg-2 col-form-label  fw-bold fs-6">الحالة</label>
+                                        <div class="col-lg-4 d-flex align-items-center">
+                                            <div class="form-check form-check-solid form-switch fv-row">
+                                                <input type="hidden" name="status" value="0">
+                                                <input class="form-check-input w-45px h-30px" type="checkbox" id="status" name="status" value="1" {{ $children->status ? 'checked' : '' }}>
+                                                <label class="form-check-label" for="status"></label>
+                                            </div>
                                         </div>
-                                        <input value="{{ $order->doctor_id}}" id="s_doctor_id" type="hidden">
-                                        <label
-                                            class="col-lg-2 col-form-label required fw-bold fs-6">{{ __('doctor') }}</label>
-                                        <div class="col-lg-4">
-                                            <select name="doctor_id" aria-label="{{ __('Select') }} {{ __('doctor') }}"
-                                                    id="doctor_id"
-                                                    data-control="select2"
-                                                    data-placeholder="{{ __('Select') }} {{ __('doctor') }} .."
-                                                    class="form-select form-select-solid form-select-lg">
-                                            </select>
-                                        </div>
+
+
+
+                                       
                                     </div>
                                     <!--end::Row-->
                                 </div>
                                 <!--end::Col-->
                             </div>
                             <!--end::Input group-->
-                        </div>
-                        <!--end::Card body-->
+                            <!--begin::Actions-->
+                            <div class="card-footer d-flex justify-content-end py-6 px-9">
+                                <button type="reset" id="btn-dscrd"
+                                    class="btn btn-white btn-active-light-primary me-2">{{ __('Discard') }}</button>
+                                <button type="submit" class="btn btn-primary" id="kt_account_profile_details_submit">
+                                    @include(
+                                        'partials.general._button-indicator',
+                                        ['label' => __('Save')]
+                                    )
+                                </button>
+                            </div>
+                            <!--end::Actions-->
+                        </form>
+                        <!--end::Form-->
                     </div>
-                    <!--end::Content-->
+                    <!--end::Card body-->
                 </div>
-                <!--end::Order info-->
-                <!--begin::Actions-->
-                <div class="card-footer d-flex justify-content-end py-6 px-9">
-                    <button type="reset" id="btn-dscrd"
-                            class="btn btn-white btn-active-light-primary me-2">{{ __('Discard') }}</button>
-                    <button type="submit" class="btn btn-primary" id="kt_account_profile_details_submit">
-                        @include('partials.general._button-indicator', ['label' => __('Save')])
-                    </button>
-                </div>
-                <!--end::Actions-->
-            </form>
-            <!--end::Form-->
+                <!--end::Content-->
+            </div>
+            <!--end::Patient info-->
         </div>
     </div>
     @section('styles')

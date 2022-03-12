@@ -30,7 +30,7 @@
                 <!--begin::Card title-->
                 <!--begin::Card toolbar-->
                     <div class="card-toolbar">
-                    @can('orders.create')
+                    @can('employees.create')
                         <!--begin::Toolbar-->
                         <div class="d-flex justify-content-end" data-kt-customer-table-toolbar="base">
                             <div class="card-toolbar">

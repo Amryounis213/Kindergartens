@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\DataTables\Attendance\AttendanceDataTable;
 use App\Models\Employee;
 use App\Models\EmployeesAttendance;
+
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class EmployeesAttendanceController extends Controller
 {
@@ -16,11 +18,21 @@ class EmployeesAttendanceController extends Controller
      */
     public function index(AttendanceDataTable $datatable ,Employee $employee)
     {
-     
+        
+
+        if(Auth::user()->kindergarten_id != null)
+        {
+            $employees = $employee->where('kindergartens' , Auth::user()->kindergarten_id)->get();
+           
+        }
+        else{
+            $employees = $employee->all();
+           
+        }
         return view('pages.Attendance.employees.index' , [
             'dataTable'=>$datatable ,
              'model'=>$employee,
-             'employees'=>Employee::get(),
+             'employees'=>$employees,
             ]);
 
     }

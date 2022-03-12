@@ -70,7 +70,7 @@
             <!--end::Card header-->
             <!--begin::Card body-->
             <div class="card-body pt-6">
-                @include('pages.patient.parts._table')
+                @include('pages.fathers.parts._table')
             </div>
             <!--end::Card body-->
         </div>

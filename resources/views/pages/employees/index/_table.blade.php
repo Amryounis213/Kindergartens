@@ -41,12 +41,12 @@
                 }
             })
         });
-        ////////////////////////////////////////////////////
+    //     //////////////////////////////////////////////////
     //     $(document).on('click', '.csl-btn', function (e) {
     //         const id = $(this).data('id');
     //         $.ajax({
     //             type: "POST",
-    //             url: "{{ route('order.cancel') }}",
+    //             url: "{{-- route('order.cancel') --}}",
     //             data: {'id': id},
     //             success: function (data) {
     //                 oTable.draw();
@@ -64,7 +64,7 @@
         const checkedValue = $(this).is(":checked");
         $.ajax({
             type: "POST",
-            url: "{{ route('order.status') }}",
+            url: "{{-- route('order.status') --}}",
             data: {'id': id},
             success: function (data) {
                 if (data.type === 'yes') {

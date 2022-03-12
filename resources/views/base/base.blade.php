@@ -110,30 +110,7 @@ License: {{ theme()->getOption('product', 'license') }}
 <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
 <script src='https://cdn.rawgit.com/admsev/jquery-play-sound/master/jquery.playSound.js'></script>
 <script>
-    var userId = $('#auth-user-id').val();
-    // Enable pusher logging - don't include this in production
-    Pusher.logToConsole = true;
-
-    var pusher = new Pusher('9397b6ac94ce5395dee8', {
-        cluster: 'ap2'
-    });
-
-    var channel = pusher.subscribe('order-channel');
-    channel.bind('order-event', function (data) {
-        if (data['user']['id'] == userId) {
-            $(".menu-bdg .menu-badge").empty();
-            $(".menu-bdg .menu-badge").append('<span class="badge badge-circle badge-danger" style="width: 10px; height: 10px;"></span>');
-            $(".home-crd-bdg").append('<span class="badge badge-circle badge-danger" style="width: 15px; height: 15px;"></span>');
-            const mTable = $('#orders-table').DataTable();
-            mTable.draw();
-            $.playSound("/demo1/sounds/knock1.wav");
-        }
-    });
-    $(".show-menu-bdg").on('click', function (e) {
-        $(".menu-bdg .menu-badge").empty();
-        $(".home-crd-bdg").empty();
-    });
-
+   
 </script>
 </body>
 {{-- end::Body --}}

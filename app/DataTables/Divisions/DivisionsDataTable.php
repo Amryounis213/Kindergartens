@@ -5,6 +5,7 @@ namespace App\DataTables\Divisions;
 use App\Models\Division;
 use App\Models\Kindergarten;
 use App\Models\Level;
+use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Services\DataTable;
 
@@ -48,7 +49,13 @@ class DivisionsDataTable extends DataTable
      */
     public function query(Division $model)
     {
+      
+        if(Auth::user()->kindergarten_id != null)
+        {
+            return $model->where('kindergarten_id' , Auth::user()->kindergarten_id)->newQuery();
+        }
         return $model->newQuery();
+
     }
 
     /**

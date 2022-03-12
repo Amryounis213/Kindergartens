@@ -28,12 +28,14 @@
                         <div class="col-lg-8">
                             <select name="kindergarten_id" aria-label="{{ __('Select') }} الروضة" id="kindergarten_id"
                                 data-control="select2" data-placeholder="{{ __('Select') }} الروضة .."
-                                class="form-select form-select-solid form-select-lg fw-bold">
+                                class="form-select form-select-solid form-select-lg fw-bold"
+                                {{ Auth::user()->kindergarten_id !=null ? 'disabled' : '' }}
+                                >
                                 <option value="-1">{{ __('Select') }} الروضة...
                                 </option>
                                 @foreach ($kindergartens as $kindergartens)
                                     <option value="{{ $kindergartens->id }}"
-                                        {{ $kindergartens->id == old('kindergarten_id') ? 'selected' : '' }}>
+                                        {{ $kindergartens->id == old('kindergarten_id') || Auth::user()->kindergarten_id ? 'selected' : '' }}>
                                         {{ $kindergartens->name }} </option>
                                 @endforeach
                             </select>
@@ -133,7 +135,7 @@
                 var e = document.getElementById("gov_identity");
                 var govIdentity = e.value;
                 $.ajax({
-                    url: "{{ route('order.gov.data') }}",
+                    url: "{{-- route('order.gov.data') --}}",
                     method: 'GET',
                     data: {
                         'gov_identity': govIdentity

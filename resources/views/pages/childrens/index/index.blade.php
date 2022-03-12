@@ -30,12 +30,12 @@
                 <!--begin::Card title-->
                 <!--begin::Card toolbar-->
                     <div class="card-toolbar">
-                    @can('orders.create')
+                    @can('childrens.create')
                         <!--begin::Toolbar-->
                         <div class="d-flex justify-content-end" data-kt-customer-table-toolbar="base">
                             <div class="card-toolbar">
 {{--                                <a href="{{ route('order.create') }}" class="btn btn-sm btn-light-primary">--}}
-                                <a href="{{ route('employees.create') }}" class="btn btn-sm btn-light-primary">
+                                <a href="{{ route('childrens.create') }}" class="btn btn-sm btn-light-primary">
                                     <!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
                                     <span class="svg-icon svg-icon-2">
 												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"

@@ -11,6 +11,10 @@ class JobPlacement extends Model
     protected $fillable = [
          'period_id' , 'job_id' , 'employee_id' , 'levels_id' , 'is_mother','divisions_id', 'year'
     ];
+    public function Kindergarten()
+    {
+        return $this->belongsTo(Kindergarten::class , 'kindergarten_id' , 'id');
+    }
 
     public function Employee()
     {

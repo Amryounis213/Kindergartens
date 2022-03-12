@@ -1,14 +1,14 @@
 <!--begin::Action--->
 <td class="text-end">
     
-    @can('patients.edit')
+    @can('division.edit')
     <a href="{{ route('divisions.edit', $model) }}"
        title="تعديل"
        class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
         {!! theme()->getSvgIcon("icons/duotune/art/art005.svg", "svg-icon-3") !!}
     </a>
     @endcan
-    @can('patients.delete')
+    @can('division.delete')
     <a data-id = "{{$model->id}}"
        title="حذف"
        class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm del_rec_btn">

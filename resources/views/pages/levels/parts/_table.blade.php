@@ -16,7 +16,7 @@
             $(document).on('click', ".del_rec_btn", function (e) {
                 e.preventDefault();
                 const id = $(this).data('id');
-                let url = "{{ route('patient.destroy', ":id") }}";
+                let url = "{{ route('levels.destroy', ":id") }}";
                 url = url.replace(':id', id);
 
                 Swal.fire({
@@ -50,7 +50,7 @@
             const checkedValue = $(this).is(":checked");
             $.ajax({
                 type: "POST",
-                url: "{{ route('patient.status') }}",
+                url: "{{-- route('levels.status') --}}",
                 data: {'id': id},
                 success: function (data) {
                     if (data.type === 'yes') {

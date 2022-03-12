@@ -37,10 +37,10 @@ class ChildrensDataTable extends DataTable
                 return $model->ClassPlacement ? ($model->ClassPlacement->Level->name) ?? '---' : '---';
             })
             ->addColumn('status', function (Children $model) {
-                return view('pages.employees.index._status', compact('model'));
+                return view('pages.childrens.index._status', compact('model'));
             })
             ->addColumn('action', function (Children $model) {
-                return view('pages.employees.index._action-menu', compact('model'));
+                return view('pages.childrens.index._action-menu', compact('model'));
             });
             
     }
@@ -54,6 +54,10 @@ class ChildrensDataTable extends DataTable
      */
     public function query(Children $model)
     {
+        if(Auth::user()->kindergarten_id != null)
+        {
+            return $model->where('kindergarten_id' , Auth::user()->kindergarten_id)->newQuery();
+        }
         return $model->newQuery();
     }
 

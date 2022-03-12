@@ -216,12 +216,14 @@
                                                         id="clinic_id"
                                                         data-control="select2"
                                                         data-placeholder="{{ __('Select') }} الروضة .."
-                                                        class="form-select form-select-solid form-select-lg fw-bold">
+                                                        class="form-select form-select-solid form-select-lg fw-bold"
+                                                        {{ Auth::user()->kindergarten_id !=null ? 'disabled' :'' }}
+                                                        >
                                                     <option value="-1">{{ __('Select') }} الروضة...
                                                     </option>
                                                     @foreach($kinder as $item)
                                                     <option
-                                                        value="{{$item->id}}" {{ $item->id == old('kindergartens') ? 'selected' :'' }}> {{$item->name}}  </option>
+                                                        value="{{$item->id}}" {{ $item->id == (Auth::user()->kindergarten_id) ? 'selected' :'' }}> {{$item->name}}  </option>
                                                     @endforeach
                                                 </select>
                                                     </div>

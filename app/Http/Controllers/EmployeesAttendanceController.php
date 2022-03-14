@@ -127,4 +127,10 @@ class EmployeesAttendanceController extends Controller
     {
         //
     }
+
+    public function showEmployee(Request $request)
+    {
+        
+           
+    }
 }

@@ -355,97 +355,97 @@
         <script>
             document.addEventListener('DOMContentLoaded', function (e) {
                 FormValidation.formValidation(
-                    document.getElementById('details_form'), {
-                        fields: {
-                            name: {
-                                validators: {
-                                    notEmpty: {
-                                        message: 'الاسم مطلوب',
-                                    },
-                                },
-                            },
-                            identity: {
-                                validators: {
-                                    notEmpty: {
-                                        message: 'رقم الهوية مطلوب',
-                                    },
-                                    stringLength: {
-                                        min: 9,
-                                        max: 9,
-                                        message: 'رقم الهوية يتكون من 9 خانات',
-                                    },
-                                    regexp: {
-                                        regexp: /^[0-9]+$/,
-                                        message: 'رقم الهوية فقط أرقام',
-                                    },
-                                },
-                            },
-                            mobile: {
-                                validators: {
-                                    notEmpty: {
-                                        message: 'رقم الجوال مطلوب',
-                                    },
-                                    stringLength: {
-                                        min: 10,
-                                        max: 10,
-                                        message: 'رقم الجوال يتكون من 10 خانات',
-                                    },
-                                    regexp: {
-                                        regexp: /^[0-9]+$/,
-                                        message: 'رقم الجوال فقط أرقام',
-                                    },
-                                },
-                            },
-                            dob: {
-                                validators: {
-                                    notEmpty: {
-                                        message: 'تاريخ الميلاد مطلوب',
-                                    },
-                                },
-                            },
-                            states_id: {
-                                validators: {
-                                    notEmpty: {
-                                        message: 'المحافظة مطلوب',
-                                    },
-                                },
-                            },
-                            cities_id: {
-                                validators: {
-                                    notEmpty: {
-                                        message: 'المدينة مطلوب',
-                                    },
-                                },
-                            },
-                            gender: {
-                                validators: {
-                                    notEmpty: {
-                                        message: 'الجنس مطلوب',
-                                    },
-                                },
-                            },
-                            clinic_id: {
-                                validators: {
-                                    notEmpty: {
-                                        message: 'العيادة مطلوب',
-                                    },
-                                },
-                            },
-                            doctor_id: {
-                                validators: {
-                                    notEmpty: {
-                                        message: 'الطبيب مطلوب',
-                                    },
+                        document.getElementById('details_form'), {
+                    fields: {
+                        name: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'الاسم مطلوب',
                                 },
                             },
                         },
-                        plugins: {
-                            trigger: new FormValidation.plugins.Trigger(),
-                            submitButton: new FormValidation.plugins.SubmitButton(),
-                            defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
-                            bootstrap: new FormValidation.plugins.Bootstrap5(),
+                        identity: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'رقم الهوية مطلوب',
+                                },
+                                stringLength: {
+                                    min: 9,
+                                    max: 9,
+                                    message: 'رقم الهوية يتكون من 9 خانات',
+                                },
+                                regexp: {
+                                    regexp: /^[0-9]+$/,
+                                    message: 'رقم الهوية فقط أرقام',
+                                },
+                            },
                         },
-                    });
+                        mobile: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'رقم الجوال مطلوب',
+                                },
+                                stringLength: {
+                                    min: 10,
+                                    max: 10,
+                                    message: 'رقم الجوال يتكون من 10 خانات',
+                                },
+                                regexp: {
+                                    regexp: /^[0-9]+$/,
+                                    message: 'رقم الجوال فقط أرقام',
+                                },
+                            },
+                        },
+                        dob: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'تاريخ الميلاد مطلوب',
+                                },
+                            },
+                        },
+                        major_id: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'التخصص مطلوب',
+                                },
+                            },
+                        },
+                        address: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'العنوان مطلوب',
+                                },
+                            },
+                        },
+                        gender: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'الجنس مطلوب',
+                                },
+                            },
+                        },
+                        clinic_id: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'العيادة مطلوب',
+                                },
+                            },
+                        },
+                        kindergartens: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'الروضة مطلوبة',
+                                },
+                            },
+                        },
+                    },
+                    plugins: {
+                        trigger: new FormValidation.plugins.Trigger(),
+                        submitButton: new FormValidation.plugins.SubmitButton(),
+                        defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
+                        bootstrap: new FormValidation.plugins.Bootstrap5(),
+                    },
+                });
             });
         </script>
     @endsection

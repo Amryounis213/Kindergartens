@@ -173,9 +173,9 @@
                                                     <label  class="col-lg-2 col-form-label required fw-bold fs-6">المستوى التعليمي</label>
                                                        
                                                     <div class="col-lg-4">
-                                                        <select name="clinic_id"
+                                                        <select name="major_id"
                                                                 aria-label="{{ __('Select') }} المستوى التعليمي"
-                                                                id="clinic_id"
+                                                                id="major_id"
                                                                 data-control="select2"
                                                                 data-placeholder="{{ __('Select') }} المستوى التعليمي .."
                                                                 class="form-select form-select-solid form-select-lg fw-bold">
@@ -192,7 +192,7 @@
                                                     <div class="col-lg-4">
                                                         <select name="major_id"
                                                         aria-label="{{ __('Select') }} التخصص"
-                                                        id="clinic_id"
+                                                        id="major_id"
                                                         data-control="select2"
                                                         data-placeholder="{{ __('Select') }} التخصص .."
                                                         class="form-select form-select-solid form-select-lg fw-bold">
@@ -200,7 +200,7 @@
                                                     </option>
                                                     @foreach($majors as $item)
                                                     <option
-                                                        value="{{$item->id}}" {{ $item->id == old('clinic_id') ? 'selected' :'' }}> {{$item->name}}  </option>
+                                                        value="{{$item->id}}" {{ $item->id == old('major_id') ? 'selected' :'' }}> {{$item->name}}  </option>
                                                     @endforeach
                                                 </select>
                                                     </div>
@@ -382,22 +382,7 @@ $(".flatpickr-input").flatpickr({
                             },
                         },
                     },
-                    identity: {
-                        validators: {
-                            notEmpty: {
-                                message: 'رقم الهوية مطلوب',
-                            },
-                            stringLength: {
-                                min: 9,
-                                max: 9,
-                                message: 'رقم الهوية يتكون من 9 خانات',
-                            },
-                            regexp: {
-                                regexp: /^[0-9]+$/,
-                                message: 'رقم الهوية فقط أرقام',
-                            },
-                        },
-                    },
+            
                     mobile: {
                         validators: {
                             notEmpty: {
@@ -414,24 +399,24 @@ $(".flatpickr-input").flatpickr({
                             },
                         },
                     },
-                    dob: {
+                    bth_date: {
                         validators: {
                             notEmpty: {
                                 message: 'تاريخ الميلاد مطلوب',
                             },
                         },
                     },
-                    states_id: {
+                    major_id: {
                         validators: {
                             notEmpty: {
-                                message: 'المحافظة مطلوب',
+                                message: 'التخصص مطلوب',
                             },
                         },
                     },
-                    cities_id: {
+                    clinic_id: {
                         validators: {
                             notEmpty: {
-                                message: 'المدينة مطلوب',
+                                message: 'العنوان مطلوب',
                             },
                         },
                     },
@@ -442,17 +427,11 @@ $(".flatpickr-input").flatpickr({
                             },
                         },
                     },
-                    clinic_id: {
+
+                    kindergartens: {
                         validators: {
                             notEmpty: {
-                                message: 'العيادة مطلوب',
-                            },
-                        },
-                    },
-                    doctor_id: {
-                        validators: {
-                            notEmpty: {
-                                message: 'الطبيب مطلوب',
+                                message: 'الروضة مطلوبة',
                             },
                         },
                     },

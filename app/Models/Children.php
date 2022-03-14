@@ -24,4 +24,9 @@ class Children extends Model
    {
         return $this->hasOne(ClassPlacment::class , 'children_id' , 'id');
    }
+
+   public function attendance()
+   {
+       return $this->hasMany(ChildrenAttendances::class, 'children_id');
+   }
 }

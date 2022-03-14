@@ -107,7 +107,7 @@
                             name: {
                                 validators: {
                                     notEmpty: {
-                                        message: 'الاسم مطلوب',
+                                        message: 'اسم الروضة مطلوب',
                                     },
                                 },
                             },
@@ -127,23 +127,23 @@
                                     },
                                 },
                             },
-                            mobile: {
+                            phone: {
                                 validators: {
                                     notEmpty: {
-                                        message: 'رقم الجوال مطلوب',
+                                        message: 'رقم التواصل مطلوب',
                                     },
                                     stringLength: {
                                         min: 10,
                                         max: 10,
-                                        message: 'رقم الجوال يتكون من 10 خانات',
+                                        message: 'رقم التواصل يتكون من 10 خانات',
                                     },
                                     regexp: {
                                         regexp: /^[0-9]+$/,
-                                        message: 'رقم الجوال فقط أرقام',
+                                        message: 'رقم التواصل فقط أرقام',
                                     },
                                 },
                             },
-                            dob: {
+                            address: {
                                 validators: {
                                     notEmpty: {
                                         message: 'تاريخ الميلاد مطلوب',

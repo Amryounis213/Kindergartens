@@ -26,8 +26,8 @@ class EmployeesDataTable extends DataTable
             ->editColumn('job', function(Employee $model){
                 return $model->JobPlacement ? $model->JobPlacement->Job->name : '---' ; 
             })
-            ->editColumn('added_by', function (Employee $model) {
-                return $model->added_by ? $model->creator->first_name . ' ' .$model->creator->last_name : __('System');
+            ->editColumn('active', function (Employee $model) {
+                return view('pages.employees.index._status2', compact('model'));
             })
             ->editColumn('period', function (Employee $model) {
                 return $model->JobPlacement ? ($model->JobPlacement->Period->name) ?? '---' : '---';
@@ -101,10 +101,12 @@ class EmployeesDataTable extends DataTable
             Column::computed('job')->title('الوظيفة')->addClass('text-center'),
             Column::make('mobile')->title(__('mobile'))->addClass('text-center'),
             Column::make('bth_date')->title(__('dob'))->addClass('text-center'),
-            Column::make('added_by')->title(__('created by'))->addClass('text-center'),
+            //Column::make('added_by')->title(__('created by'))->addClass('text-center'),
             Column::computed('period')->title('الفترة')->addClass('text-center'),
             Column::computed('division')->title('الشعبة')->addClass('text-center'),
             Column::computed('level')->title('المستوى')->addClass('text-center'),
+            Column::computed('active')->title('مفعل')->addClass('text-start'),
+
             Column::computed('status')
                 ->exportable(false)
                 ->printable(false)

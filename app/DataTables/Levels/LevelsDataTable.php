@@ -23,13 +23,13 @@ class LevelsDataTable extends DataTable
             ->addColumn('table_index', '')
             ->addColumn('status', function (Level $model) {
                 return view('pages.kindergartens.parts._status', compact('model'));
-            })
-            ->editColumn('division', function (Level $model) {
-                return $model->Division ? $model->Division->count() : 0;
-            })
-            ->addColumn('action', function (Level $model) {
-                return view('pages.kindergartens.parts._action-menu', compact('model'));
             });
+            // ->editColumn('division', function (Level $model) {
+            //     return $model->Division ? $model->Division->count() : 0;
+            // })
+            // ->addColumn('action', function (Level $model) {
+            //     return view('pages.kindergartens.parts._action-menu', compact('model'));
+            // });
     }
 
     /**
@@ -79,22 +79,22 @@ class LevelsDataTable extends DataTable
         return [
             Column::make('table_index')->title(__('#'))->addClass('text-center'),
             Column::make('name')->title(__('name'))->addClass('text-center'), 
-            Column::computed('status')
-                ->exportable(false)
-                ->printable(false)
-                ->addClass('text-center')
-                ->responsivePriority(-1)
-                ->title(__('Status')),
-            Column::computed('division')
-                ->addClass('text-center')
-                ->responsivePriority(-1)
-                ->title('عدد الشعب'),
-            Column::computed('action')
-                ->exportable(false)
-                ->printable(true)
-                ->addClass('text-center')
-                ->responsivePriority(-1)
-                ->title(__('action')),
+            // Column::computed('status')
+            //     ->exportable(false)
+            //     ->printable(false)
+            //     ->addClass('text-center')
+            //     ->responsivePriority(-1)
+            //     ->title(__('Status')),
+            // Column::computed('division')
+            //     ->addClass('text-center')
+            //     ->responsivePriority(-1)
+            //     ->title('عدد الشعب'),
+            // Column::computed('action')
+            //     ->exportable(false)
+            //     ->printable(true)
+            //     ->addClass('text-center')
+            //     ->responsivePriority(-1)
+            //     ->title(__('action')),
         ];
     }
 

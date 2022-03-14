@@ -9,7 +9,7 @@
                  aria-controls="kt_account_profile_details">
                 <!--begin::Card title-->
                 <div class="card-title m-0">
-                    <h3 class="fw-bolder m-0">انشاء روضة جديدة</h3>
+                    <h3 class="fw-bolder m-0">اضافة سائق جديد</h3>
                 </div>
                 <!--end::Card title-->
             </div>
@@ -17,42 +17,57 @@
             <!--begin::Content-->
             <div id="kt_account_profile_details" class="collapse show">
                 <!--begin::Form-->
-                <form id="details_form" class="form" method="POST" action="{{ route('kindergarden.store') }}"
+                <form id="details_form" class="form" method="POST" action="{{ route('drivers.store') }}"
                       enctype="multipart/form-data">
                 @csrf
                 @method('POST')
                 <!--begin::Card body-->
                     <div class="card-body border-top p-9">
-                        
+                        <div class="row mb-6">
+                            <label class="col-lg-4 col-form-label required fw-bold fs-6">اختيار الروضة</label>
+                            <div class="col-lg-8 fv-row">
+                                <select name="kindergarten_id" aria-label="اختر  الروضة." data-control="select2"
+                                    data-placeholder="اختر  الروضة..."
+                                    class="form-select form-select-solid form-select-lg period_id">
+                                    <option value="">اختر  الروضة....</option>
+                                    @foreach ($kindergartens as $item)
+                                        <option value="{{ $item->id }}"
+                                            {{ $item->id == old('kindergarten_id') ? 'selected' : '' }}>
+                                            {{ $item->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
                        
                         <!--begin::Input group-->
                         <div class="row mb-6">
-                            <label class="col-lg-4 col-form-label required fw-bold fs-6">اسم الروضة</label>
+                            <label class="col-lg-4 col-form-label required fw-bold fs-6">اسم السائق</label>
                             <div class="col-lg-8">
                                 <input type="text" name="name"
                                        class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 name"
-                                       placeholder="اسم الروضة" value="{{ old('name') }}"/>
+                                       placeholder="اسم السائق" value="{{ old('name') }}"/>
                             </div>
                         </div>
                         <!--end::Input group-->
                       
                         <div class="row mb-6 fv-plugins-icon-container">
                             <label class="col-lg-4 col-form-label fw-bold fs-6">
-                                <span class="required">رقم التواصل</span>
+                                <span class="required">رقم المحمول</span>
                             </label>
                             <div class="col-lg-8 fv-row">
-                                <input type="text" name="phone" class="form-control form-control-lg form-control-solid mobile" placeholder="رقم التواصل" value="">
+                                <input type="text" name="mobile" class="form-control form-control-lg form-control-solid mobile" placeholder="رقم المحمول" value="">
                             <div class="fv-plugins-message-container invalid-feedback"></div></div>
                         </div>
 
                         
                         <div class="row mb-6">
-                            <label class="col-lg-4 col-form-label fw-bold fs-6">العنوان</label>
+                            <label class="col-lg-4 col-form-label fw-bold fs-6">رقم الحافلة</label>
                             <div class="col-lg-8">
-                                <input type="text" name="address" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 address" placeholder="العنوان" value="">
+                                <input type="text" name="bus_no" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 address" placeholder="رقم الحافلة" value="">
                             </div>
                         </div>
                         
+                       
                       
 
                      
@@ -143,70 +158,43 @@
                             name: {
                                 validators: {
                                     notEmpty: {
-                                        message: 'اسم الروضة مطلوب',
+                                        message: 'اسم السائق مطلوب',
                                     },
                                 },
                             },
-                            identity: {
+                            
+                            mobile: {
                                 validators: {
                                     notEmpty: {
-                                        message: 'رقم الهوية مطلوب',
-                                    },
-                                    stringLength: {
-                                        min: 9,
-                                        max: 9,
-                                        message: 'رقم الهوية يتكون من 9 خانات',
-                                    },
-                                    regexp: {
-                                        regexp: /^[0-9]+$/,
-                                        message: 'رقم الهوية فقط أرقام',
-                                    },
-                                },
-                            },
-                            phone: {
-                                validators: {
-                                    notEmpty: {
-                                        message: 'رقم التواصل مطلوب',
+                                        message: 'رقم المحمول مطلوب',
                                     },
                                     stringLength: {
                                         min: 10,
                                         max: 10,
-                                        message: 'رقم التواصل يتكون من 10 خانات',
+                                        message: 'رقم المحمول يتكون من 10 خانات',
                                     },
                                     regexp: {
                                         regexp: /^[0-9]+$/,
-                                        message: 'رقم التواصل فقط أرقام',
+                                        message: 'رقم المحمول فقط أرقام',
                                     },
                                 },
                             },
-                            address: {
+                           
+                            kindergarten_id: {
                                 validators: {
                                     notEmpty: {
-                                        message: 'تاريخ الميلاد مطلوب',
+                                        message: 'اسم الروضة مطلوب',
                                     },
                                 },
                             },
-                            states_id: {
+                            bus_no: {
                                 validators: {
                                     notEmpty: {
-                                        message: 'المحافظة مطلوب',
+                                        message: 'رقم الحافلة مطلوب',
                                     },
                                 },
                             },
-                            cities_id: {
-                                validators: {
-                                    notEmpty: {
-                                        message: 'المدينة مطلوب',
-                                    },
-                                },
-                            },
-                            gender: {
-                                validators: {
-                                    notEmpty: {
-                                        message: 'الجنس مطلوب',
-                                    },
-                                },
-                            },
+                            
                         },
                         plugins: {
                             trigger: new FormValidation.plugins.Trigger(),

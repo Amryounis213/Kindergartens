@@ -1690,7 +1690,7 @@ var KTWidgets = function () {
             chart.render();
         });
     }
-
+    alert(x1);
     var initMixedWidget4 = function () {
         var charts = document.querySelectorAll('.mixed-widget-4-chart');
 
@@ -1708,7 +1708,7 @@ var KTWidgets = function () {
             var labelColor = KTUtil.getCssVariableValue('--bs-' + 'gray-700');
 
             var options = {
-                series: [74],
+                series: [80],
                 chart: {
                     fontFamily: 'inherit',
                     height: height,

@@ -154,7 +154,9 @@ return array(
         ),
     ),
 ),
-'attendance' => array(
+
+// قائمة الحضور للموظفين
+'employee' => array(
     'title' => 'قائمة الروضات',
     'assets' => array(
         'custom' => array(
@@ -174,6 +176,26 @@ return array(
     ),
 ),
 
+//قائمة الحضور للطلاب
+'children' => array(
+    'title' => 'قائمة الروضات',
+    'assets' => array(
+        'custom' => array(
+            'css' => array(
+                'plugins/custom/datatables/datatables.bundle.css',
+            ),
+            'js' => array(
+                'plugins/custom/datatables/datatables.bundle.js',
+            ),
+        ),
+    ),
+    '*' => array(
+        'title' => 'حضور الطلاب اليومي',
+        'edit' => array(
+            'title' => 'تعديل ملف مريض',
+        ),
+    ),
+),
 'classplacement' => array(
     'title' => ' ',
     'assets' => array(
@@ -213,6 +235,31 @@ return array(
         
     ),
 ),
+'drivers' => array(
+    'title' => 'قائمة السائقين',
+    'assets' => array(
+        'custom' => array(
+            'css' => array(
+                'plugins/custom/datatables/datatables.bundle.css',
+            ),
+            'js' => array(
+                'plugins/custom/datatables/datatables.bundle.js',
+            ),
+        ),
+    ),
+    '*' => array(
+        'title' => 'السائقين',
+        'create' => array(
+            'title' => 'اضافة سائق',
+        ),
+        'edit' => array(
+            'title' => 'تعديل ملف سائق',
+        ),
+        
+    ),
+),
+
+
     'patient' => array(
         'title' => 'قائمة المرضى',
         'assets' => array(

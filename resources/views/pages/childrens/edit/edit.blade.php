@@ -19,9 +19,9 @@
                     <!--begin::Card body-->
                     <div class="card-body border-top p-9 item">
                         <form id="details_form" class="form" method="POST"
-                            action="{{ route('childrens.store') }}" enctype="multipart/form-data">
+                            action="{{ route('childrens.update' ,$children->id ) }}" enctype="multipart/form-data">
                             @csrf
-                            @method('POST')
+                            @method('PUT')
                             <!--begin::Input group-->
                             <div class="row mb-2">
                                 <!--begin::Col-->
@@ -252,8 +252,8 @@
                 $('#select2-doctor_id-container').attr('title', title);
             }
         </script>
-        <script>
-            document.addEventListener('DOMContentLoaded', function (e) {
+         <script>
+            document.addEventListener('DOMContentLoaded', function(e) {
                 FormValidation.formValidation(
                     document.getElementById('details_form'), {
                         fields: {
@@ -296,21 +296,21 @@
                                     },
                                 },
                             },
-                            dob: {
+                            bth_date: {
                                 validators: {
                                     notEmpty: {
                                         message: 'تاريخ الميلاد مطلوب',
                                     },
                                 },
                             },
-                            states_id: {
+                            father_id: {
                                 validators: {
-                                    notEmpty: {
-                                        message: 'المحافظة مطلوب',
+                                    required: {
+                                        message: 'ولي الأمر مطلوب',
                                     },
                                 },
                             },
-                            cities_id: {
+                            kindergarten_id: {
                                 validators: {
                                     notEmpty: {
                                         message: 'المدينة مطلوب',
@@ -324,10 +324,10 @@
                                     },
                                 },
                             },
-                            clinic_id: {
+                            address: {
                                 validators: {
                                     notEmpty: {
-                                        message: 'العيادة مطلوب',
+                                        message: 'العنوان مطلوب',
                                     },
                                 },
                             },

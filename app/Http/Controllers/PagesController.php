@@ -3,7 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Checkup;
+use App\Models\Children;
+use App\Models\ChildrenAttendances;
 use App\Models\Clinic;
+use App\Models\Driver;
+use App\Models\Employee;
+use App\Models\EmployeesAttendance;
+use App\Models\Kindergarten;
 use App\Models\Medicine;
 use App\Models\Order;
 use App\Models\Patient;
@@ -21,14 +27,15 @@ class PagesController extends Controller
         // Check if the page view file exist
         if (view()->exists('pages.'.$view)) {
             if($view == 'index'){
-                $patientsCount = 0  ; //sizeof(Patient::all());
-                $ordersCount = 0;//sizeof(Order::whereDate('created_at', Carbon::today())->get());
-                $clinicsCount = 0;//sizeof(Clinic::all());
-                $checkupCount =0;//sizeof(Checkup::all());
-                $xrayCount = 0;//sizeof(Xray::all());
-                $medicineCount =0; //sizeof(Medicine::all());
-                return view('pages.'.$view, compact('patientsCount', 'ordersCount',
-                'clinicsCount', 'checkupCount', 'xrayCount', 'medicineCount'));
+                $employeeCount = Employee::count() ; //sizeof(Patient::all());
+                $studentsCount = Children::count();//sizeof(Order::whereDate('created_at', Carbon::today())->get());
+                $driversCount = Driver::count();//sizeof(Clinic::all());
+                $kinderCount =Kindergarten::count();//sizeof(Checkup::all());
+                $employeeAtt =  EmployeesAttendance::whereDate('attendence_date' , date('y-m-d'))->where('attendence_status' , 1)->count();
+                $studentsAtt =  ChildrenAttendances::whereDate('attendence_date' , date('y-m-d'))->where('attendence_status' , 1)->count();
+                $classplacementstudent = Children::whereHas('ClassPlacement')->count();
+                return view('pages.'.$view, compact('employeeCount', 'studentsCount',
+                'driversCount', 'kinderCount' , 'employeeAtt' , 'studentsAtt' , 'classplacementstudent'));
             }else{
                 return view('pages.'.$view);
             }

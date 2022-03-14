@@ -16,7 +16,7 @@
         $(document).on('click', ".del_rec_btn", function (e) {
             e.preventDefault();
             const id = $(this).data('id');
-            let url = "{{ route('employees.destroy', ":id") }}";
+            let url = "{{ route('childrens.destroy', ":id") }}";
             url = url.replace(':id', id);
 
             Swal.fire({
@@ -41,21 +41,7 @@
                 }
             })
         });
-        ////////////////////////////////////////////////////
-    //     $(document).on('click', '.csl-btn', function (e) {
-    //         const id = $(this).data('id');
-    //         $.ajax({
-    //             type: "POST",
-    //             url: "{{ route('order.cancel') }}",
-    //             data: {'id': id},
-    //             success: function (data) {
-    //                 oTable.draw();
-    //                 toastr.options.positionClass = 'toast-top-left';
-    //                 toastr[data.status](data.message);
-    //             }
-    //         });
-    //     });
-    // });
+    });  
 </script>
 <script>
     $(document).on('click', '.sts-fld', function (e) {
@@ -64,7 +50,7 @@
         const checkedValue = $(this).is(":checked");
         $.ajax({
             type: "POST",
-            url: "{{ route('order.status') }}",
+            url: "{{ route('childrens.status') }}",
             data: {'id': id},
             success: function (data) {
                 if (data.type === 'yes') {

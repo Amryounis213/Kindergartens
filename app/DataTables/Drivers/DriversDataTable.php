@@ -1,12 +1,14 @@
 <?php
 
-namespace App\DataTables\Kindergarten;
+namespace App\DataTables\Drivers;
 
+use App\Models\Driver;
 use App\Models\Kindergarten;
+use App\Models\Level;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Services\DataTable;
 
-class KindergartenDataTable extends DataTable
+class DriversDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -20,28 +22,25 @@ class KindergartenDataTable extends DataTable
         return datatables()
             ->eloquent($query)
             ->addColumn('table_index', '')
-            ->editColumn('created_by', function (Kindergarten $model) {
-                return $model->creator ? $model->creator->first_name : __('System');
+            ->addColumn('status', function (Driver $model) {
+                return view('pages.drivers.parts._status', compact('model'));
             })
-            ->editColumn('children', function (Kindergarten $model) {
-                return $model->Children ? $model->Children->count() : 'لا يوجد طلاب بعد';
+            ->editColumn('kindergarten_id', function (Driver $model) {
+                return $model->Kindergarten ? $model->Kindergarten->name : '';
             })
-            ->addColumn('status', function (Kindergarten $model) {
-                return view('pages.kindergartens.parts._status', compact('model'));
-            })
-            ->addColumn('action', function (Kindergarten $model) {
-                return view('pages.kindergartens.parts._action-menu', compact('model'));
+            ->addColumn('action', function (Driver $model) {
+                return view('pages.drivers.parts._action-menu', compact('model'));
             });
     }
 
     /**
      * Get query source of dataTable.
      *
-     * @param Patient $model
+     * @param Driver $model
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Kindergarten $model)
+    public function query(Driver $model)
     {
         return $model->newQuery();
     }
@@ -80,24 +79,25 @@ class KindergartenDataTable extends DataTable
     {
         return [
             Column::make('table_index')->title(__('#'))->addClass('text-center'),
-            
-            Column::make('name')->title(__('name'))->addClass('text-center'),
-            Column::make('phone')->title(__('mobile'))->addClass('text-center'),
-            Column::make('address')->title('العنوان')->addClass('text-center'),
-           // Column::make('created_by')->title(__('created by')),
-            Column::computed('children')
-            ->title('عدد الطلاب')
+            Column::make('name')->title(__('name'))->addClass('text-center'), 
+            Column::make('mobile')->title(__('mobile'))->addClass('text-center'), 
+            Column::make('bus_no')->title('رقم الحافلة')->addClass('text-center'), 
+
+            Column::computed('kindergarten_id')
             ->addClass('text-center')
-            ,
+            ->responsivePriority(-1)
+            ->title('الروضة'),
             Column::computed('status')
                 ->exportable(false)
                 ->printable(false)
                 ->addClass('text-start')
                 ->responsivePriority(-1)
                 ->title(__('Status')),
+
+              
             Column::computed('action')
                 ->exportable(false)
-                ->printable(false)
+                ->printable(true)
                 ->addClass('text-center')
                 ->responsivePriority(-1)
                 ->title(__('action')),

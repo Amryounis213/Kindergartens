@@ -163,23 +163,23 @@
                                     },
                                 },
                             },
-                            phone: {
+                            mobile: {
                                 validators: {
                                     notEmpty: {
-                                        message: 'رقم التواصل مطلوب',
+                                        message: 'رقم الجوال مطلوب',
                                     },
                                     stringLength: {
                                         min: 10,
                                         max: 10,
-                                        message: 'رقم التواصل يتكون من 10 خانات',
+                                        message: 'رقم الجوال يتكون من 10 خانات',
                                     },
                                     regexp: {
                                         regexp: /^[0-9]+$/,
-                                        message: 'رقم التواصل فقط أرقام',
+                                        message: 'رقم الجوال فقط أرقام',
                                     },
                                 },
                             },
-                            address: {
+                            dob: {
                                 validators: {
                                     notEmpty: {
                                         message: 'تاريخ الميلاد مطلوب',

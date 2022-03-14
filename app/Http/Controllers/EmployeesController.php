@@ -126,7 +126,10 @@ class EmployeesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $info = Employee::find($id);
+        $info->delete();
+        return response()->json(['status' => 'success', 'message' => 'تم الحذف بنجاح']);
+
     }
 
 
@@ -149,5 +152,13 @@ class EmployeesController extends Controller
 
        JobPlacement::create($request->all());
        return redirect()->route('employees.index')->with('success' , 'تم التسكين بنجاح');
+    }
+
+    //////////////////////////////////////////////
+    public function status(Request $request)
+    {
+        $id = $request->get('id');
+        $info = Employee::find($id);
+        return updateModelStatus($info);
     }
 }

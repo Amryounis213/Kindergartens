@@ -24,8 +24,8 @@ class ChildrensDataTable extends DataTable
         return datatables()
             ->eloquent($query)
             ->addColumn('table_index', '')
-            ->editColumn('added_by', function (Children $model) {
-                return $model->added_by ? $model->creator->first_name . ' ' .$model->creator->last_name : __('System');
+            ->editColumn('active', function (Children $model) {
+                return view('pages.childrens.index._status2', compact('model'));
             })
             ->editColumn('period', function (Children $model) {
                 return $model->ClassPlacement ? ($model->ClassPlacement->Period->name) ?? '---' : '---';
@@ -97,10 +97,12 @@ class ChildrensDataTable extends DataTable
             Column::make('table_index')->title(__('#'))->addClass('text-center'),
             Column::make('name')->title(__('name'))->addClass('text-center'),
             Column::make('bth_date')->title(__('dob'))->addClass('text-center'),
-            Column::make('added_by')->title(__('created by'))->addClass('text-center'),
+           // Column::make('added_by')->title(__('created by'))->addClass('text-center'),
+           
             Column::computed('period')->title('الفترة')->addClass('text-center'),
             Column::computed('division')->title('الشعبة')->addClass('text-center'),
             Column::computed('level')->title('المستوى')->addClass('text-center'),
+            Column::computed('active')->title('مفعل')->addClass('text-start'),
             Column::computed('status')
                 ->exportable(false)
                 ->printable(false)

@@ -47,9 +47,10 @@ class ChildrenController extends Controller
      */
     public function store(Request $request)
     {
+      
         $request->merge([
             'age'=> 10 ,
-            'bth_date'=> Carbon::parse($request->get('bth_date'))->format('Y-m-d'),
+            'bth_date'=> Carbon::createFromFormat('d/m/Y h:m:i', $request->bth_date)->format('Y-m-d'),
             'added_by'=> Auth::guard('web')->id(),
             'status'=>1,
         ]);
@@ -99,7 +100,16 @@ class ChildrenController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+       
+        $child=Children::find($id);
+        $request->merge([
+            'age'=> 10 ,
+            'bth_date'=> Carbon::parse($request->bth_date)->format('Y-m-d'),
+            'added_by'=> Auth::guard('web')->id(),
+            'status'=>1,
+        ]);
+        $child->update($request->all());
+        return redirect()->route('childrens.index');
     }
 
     /**
@@ -110,7 +120,10 @@ class ChildrenController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $info = Children::find($id);
+        $info->delete();
+        return response()->json(['status' => 'success', 'message' => 'تم الحذف بنجاح']);
+
     }
 
     
@@ -138,5 +151,13 @@ class ChildrenController extends Controller
         ]);
        ClassPlacment::create($request->all());
        return redirect()->route('childrens.index')->with('success' , 'تم التسكين بنجاح');
+    }
+
+
+    public function status(Request $request)
+    {
+        $id = $request->get('id');
+        $info = Children::find($id);
+        return updateModelStatus($info);
     }
 }

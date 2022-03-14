@@ -5,7 +5,7 @@
     <thead class="thead-dark">
         <tr>
             <th scope="col">#</th>
-            <th scope="col">اسم الموظف</th>
+            <th scope="col">اسم الطالب</th>
             <th class="text-center" scope="col">الحضور /الغياب</th>
         </tr>
     </thead>

@@ -2,9 +2,9 @@
 return array(
     // Product
     'product' => array(
-        'name'        => 'جمعية أصدقاء المريض',
-        'description' => 'جمعية أصدقاء المريض',
-        'preview'     => 'https://pfsgaza.com',
+        'name'        => 'ادارة الروضات',
+        'description' => 'ادارة الروضات',
+        'preview'     => '',
         'purchase'    => 'https://1.envato.market/EA4JP',
         'license'     => 'For each use you must have a valid license purchased only from above link in order to legally use the theme for your project.',
         'tooltips'    => array(
@@ -91,9 +91,9 @@ return array(
 
     // Meta
     'meta'    => array(
-        'title'       => 'جمعية أصدقاء المريض',
-        'description' => 'جمعية أصدقاء المريض',
-        'keywords'    => 'جمعية أصدقاء المريض',
+        'title'       => 'ادارة رياض الأطفال',
+        'description' => 'ادارة رياض الأطفال',
+        'keywords'    => 'ادارة رياض الأطفال',
         'canonical'   => 'https://pfsgaza.com',
     ),
 

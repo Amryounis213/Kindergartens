@@ -1,16 +1,13 @@
 <x-base-layout>
 @include('layout.error')
 <!--begin::Container-->
-
-    
     <div id="kt_content" class="content d-flex flex-column flex-column-fluid">
-        <h3 class="p-4">  تسجيل حضور اليوم : {{date('y-m-d')}}</h3>
         <!--begin::Card-->
         <div class="card">
             <!--begin::Card header-->
-            <div class="card-header border-1 pt-6">
+            <div class="card-header border-0 pt-6">
                 <!--begin::Card title-->
-                <div class="card-title d-flex justify-content-between">
+                <div class="card-title">
                     <!--begin::Search-->
                     <div class="d-flex align-items-center position-relative my-1">
                         <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
@@ -24,20 +21,10 @@
                                         fill="black"></path>
                                 </svg>
                             </span>
-                            
-                                <input type="text" id="myInputSearchField" class="form-control form-control-solid w-250px ps-15 ml-5" placeholder="البحث عن اسم موظف ...">
-                                <button type="submit" class="btn btn-success">{{__('Search')}}</button>
-                            
-
                         <!--end::Svg Icon-->
-                       
+                        <input type="text" id="myInputSearchField" data-kt-customer-table-filter="search"
+                               class="form-control form-control-solid w-250px ps-15" placeholder="{{__('Search')}}">
                     </div>
-
-                   
-                   
-                   
-
-                  
                     <!--end::Search-->
                 </div>
                 <!--begin::Card title-->
@@ -45,8 +32,24 @@
                 <div class="card-toolbar">
                     <!--begin::Toolbar-->
                     <div class="d-flex justify-content-end" data-kt-customer-table-toolbar="base">
-                        <label> تحديد الكل حضور</label>
-                        <input  type="checkbox" value="0" onclick="CheckAll('box1', this)">
+                        {{--                @include('modals.filter_popup_menu')--}}
+                        {{--                @include('modals.add_modal')--}}
+                        {{--                @include('modals.export_modal')--}}
+                        @can('kindergarten.create')
+                        <!--begin::Add-->
+                        <a href="{{ route('drivers.create') }}" type="button" class="btn btn-primary">
+                        <span class="svg-icon svg-icon-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                 fill="none">
+                                <rect opacity="0.5" x="11.364" y="20.364" width="16" height="2" rx="1"
+                                      transform="rotate(-90 11.364 20.364)" fill="black"></rect>
+                                <rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="black"></rect>
+                            </svg>
+                        </span>
+                            {{__('add')}}
+                        </a>
+                        <!--end::Add-->
+                        @endcan
                     </div>
                     <!--end::Toolbar-->
                     <!--begin::Group actions-->
@@ -66,18 +69,10 @@
             </div>
             <!--end::Card header-->
             <!--begin::Card body-->
-            <form action="{{route('attendance.store')}}"  method="POST">
-            @csrf
             <div class="card-body pt-6">
-                @include('pages.Attendance.employees.parts._table')
-            </div>
-            
-            <div class="p-2 container text-center">
-                <hr>
-                <button class="btn btn-success " type="submit"> تأكيد الحضور</button>
+                @include('pages.drivers.parts._table')
             </div>
             <!--end::Card body-->
-            </form>
         </div>
         <!--end::Card-->
     </div>

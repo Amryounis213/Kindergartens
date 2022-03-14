@@ -327,21 +327,21 @@
                                     },
                                 },
                             },
-                            dob: {
+                            bth_date: {
                                 validators: {
                                     notEmpty: {
                                         message: 'تاريخ الميلاد مطلوب',
                                     },
                                 },
                             },
-                            states_id: {
+                            father_id: {
                                 validators: {
-                                    notEmpty: {
-                                        message: 'المحافظة مطلوب',
+                                    required: {
+                                        message: 'ولي الأمر مطلوب',
                                     },
                                 },
                             },
-                            cities_id: {
+                            kindergarten_id: {
                                 validators: {
                                     notEmpty: {
                                         message: 'المدينة مطلوب',
@@ -355,10 +355,10 @@
                                     },
                                 },
                             },
-                            clinic_id: {
+                            address: {
                                 validators: {
                                     notEmpty: {
-                                        message: 'العيادة مطلوب',
+                                        message: 'العنوان مطلوب',
                                     },
                                 },
                             },

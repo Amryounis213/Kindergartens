@@ -41,21 +41,21 @@
                 }
             })
         });
-    //     //////////////////////////////////////////////////
-    //     $(document).on('click', '.csl-btn', function (e) {
-    //         const id = $(this).data('id');
-    //         $.ajax({
-    //             type: "POST",
-    //             url: "{{-- route('order.cancel') --}}",
-    //             data: {'id': id},
-    //             success: function (data) {
-    //                 oTable.draw();
-    //                 toastr.options.positionClass = 'toast-top-left';
-    //                 toastr[data.status](data.message);
-    //             }
-    //         });
-    //     });
-    // });
+        //////////////////////////////////////////////////
+        $(document).on('click', '.csl-btn', function (e) {
+            const id = $(this).data('id');
+            $.ajax({
+                type: "POST",
+                url: "{{-- route('order.cancel') --}}",
+                data: {'id': id},
+                success: function (data) {
+                    oTable.draw();
+                    toastr.options.positionClass = 'toast-top-left';
+                    toastr[data.status](data.message);
+                }
+            });
+        });
+    });
 </script>
 <script>
     $(document).on('click', '.sts-fld', function (e) {
@@ -64,7 +64,7 @@
         const checkedValue = $(this).is(":checked");
         $.ajax({
             type: "POST",
-            url: "{{-- route('order.status') --}}",
+            url: "{{ route('employee.status') }}",
             data: {'id': id},
             success: function (data) {
                 if (data.type === 'yes') {

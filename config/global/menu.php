@@ -346,7 +346,7 @@ return array(
                     array(
                         'title'  => 'التسكين الصفي',
                         'permission' => 'childrens.create',
-                       // 'path'   => 'classplacement/childrens',
+                        'path'   => 'classplacement.create',
                         'bullet' => '<span class="bullet bullet-dot"></span>',
                     ),
                     array(
@@ -377,7 +377,7 @@ return array(
                 'items' => array(
                     array(
                         'title'  => 'سجل الموظفين',
-                        'path'   => 'employees/attendance',
+                        'path'   => 'employee/attendance',
                         'classes'    => array('item' => 'show-menu-bdg'),
                         'permission' => 'orders.create',
                         'bullet' => '<span class="bullet bullet-dot"></span>',
@@ -385,14 +385,48 @@ return array(
                     array(
                         'title'  => 'سجل الطلاب',
                         'permission' => 'orders.create',
-                        'path'   => 'employees/create',
+                        'path'   => 'children/cattendance',
                         'bullet' => '<span class="bullet bullet-dot"></span>',
                     ),
                    
                 ),
             ),
         ),
-      
+        
+
+         // الحضور والغياب
+         array(
+            'title'      => 'السائقين',
+            'permission' => array('orders.show','orders.create','orders.edit','orders.delete'),
+            'icon'       => array(
+                'svg'  => theme()->getSvgIcon("demo1/media/icons/duotune/general/gen055.svg", "svg-icon-2"),
+                'font' => '<i class="bi bi-person fs-2"></i>',
+            ),
+            'classes'    => array('item' => 'menu-accordion', 'item' => 'menu-bdg'),
+            'badge' => '',
+            'attributes' => array(
+                "data-kt-menu-trigger" => "click",
+            ),
+            'sub'        => array(
+                'class' => 'menu-sub-accordion menu-active-bg',
+                'items' => array(
+                    array(
+                        'title'  => 'عرض السائقين',
+                        'path'   => 'drivers',
+                        'classes'    => array('item' => 'show-menu-bdg'),
+                        'permission' => 'orders.create',
+                        'bullet' => '<span class="bullet bullet-dot"></span>',
+                    ),
+                    // array(
+                    //     'title'  => 'سجل الطلاب',
+                    //     'permission' => 'orders.create',
+                    //     'path'   => 'children/cattendance',
+                    //     'bullet' => '<span class="bullet bullet-dot"></span>',
+                    // ),
+                   
+                ),
+            ),
+        ),
 
         // User
         array(

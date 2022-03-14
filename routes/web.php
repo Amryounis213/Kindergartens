@@ -3,13 +3,16 @@
 use App\Http\Controllers\Account\SettingsController;
 use App\Http\Controllers\Auth\SocialiteLoginController;
 use App\Http\Controllers\CheckupsController;
+use App\Http\Controllers\ChildrenAttendanceController;
 use App\Http\Controllers\ChildrenController;
 use App\Http\Controllers\ClinicsController;
 use App\Http\Controllers\DivisionController;
 use App\Http\Controllers\Documentation\ReferencesController;
+use App\Http\Controllers\DriverController;
 use App\Http\Controllers\EmployeesAttendanceController;
 use App\Http\Controllers\EmployeesController;
 use App\Http\Controllers\FatherController;
+use App\Http\Controllers\FormAjaxController;
 use App\Http\Controllers\KindergardenController;
 use App\Http\Controllers\LevelsController;
 use App\Http\Controllers\Logs\AuditLogsController;
@@ -71,6 +74,8 @@ Route::post('kindergarden/status', [KindergardenController::class, 'status'])->n
 Route::resource('employees', EmployeesController::class);
 Route::get('jobplacement/employees/{id?}', [EmployeesController::class , 'jobPlacementView'])->name('jobplacement.create');
 Route::post('jobplacement/employees', [EmployeesController::class , 'jobPlacementStore'])->name('jobplacement.store');
+Route::post('employee/status', [EmployeesController::class, 'status'])->name('employee.status');
+
 
 //المستويات
 Route::resource('levels' , LevelsController::class);
@@ -83,13 +88,23 @@ Route::post('divisions/status', [DivisionController::class, 'status'])->name('di
 Route::resource('fathers' , FatherController::class);
 //الاطفال
 Route::resource('childrens' , ChildrenController::class);
+Route::post('childrens/status', [ChildrenController::class, 'status'])->name('childrens.status');
+
 Route::get('classplacement/childrens/{id?}', [ChildrenController::class , 'classPlacementView'])->name('classplacement.create');
 Route::post('classplacement/childrens', [ChildrenController::class , 'classPlacementStore'])->name('classplacement.store');
-//الحضور والغياب
-Route::resource('employees/attendance' , EmployeesAttendanceController::class);
+//الحضور والغياب (الموظفين والطلاب)
+Route::resource('employee/attendance' , EmployeesAttendanceController::class);
+Route::get('/employee/search',[EmployeesAttendanceController::class, 'showEmployee'])->name('employee.search');
+Route::resource('children/cattendance' , ChildrenAttendanceController::class);
+Route::post('/children/cattendance/filter',[ChildrenAttendanceController::class, 'DivisionFilterSearch'])->name('DivisionFilterSearch');
 
 
+// السائقين
+Route::resource('drivers' , DriverController::class);
+Route::post('drivers/status', [DriverController::class, 'status'])->name('drivers.status');
 
+//ajax filter 
+Route::get('GetDivisionByLevel/{id}', [FormAjaxController::class, 'GetDivisionByLevel'])->name('GetDivisionByLevel');
 
 
 

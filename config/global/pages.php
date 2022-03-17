@@ -175,7 +175,23 @@ return array(
         ),
     ),
 ),
-
+'switch' => array(
+    'title' => 'قائمة الروضات',
+    'assets' => array(
+        'custom' => array(
+            'css' => array(
+                'plugins/custom/datatables/datatables.bundle.css',
+            ),
+            'js' => array(
+                'plugins/custom/datatables/datatables.bundle.js',
+            ),
+        ),
+    ),
+    '*' => array(
+        'title' => 'تبديل الشعب بين المربيات',
+       
+    ),
+),
 //قائمة الحضور للطلاب
 'children' => array(
     'title' => 'قائمة الروضات',

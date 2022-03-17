@@ -146,6 +146,29 @@
                                 <!--end::Col-->
                             </div>
                             <!--end::Input group-->
+                             <!--begin::Input group-->
+                             <div class="row mb-2">
+                                <!--begin::Col-->
+                                <div class="col-lg-12">
+                                    <!--begin::Row-->
+                                    <div class="row">
+                                        <label
+                                            class="col-lg-2 col-form-label required fw-bold fs-6">تاريخ التعيين</label>
+                                        <div class="col-lg-4">
+                                            <div class="position-relative d-flex align-items-center">
+                                                {!! theme()->getSvgIcon("icons/duotune/general/gen014.svg", "svg-icon svg-icon-2 position-absolute mx-4") !!}
+                                                <input class="form-control form-control-solid ps-12 flatpickr-input dob"
+                                                       placeholder="{{ __('Select a date')}}" name="add_date" type="text" value="{{ $employee->add_date }}"
+                                                       readonly="readonly">
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                    <!--end::Row-->
+                                </div>
+                                <!--end::Col-->
+                            </div>
+                            <!--end::Input group-->
                             <!--begin::Order info-->
                             <div class="card mb-5 mb-xl-10">
                                 <!--begin::Card header-->

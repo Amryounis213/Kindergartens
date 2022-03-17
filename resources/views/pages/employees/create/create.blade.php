@@ -147,6 +147,31 @@
                                 <!--end::Col-->
                             </div>
                             <!--end::Input group-->
+
+                            <!--begin::Input group-->
+                            <div class="row mb-2">
+                                <!--begin::Col-->
+                                <div class="col-lg-12">
+                                    <!--begin::Row-->
+                                    <div class="row">
+                                        <label
+                                            class="col-lg-2 col-form-label required fw-bold fs-6">تاريخ التعيين</label>
+                                        <div class="col-lg-4">
+                                            <div class="position-relative d-flex align-items-center">
+                                                {!! theme()->getSvgIcon("icons/duotune/general/gen014.svg", "svg-icon svg-icon-2 position-absolute mx-4") !!}
+                                                <input class="form-control form-control-solid ps-12 flatpickr-input dob"
+                                                       placeholder="{{ __('Select a date')}}" name="add_date" type="text" value="{{ old('dob') }}"
+                                                       readonly="readonly">
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                    <!--end::Row-->
+                                </div>
+                                <!--end::Col-->
+                            </div>
+                            <!--end::Input group-->
+
                             <!--begin::Order info-->
                             <div class="card mb-5 mb-xl-10">
                                 <!--begin::Card header-->
@@ -179,9 +204,9 @@
                                                                 data-control="select2"
                                                                 data-placeholder="{{ __('Select') }} المستوى التعليمي .."
                                                                 class="form-select form-select-solid form-select-lg fw-bold">
-                                                            <option value="-1">{{ __('Select') }} المستوى التعليمي...
+                                                            <option value="">{{ __('Select') }} المستوى التعليمي...
                                                             </option>
-                                                            @foreach($majors as $item)
+                                                            @foreach($education as $item)
                                                             <option
                                                                 value="{{$item->id}}" {{ $item->id == old('clinic_id') ? 'selected' :'' }}> {{$item->name}}  </option>
                                                             @endforeach
@@ -219,7 +244,7 @@
                                                         class="form-select form-select-solid form-select-lg fw-bold"
                                                         {{ Auth::user()->kindergarten_id !=null ? 'disabled' :'' }}
                                                         >
-                                                    <option value="-1">{{ __('Select') }} الروضة...
+                                                    <option value="">{{ __('Select') }} الروضة...
                                                     </option>
                                                     @foreach($kinder as $item)
                                                     <option
@@ -310,9 +335,9 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script type="text/javascript">
 $(".flatpickr-input").flatpickr({
-    enableTime: true,
-    minDate: new Date(),
-    dateFormat: 'd/m/Y H:i:S',
+   // enableTime: true,
+   // minDate: new Date(),
+    dateFormat: 'd/m/Y',
 });
     </script>
     <script>
@@ -375,6 +400,22 @@ $(".flatpickr-input").flatpickr({
             FormValidation.formValidation(
                     document.getElementById('details_form'), {
                 fields: {
+                    identity: {
+                        validators: {
+                            notEmpty: {
+                                message: 'رقم الهوية مطلوب',
+                            },
+                            stringLength: {
+                                min: 9,
+                                max: 9,
+                                message: 'رقم الهوية يتكون من 9 خانات',
+                            },
+                            regexp: {
+                                regexp: /^[0-9]+$/,
+                                message: 'رقم الهوية فقط أرقام',
+                            },
+                        },
+                    },
                     name: {
                         validators: {
                             notEmpty: {
@@ -382,7 +423,6 @@ $(".flatpickr-input").flatpickr({
                             },
                         },
                     },
-            
                     mobile: {
                         validators: {
                             notEmpty: {
@@ -406,14 +446,21 @@ $(".flatpickr-input").flatpickr({
                             },
                         },
                     },
-                    major_id: {
+                    add_date: {
                         validators: {
                             notEmpty: {
-                                message: 'التخصص مطلوب',
+                                message: 'تاريخ التعيين مطلوب',
                             },
                         },
                     },
-                    clinic_id: {
+                    major_id: {
+                        validators: {
+                            notEmpty: {
+                                message: 'المستوى التعليمي مطلوب',
+                            },
+                        },
+                    },
+                    address: {
                         validators: {
                             notEmpty: {
                                 message: 'العنوان مطلوب',
@@ -560,6 +607,8 @@ $(".flatpickr-input").flatpickr({
             $(cls + ' .select2-selection__rendered').attr('title', title);
         }
     </script>
+
+    
     @endsection
 </x-base-layout>
 

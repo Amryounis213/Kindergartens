@@ -100,47 +100,6 @@
         <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
         <script type="text/javascript">$(".flatpickr-input").flatpickr();</script>
         <script>
-            $(document).on("click", "#kt_gov_data_submit", function () {
-                $('.loader-pub').show();
-                $('.search-title').hide();
-                var e = document.getElementById("gov_identity");
-                var govIdentity = e.value;
-                $.ajax({
-                    url: "{{ route('order.gov.data') }}",
-                    method: 'GET',
-                    data: {'gov_identity': govIdentity},
-                    dataType: "JSON",
-                    success: function (data) {
-                        $('.loader-pub').hide();
-                        $('.search-title').show();
-                        $(".name").val(data['DATA'][0]['FNAME_ARB'] + " " + data['DATA'][0]['SNAME_ARB'] + " " + data['DATA'][0]['TNAME_ARB'] + " " + data['DATA'][0]['LNAME_ARB']);
-                        $(".dob").val(data['DATA'][0]['BIRTH_DT']);
-                        $(".address").val(data['DATA'][0]['STREET_ARB']);
-                        let region_cd = data['DATA'][0]['REGION_CD'];
-                        let city_cd = data['DATA'][0]['CITY_CD'];
-                        setSelectValue($(".states_id"), region_cd, '.states_id');
-                        setSelectValue($(".cities_id"), city_cd, '.cities_id');
-                        let gender_id = data['DATA'][0]['SEX_CD'];
-                        if (gender_id == 1) {
-                            $("#gender-male").prop("checked", true);
-
-                        } else {
-                            $('#gender-female').prop("checked", true);
-                        }
-
-                    }
-                });
-            });
-
-            ///////////////////////////////////////////
-            function setSelectValue(object, value, cls) {
-                object.val(value).trigger('change');
-                let title = $(cls + ' option:selected').text();
-                $(cls + ' .select2-selection__rendered').text(title);
-                $(cls + ' .select2-selection__rendered').attr('title', title);
-            }
-
-            ////////////////////////////////////////
             document.addEventListener('DOMContentLoaded', function (e) {
                 FormValidation.formValidation(
                     document.getElementById('details_form'), {
@@ -148,26 +107,11 @@
                             name: {
                                 validators: {
                                     notEmpty: {
-                                        message: 'اسم الروضة مطلوب',
+                                        message: 'الاسم مطلوب',
                                     },
                                 },
                             },
-                            identity: {
-                                validators: {
-                                    notEmpty: {
-                                        message: 'رقم الهوية مطلوب',
-                                    },
-                                    stringLength: {
-                                        min: 9,
-                                        max: 9,
-                                        message: 'رقم الهوية يتكون من 9 خانات',
-                                    },
-                                    regexp: {
-                                        regexp: /^[0-9]+$/,
-                                        message: 'رقم الهوية فقط أرقام',
-                                    },
-                                },
-                            },
+                            
                             mobile: {
                                 validators: {
                                     notEmpty: {
@@ -184,31 +128,18 @@
                                     },
                                 },
                             },
-                            dob: {
+                           
+                            address: {
                                 validators: {
                                     notEmpty: {
-                                        message: 'تاريخ الميلاد مطلوب',
+                                        message: 'العنوان مطلوب',
                                     },
                                 },
                             },
-                            states_id: {
+                            occupation: {
                                 validators: {
                                     notEmpty: {
-                                        message: 'المحافظة مطلوب',
-                                    },
-                                },
-                            },
-                            cities_id: {
-                                validators: {
-                                    notEmpty: {
-                                        message: 'المدينة مطلوب',
-                                    },
-                                },
-                            },
-                            gender: {
-                                validators: {
-                                    notEmpty: {
-                                        message: 'الجنس مطلوب',
+                                        message: 'المهنة مطلوبة',
                                     },
                                 },
                             },

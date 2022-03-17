@@ -310,6 +310,14 @@ return array(
                         'path'   => 'jobplacement.create',
                         'bullet' => '<span class="bullet bullet-dot"></span>',
                     ),
+                    array(
+                        'title'  => 'تبديل الشعب بين المربيات',
+                        'permission' => 'employees.edit',
+                        'path'   => 'switch',
+                        'bullet' => '<span class="bullet bullet-dot"></span>',
+                    ),
+
+
                 ),
             ),
         ),
@@ -355,6 +363,13 @@ return array(
                         'path'   => 'fathers',
                         'bullet' => '<span class="bullet bullet-dot"></span>',
                     ),
+                    array(
+                        'title'  => 'الأطفال المحذوفين والمجتازين ',
+                        'permission' => 'childrens.delete',
+                        'path'   => 'trashed-children',
+                        'bullet' => '<span class="bullet bullet-dot"></span>',
+                    ),
+
                 ),
             ),
         ),
@@ -541,6 +556,59 @@ return array(
                         'permission' => array('profile.edit'),
                         'bullet' => '<span class="bullet bullet-dot"></span>',
                     ),
+                ),
+            ),
+        ),
+
+
+        // الأطفال وأولياء الأمور
+        array(
+            'title'      => 'الثوابث',
+            'permission' => array('orders.show','orders.create','orders.edit','orders.delete'),
+            'icon'       => array(
+                'svg'  => theme()->getSvgIcon("demo1/media/icons/duotune/general/gen055.svg", "svg-icon-2"),
+                'font' => '<i class="bi bi-person fs-2"></i>',
+            ),
+            'classes'    => array('item' => 'menu-accordion', 'item' => 'menu-bdg'),
+            'badge' => '',
+            'attributes' => array(
+                "data-kt-menu-trigger" => "click",
+            ),
+            'sub'        => array(
+                'class' => 'menu-sub-accordion menu-active-bg',
+                'items' => array(
+                    array(
+                        'title'  => 'عرض المستويات التعليمية',
+                        'path'   => 'educational-level',
+                        'classes'    => array('item' => 'show-menu-bdg'),
+                        'permission' => 'childrens.show',
+                        'bullet' => '<span class="bullet bullet-dot"></span>',
+                    ),
+                    array(
+                        'title'  => ' صلة القرابة لأولياء الامور',
+                        'permission' => 'childrens.show',
+                        'path'   => 'father-relations',
+                        'bullet' => '<span class="bullet bullet-dot"></span>',
+                    ),
+                    array(
+                        'title'  => ' التخصصات',
+                        'permission' => 'childrens.create',
+                        'path'   => 'majors',
+                        'bullet' => '<span class="bullet bullet-dot"></span>',
+                    ),
+                    array(
+                        'title'  => 'مهن أولياء الأمور',
+                        'permission' => 'childrens.create',
+                        'path'   => 'father-jobs',
+                        'bullet' => '<span class="bullet bullet-dot"></span>',
+                    ),
+                    array(
+                        'title'  => 'عرض المسميات الوظيفية ',
+                        'permission' => 'childrens.delete',
+                        'path'   => 'job-titles',
+                        'bullet' => '<span class="bullet bullet-dot"></span>',
+                    ),
+
                 ),
             ),
         ),

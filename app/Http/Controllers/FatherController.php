@@ -59,7 +59,8 @@ class FatherController extends Controller
      */
     public function edit($id)
     {
-        //
+        $father = Father::find($id);
+        return view('pages.fathers.edit' , compact('father'));
     }
 
     /**
@@ -71,7 +72,10 @@ class FatherController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $father = Father::find($id);
+        $father->update($request->all());
+        return redirect()->route('fathers.index')->with('success' , 'تم التعديل بنجاح');
+
     }
 
     /**
@@ -82,6 +86,14 @@ class FatherController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $father = Father::find($id);
+        if($father->Children->count() > 0)
+        {
+            return response()->json(['status' => 'error', 'message' => 'لا يمكن حذف ولي الامر لان لديه ابناء']);
+
+        }
+        $father->delete();
+        return response()->json(['status' => 'success', 'message' => 'تم الحذف بنجاح']);
+
     }
 }

@@ -66,7 +66,15 @@ class DivisionController extends Controller
      */
     public function edit($id)
     {
-        //
+        $division = Division::find($id);
+        $kindergartens =Kindergarten::where('status' , 1)->get();
+        $levels = Level::get();
+        return view('pages.divisions.edit' , [
+            'division'=>$division ,
+            'kindergartens'=>$kindergartens ,
+            'levels'=>$levels,
+        ]);
+
     }
 
     /**
@@ -78,7 +86,9 @@ class DivisionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $division = Division::find($id);
+        $division->update($request->all());
+        return redirect()->route('divisions.index')->with('success' , 'تمت تعديل الشعبة بنجاح');
     }
 
     /**

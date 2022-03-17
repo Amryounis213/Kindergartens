@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\Employees\EmployeesDataTable;
+use App\Models\Division;
+use App\Models\EducationalLevels;
 use App\Models\Employee;
 use App\Models\JobPlacement;
 use App\Models\Kindergarten;
+use App\Models\Level;
 use App\Models\Major;
 use App\Models\Period;
 use Auth;
@@ -36,9 +39,11 @@ class EmployeesController extends Controller
     {
         $majors = Major::get();
         $kinder =Kindergarten::all();
-        return view('pages.employees.create.create' ,[
+        $education = EducationalLevels::get();
+            return view('pages.employees.create.create' ,[
             'majors'=>$majors ,
             'kinder'=>$kinder ,
+            'education'=>$education ,
         ]);
     }
 
@@ -51,13 +56,11 @@ class EmployeesController extends Controller
     public function store(Request $request)
     {
      
-      //  $tt = DateTime::createFromFormat('d/m/Y', $request->bth_date);
-       // $dob = $request->get('bth_date');
-    
+     
        $request->merge([
-           'bth_date'=> Carbon::parse($request->get('bth_date'))->format('Y-m-d'),
+           'bth_date'=> Carbon::createFromFormat('d/m/Y', $request->bth_date)->format('Y-m-d'),
            'added_by'=> Auth::guard('web')->id(),
-           'add_date'=>Carbon::now()->format('Y-m-d'),
+           'add_date'=>Carbon::createFromFormat('d/m/Y', $request->add_date)->format('Y-m-d'),
        ]);
         Employee::create($request->all());
 
@@ -102,14 +105,15 @@ class EmployeesController extends Controller
      */
     public function update(Request $request, $id)
     {
+      //  dd($request->bth_date);
         $employee = Employee::find($id);
         
         if($request->bth_date)
         {
             $request->merge([
-                'bth_date'=> Carbon::parse($request->get('bth_date'))->format('Y-m-d'),
+                'bth_date'=> $request->bth_date,
                 'added_by'=> Auth::guard('web')->id(),
-                'add_date'=>Carbon::now()->format('Y-m-d'),
+                'add_date'=> $request->add_date,
             ]);
         }
         
@@ -139,19 +143,38 @@ class EmployeesController extends Controller
         $majors = Major::get();
         $kinder =Kindergarten::all();
         $employee = Employee::find($id);
+        $levels= Level::get();
+        $divisions=Division::get();
         return view('pages.employees.job_placement.create' ,[
             'majors'=>$majors ,
             'kinder'=>$kinder ,
             'periods'=>Period::select('id' , 'name')->get(),
             'employees'=> Employee::select('id' , 'name')->get(),
             'emp'=>$employee,
+            'levels'=>$levels ,
+            'divisions'=>$divisions ,
         ]);
     }
     public function jobPlacementStore(Request $request)
     {
+        $exists = JobPlacement::where('employee_id' , $request->employee_id)->exists();
 
-       JobPlacement::create($request->all());
-       return redirect()->route('employees.index')->with('success' , 'تم التسكين بنجاح');
+
+        if($exists)
+        {
+            $job_placment =JobPlacement::where('employee_id' , $request->employee_id)->first();
+            $job_placment->update($request->all());
+            return redirect()->route('employees.index')->with('success' , 'تم تعديل التسكين بنجاح');
+
+        }
+
+        else{
+
+
+            JobPlacement::create($request->all());
+            return redirect()->route('employees.index')->with('success' , 'تم التسكين بنجاح');
+        }
+       
     }
 
     //////////////////////////////////////////////

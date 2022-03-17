@@ -151,4 +151,12 @@ class ChildrenAttendanceController extends Controller
             ]);
 
     }
+
+
+    public function autocomplete(Request $request)
+    {
+        $data = Children::select('name')->where('name', 'LIKE' , "%{$request->terms}")->get();
+        return response()->json($data);
+    }
+
 }

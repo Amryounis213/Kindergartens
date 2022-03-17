@@ -27,11 +27,9 @@ class FathersDataTable extends DataTable
             ->editColumn('created_at', function (Father $model) {
                 return $model->created_at->format('d M, Y H:i');
             })
-            ->addColumn('status', function (Father $model) {
-                return view('pages.kindergartens.parts._status', compact('model'));
-            })
+            
             ->addColumn('action', function (Father $model) {
-                return view('pages.kindergartens.parts._action-menu', compact('model'));
+                return view('pages.fathers.parts._action-menu', compact('model'));
             });
     }
 
@@ -89,12 +87,7 @@ class FathersDataTable extends DataTable
                 ->title(__('created at'))
                 ->addClass('text-center')
                 ->addClass('td-ltr'),
-            Column::computed('status')
-                ->exportable(false)
-                ->printable(false)
-                ->addClass('text-center')
-                ->responsivePriority(-1)
-                ->title(__('Status')),
+            
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)

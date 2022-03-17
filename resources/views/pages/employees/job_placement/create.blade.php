@@ -1,7 +1,15 @@
 <x-base-layout>
-
+    @php
+        if ($emp) {
+            $employee = App\Models\Employee::with('JobPlacement')
+                ->where('id', $emp->id)
+                ->first();
+        } else {
+            $employee = null;
+        }
+    @endphp
     @include('.layout.error')
-  
+
     <div id="kt_content" class="content d-flex flex-column flex-column-fluid">
         <div>
             <!--begin::Patient info-->
@@ -28,6 +36,21 @@
                             <!--begin::Input group-->
                             <div class="card-body border-top p-9">
 
+                                {{-- <div class="row mb-6">
+                                    <label class="col-lg-4 col-form-label required fw-bold fs-6"> اسم الروضة</label>
+                                    <div class="col-lg-8 fv-row">
+                                        <select name="employee_id" aria-label="اختر اسم الروضة" data-control="select2"
+                                            data-placeholder="اختر اسم الروضة.."
+                                            class="form-select form-select-solid form-select-lg employee_id">
+                                            <option value="">اختر المسمى الوظيفي...</option>
+                                            @foreach ($kinder as $item)
+                                                <option value="{{ $item->id }}"
+                                                    {{ $item->id == ($emp->id ?? old('employee_id')) ? 'selected' : '' }}>
+                                                    {{ $item->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div> --}}
 
                                 <!--begin::Input group-->
                                 <div class="row mb-6">
@@ -39,7 +62,7 @@
                                             <option value="">اختر المسمى الوظيفي...</option>
                                             @foreach ($employees as $item)
                                                 <option value="{{ $item->id }}"
-                                                    {{ $item->id == ($emp->id ?? old('employee_id'))  ?  'selected' : '' }}>
+                                                    {{ $item->id == ($emp->id ?? old('employee_id')) ? 'selected' : '' }}>
                                                     {{ $item->name }}</option>
                                             @endforeach
                                         </select>
@@ -47,16 +70,17 @@
                                 </div>
                                 <!--end::Input group-->
                                 <div class="row mb-6">
-                                    <label class="col-lg-4 col-form-label fw-bold fs-6">العام الدراسي</label>
+                                    <label class="col-lg-4 col-form-label required fw-bold fs-6">العام الدراسي</label>
                                     <div class="col-lg-8">
                                         <input type="text" name="year"
                                             class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 address"
-                                            placeholder="مثال : 2020-2021" value="">
+                                            placeholder="مثال : 2020-2021"
+                                            value="{{ $employee->JobPlacement ?? null ? $employee->JobPlacement->year : old('year') }}">
                                     </div>
                                 </div>
 
-                                 <!--begin::Input group-->
-                                 <div class="row mb-6">
+                                <!--begin::Input group-->
+                                <div class="row mb-6">
                                     <label class="col-lg-4 col-form-label required fw-bold fs-6">المسمى الوظيفي</label>
                                     <div class="col-lg-8 fv-row">
                                         <select name="job_id" aria-label="اختر المسمى الوظيفي" data-control="select2"
@@ -65,7 +89,7 @@
                                             <option value="">اختر المسمى الوظيفي...</option>
                                             @foreach ($majors as $item)
                                                 <option value="{{ $item->id }}"
-                                                    {{ $item->id == old('job_id') ? 'selected' : '' }}>
+                                                    {{ $item->id == ($employee->JobPlacement ?? null ? $employee->JobPlacement->job_id : old('job_id'))? 'selected': '' }}>
                                                     {{ $item->name }}</option>
                                             @endforeach
                                         </select>
@@ -73,7 +97,7 @@
                                 </div>
                                 <!--end::Input group-->
                                 <!--begin::Input group-->
-                                <div class="row mb-6">
+                                <div  class="row mb-6">
                                     <label class="col-lg-4 col-form-label required fw-bold fs-6">الفترة</label>
                                     <div class="col-lg-8 fv-row">
                                         <select name="period_id" aria-label="اختر فترة الدوام." data-control="select2"
@@ -82,41 +106,43 @@
                                             <option value="">اختر فترة الدوام....</option>
                                             @foreach ($periods as $item)
                                                 <option value="{{ $item->id }}"
-                                                    {{ $item->id == old('period_id') ? 'selected' : '' }}>
+                                                    {{ $item->id == ($employee->JobPlacement ?? null ? $employee->JobPlacement->period_id : old('period_id'))? 'selected': '' }}>
                                                     {{ $item->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                 </div>
-                               
+
 
                                 <div class="row mb-6">
-                                    <label class="col-lg-4 col-form-label required fw-bold fs-6">مربية شعبة</label>
+                                    <label class="col-lg-4 col-form-label  fw-bold fs-6">مربية شعبة</label>
                                     <div class="col-lg-8 fv-row align-items-center">
                                         <div class="col-9 col-form-label">
                                             <div class="checkbox-list">
                                                 <label class="checkbox">
-                                                    <input type="checkbox"  name="Checkboxes4"/>
+                                                    <input id="is_mother" name="is_mother" type="checkbox" name="Checkboxes4" value="1"
+                                                    {{ ($employee->JobPlacement ?? null ? $employee->JobPlacement->is_mother : old('is_mother'))? 'checked': '' }}
+                                                    />
                                                     <span></span>
-                                                    
+
                                                 </label>
                                             </div>
                                         </div>
-                                           
+
                                     </div>
                                 </div>
 
 
-                                {{-- <div class="row mb-6">
-                                    <label class="col-lg-4 col-form-label required fw-bold fs-6">المستوى</label>
+                                <div id="level_id" class="row mb-6">
+                                    <label class="col-lg-4 col-form-label  fw-bold fs-6">المرحلة</label>
                                     <div class="col-lg-8 fv-row">
-                                        <select name="period_id" aria-label="اختر فترة الدوام." data-control="select2"
-                                            data-placeholder="اختر فترة الدوام..."
-                                            class="form-select form-select-solid form-select-lg period_id">
-                                            <option value="">اختر فترة الدوام....</option>
-                                            @foreach ($periods as $item)
+                                        <select id="level" name="level_id" aria-label="اختر المرحلة الدوام."
+                                            data-control="select2" data-placeholder="اختر المرحلة الدوام..."
+                                            class="form-select form-select-solid form-select-lg level_id">
+                                            <option value="">اختر المرحلة الدوام....</option>
+                                            @foreach ($levels as $item)
                                                 <option value="{{ $item->id }}"
-                                                    {{ $item->id == old('period_id') ? 'selected' : '' }}>
+                                                    {{ $item->id == ($employee->JobPlacement ?? null ? $employee->JobPlacement->level_id : old('level_id'))? 'selected': '' }}>
                                                     {{ $item->name }}</option>
                                             @endforeach
                                         </select>
@@ -124,21 +150,21 @@
                                 </div>
 
 
-                                <div class="row mb-6">
-                                    <label class="col-lg-4 col-form-label required fw-bold fs-6">الشعبة</label>
+                                <div id="division_id" class="row mb-6">
+                                    <label class="col-lg-4 col-form-label  fw-bold fs-6">الشعبة</label>
                                     <div class="col-lg-8 fv-row">
-                                        <select name="division_id" aria-label="اختر فترة الدوام." data-control="select2"
-                                            data-placeholder="اختر فترة الدوام..."
-                                            class="form-select form-select-solid form-select-lg period_id">
-                                            <option value="">اختر فترة الدوام....</option>
-                                            @foreach ($periods as $item)
+                                        <select name="division_id" aria-label="اختر الشعبة الدراسية."
+                                            data-control="select2" data-placeholder="اختر الشعبة الدراسية..."
+                                            class="form-select form-select-solid form-select-lg division_id">
+                                            <option value="">اختر الشعبة الدراسية....</option>
+                                            @foreach ($divisions as $item)
                                                 <option value="{{ $item->id }}"
-                                                    {{ $item->id == old('division_id') ? 'selected' : '' }}>
+                                                    {{ $item->id == ($employee->JobPlacement ?? null ? $employee->JobPlacement->division_id : old('division_id'))? 'selected': '' }}>
                                                     {{ $item->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
-                                </div> --}}
+                                </div>
 
 
 
@@ -183,75 +209,12 @@
         </style>
     @endsection
     @section('scripts')
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"
                 integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA=="
                 crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-        <script type="text/javascript">
-            $(".flatpickr-input").flatpickr({
-                enableTime: true,
-                minDate: new Date(),
-                dateFormat: 'd/m/Y H:i:S',
-            });
-        </script>
-        <script>
-            $(document).on("DOMSubtreeModified", "#select2-doctor_id-container", function() {
-                let identity = document.getElementById("gov_identity").value;
-                if (identity != '') {
-                    let e = document.getElementById("doctor_id");
-                    let id = e.value;
-                    $.ajax({
-                        url: "{{ route('order.patient.doctor') }}",
-                        method: 'GET',
-                        data: {
-                            'doctor_id': id,
-                            'identity': identity,
-                        },
-                        dataType: "JSON",
-                        success: function(data) {
-                            if (data != null) {
-                                $("#visit_date").val(data.message);
-                                if (data.pass) {
-                                    $("#type").val("1").change();
-                                    $("#type").prop('disabled', true);
-                                } else {
-                                    $("#type").prop('disabled', false);
-                                }
-                            }
-                        }
-                    });
-                }
-            });
-            ////////////////////////////////////////////////
-            $(document).on("DOMSubtreeModified", "#select2-clinic_id-container", function() {
-                var e = document.getElementById("clinic_id");
-                var id = e.value;
-                $.ajax({
-                    url: "{{ route('doctors.getByClinic') }}",
-                    method: 'GET',
-                    data: {
-                        'id': id
-                    },
-                    dataType: "JSON",
-                    success: function(data) {
-                        $("#doctor_id").empty();
-                        if (data.length > 0) {
-                            $("#doctor_id").append('<option value=""> اختر الطبيب</option>');
-                            for (var i = 0; i < data.length; i++) {
-                                if ($('#doctor_id').find("option[value='" + data[i]['id'] + "']").length) {
-                                    $('#doctor_id').val(data[i]['id']).trigger('change');
-                                } else {
-                                    var newOption = new Option(data[i]['first_name'] + " " + data[i][
-                                        'last_name'
-                                    ], data[i]['id']);
-                                    $('#doctor_id').append(newOption).trigger('change');
-                                }
-                            }
-                        }
-                    }
-                });
-            });
-        </script>
+        
+        
         ////////////////////////////////////////
         <script>
             document.addEventListener('DOMContentLoaded', function(e) {
@@ -286,8 +249,8 @@
                                     notEmpty: {
                                         message: 'المسمى الوظيفي مطلوب',
                                     },
-                                    
-                                   
+
+
                                 },
                             },
                             period_id: {
@@ -344,53 +307,7 @@
         </script>
         <script>
             let enableSRB = false;
-            ////////////////////////////////////////
-            $(document).on("click", "#kt_gov_data_submit", function() {
-                let number = $("#gov_identity").val();
-                let length = number.toString().length;
-                if (enableSRB && length == 9) {
-                    var e = document.getElementById("gov_identity");
-                    var govIdentity = e.value;
-                    if (govIdentity != '') {
-                        $('.loader-pub').show();
-                        $('.search-title').hide();
-                        $.ajax({
-                            url: "{{ route('order.gov.data') }}",
-                            method: 'GET',
-                            data: {
-                                'gov_identity': govIdentity
-                            },
-                            dataType: "JSON",
-                            success: function(data) {
-                                $('.loader-pub').hide();
-                                $('.search-title').show();
-                                $(".item_no").val(data['DATA'][0]['IDNO']);
-                                $(".name").val(data['DATA'][0]['FNAME_ARB'] + " " + data['DATA'][0][
-                                    'SNAME_ARB'
-                                ] + " " + data['DATA'][0]['TNAME_ARB'] + " " + data['DATA'][0][
-                                    'LNAME_ARB'
-                                ]);
-                                $(".dob").val(data['DATA'][0]['BIRTH_DT']);
-                                $(".address").val(data['DATA'][0]['STREET_ARB']);
-                                let region_cd = data['DATA'][0]['REGION_CD'];
-                                let city_cd = data['DATA'][0]['CITY_CD'];
-                                setSelectValue($(".states_id"), region_cd, '.states_id');
-                                setSelectValue($(".cities_id"), city_cd, '.cities_id');
-                                let gender_id = data['DATA'][0]['SEX_CD'];
-                                if (gender_id == 1) {
-                                    $("#gender-male").prop("checked", true);
-
-                                } else {
-                                    $('#gender-female').prop("checked", true);
-                                }
-
-                            }
-                        });
-                    }
-                }
-
-            });
-            ////////////////////////////////////////
+           
             let options = {
                 source: function(request, response) {
                     $.ajax({
@@ -462,6 +379,33 @@
                 $(cls + ' .select2-selection__rendered').text(title);
                 $(cls + ' .select2-selection__rendered').attr('title', title);
             }
+        </script>
+
+        <script>
+
+           
+           
+
+
+            if(!$('#level').val() != '')
+            {
+            period = $('#division_id').hide();
+            level = $('#level_id').hide();   
+            checkBox = document.getElementById('is_mother').addEventListener('click', event => {
+                if (event.target.checked) {
+                    $('#division_id').show();
+                    $('#level_id').show();
+                }
+                else{
+                    $('#division_id').hide();
+                    $('#level_id').hide();
+                }
+            });
+
+            }
+           
+
+           
         </script>
     @endsection
 </x-base-layout>

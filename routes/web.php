@@ -2,6 +2,7 @@
  
 use App\Http\Controllers\Account\SettingsController;
 use App\Http\Controllers\Auth\SocialiteLoginController;
+use App\Http\Controllers\ChangeDivisionController;
 use App\Http\Controllers\CheckupsController;
 use App\Http\Controllers\ChildrenAttendanceController;
 use App\Http\Controllers\ChildrenController;
@@ -9,14 +10,19 @@ use App\Http\Controllers\ClinicsController;
 use App\Http\Controllers\DivisionController;
 use App\Http\Controllers\Documentation\ReferencesController;
 use App\Http\Controllers\DriverController;
+use App\Http\Controllers\EducationalLevelController;
 use App\Http\Controllers\EmployeesAttendanceController;
 use App\Http\Controllers\EmployeesController;
 use App\Http\Controllers\FatherController;
+use App\Http\Controllers\FatherJobsController;
+use App\Http\Controllers\FatherRelationController;
 use App\Http\Controllers\FormAjaxController;
+use App\Http\Controllers\JobTitlesLevelController;
 use App\Http\Controllers\KindergardenController;
 use App\Http\Controllers\LevelsController;
 use App\Http\Controllers\Logs\AuditLogsController;
 use App\Http\Controllers\Logs\SystemLogsController;
+use App\Http\Controllers\MajorsController;
 use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\OrderDiagnosticsController;
 use App\Http\Controllers\MedicinesController;
@@ -30,7 +36,9 @@ use App\Http\Controllers\PermissionsController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\XraysController;
+use App\Models\EducationalLevels;
 use Illuminate\Support\Facades\Route;
+use Maatwebsite\Excel\Row;
 
 /*
 |--------------------------------------------------------------------------
@@ -89,6 +97,10 @@ Route::resource('fathers' , FatherController::class);
 //الاطفال
 Route::resource('childrens' , ChildrenController::class);
 Route::post('childrens/status', [ChildrenController::class, 'status'])->name('childrens.status');
+Route::get('trashed-children' , [ChildrenController::class ,'getTrashed'])->name('children.trashed'); // صفحة الطلاب المحذوفين
+Route::get('restore-children/{id}' , [ChildrenController::class , 'RestoreTrashed'])->name('children.restore');
+
+
 
 Route::get('classplacement/childrens/{id?}', [ChildrenController::class , 'classPlacementView'])->name('classplacement.create');
 Route::post('classplacement/childrens', [ChildrenController::class , 'classPlacementStore'])->name('classplacement.store');
@@ -97,7 +109,9 @@ Route::resource('employee/attendance' , EmployeesAttendanceController::class);
 Route::get('/employee/search',[EmployeesAttendanceController::class, 'showEmployee'])->name('employee.search');
 Route::resource('children/cattendance' , ChildrenAttendanceController::class);
 Route::post('/children/cattendance/filter',[ChildrenAttendanceController::class, 'DivisionFilterSearch'])->name('DivisionFilterSearch');
-
+//تبديل الشعب بين المربيات
+Route::get('/switch',[ChangeDivisionController::class, 'index'])->name('switch.index');
+Route::post('/switch',[ChangeDivisionController::class, 'switchDivision'])->name('switch.switchDivision');
 
 // السائقين
 Route::resource('drivers' , DriverController::class);
@@ -105,10 +119,19 @@ Route::post('drivers/status', [DriverController::class, 'status'])->name('driver
 
 //ajax filter 
 Route::get('GetDivisionByLevel/{id}', [FormAjaxController::class, 'GetDivisionByLevel'])->name('GetDivisionByLevel');
+Route::get('GetEmployeeData/{id}', [FormAjaxController::class, 'GetEmployeeData'])->name('GetEmployeeData');
+
+//Auto complete search for student attendance -- بحث تلقائي للحضور والغياب الطلابي
+Route::get('authcomplete' , [ChildrenAttendanceController::class , 'autocomplete'])->name('autocomplete');
 
 
 
-
+//ثوابث النظام
+Route::resource('educational-level' , EducationalLevelController::class);
+Route::resource('job-titles' , JobTitlesLevelController::class);
+Route::resource('majors' , MajorsController::class);
+Route::resource('father-relations' , FatherRelationController::class);
+Route::resource('father-jobs' , FatherJobsController::class);
 
 
 

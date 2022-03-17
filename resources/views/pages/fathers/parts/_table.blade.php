@@ -16,7 +16,7 @@
             $(document).on('click', ".del_rec_btn", function (e) {
                 e.preventDefault();
                 const id = $(this).data('id');
-                let url = "{{ route('patient.destroy', ":id") }}";
+                let url = "{{ route('fathers.destroy', ":id") }}";
                 url = url.replace(':id', id);
 
                 Swal.fire({

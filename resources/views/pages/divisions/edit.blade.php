@@ -8,7 +8,7 @@
                  aria-controls="kt_account_profile_details">
                 <!--begin::Card title-->
                 <div class="card-title m-0">
-                    <h6 class="fw-bolder m-0">{{ __('Edit a patient file') }}</h6>
+                    <h6 class="fw-bolder m-0">تعديل الشعبة الدراسية</h6>
                     <span class="h-20px border-gray-200 border-start mx-4"></span>
                     <h3 class="fw-bolder m-0">{{$division->name}}</h3>
 
@@ -24,7 +24,7 @@
                 <form id="details_form" class="form" method="POST" action="{{ route('divisions.update' , $division->id) }}"
                     enctype="multipart/form-data">
                     @csrf
-                    @method('POST')
+                    @method('PUT')
                     <!--begin::Card body-->
                     <div class="card-body border-top p-9">
                         <div class="row mb-6">
@@ -33,7 +33,7 @@
                             <select name="kindergarten_id" aria-label="{{ __('Select') }} الروضة" id="kindergarten_id"
                                 data-control="select2" data-placeholder="{{ __('Select') }} الروضة .."
                                 class="form-select form-select-solid form-select-lg fw-bold">
-                                <option value="-1">{{ __('Select') }} الروضة...
+                                <option value="">{{ __('Select') }} الروضة...
                                 </option>
                                 @foreach ($kindergartens as $kindergartens)
                                     <option value="{{ $kindergartens->id }}"
@@ -48,14 +48,13 @@
                         <div class="row mb-6">
                         <label class="col-lg-4 col-form-label required fw-bold fs-6"> المستوى </label>
                         <div class="col-lg-8">
-                            <select name="level_id" aria-label="{{ __('Select') }} المستوى" id="kindergarten_id"
+                            <select name="level_id" aria-label="{{ __('Select') }} المستوى" id="level_id"
                                 data-control="select2" data-placeholder="{{ __('Select') }} المستوى .."
                                 class="form-select form-select-solid form-select-lg fw-bold">
-                                <option value="-1">{{ __('Select') }} المستوى...
-                                </option>
+                               
                                 @foreach ($levels as $levels)
                                     <option value="{{ $levels->id }}"
-                                        {{ $levels->id == old('kindergarten_id') ? 'selected' : '' }}>
+                                        {{ $levels->id == $division->level_id ? 'selected' : '' }}>
                                         {{ $levels->name }} </option>
                                 @endforeach
                             </select>
@@ -69,7 +68,7 @@
                             <div class="col-lg-8">
                                 <input type="text" name="name"
                                     class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 name"
-                                    placeholder="اسم الشعبة" value="{{ old('name') }}" />
+                                    placeholder="اسم الشعبة" value="{{$division->name}}" />
                             </div>
                         </div>
                         <!--end::Input group-->
@@ -81,7 +80,7 @@
                             <div class="col-lg-8">
                                 <input type="text" name="max_children"
                                     class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 address"
-                                    placeholder="السعة" value="">
+                                    placeholder="السعة" value="{{$division->max_children}}">
                             </div>
                         </div>
 
@@ -95,7 +94,7 @@
                                 <div class="form-check form-check-solid form-switch fv-row">
                                     <input type="hidden" name="status" value="1">
                                     <input class="form-check-input w-45px h-30px" type="checkbox" id="status"
-                                        name="status" value="1" checked />
+                                        name="status" value="1" {{$division->status ? 'checked' : ''}} />
                                     <label class="form-check-label" for="status"></label>
                                 </div>
                             </div>
@@ -137,67 +136,32 @@
                             name: {
                                 validators: {
                                     notEmpty: {
-                                        message: 'الاسم مطلوب',
+                                        message: 'اسم الشعبة مطلوب',
                                     },
                                 },
                             },
-                            identity: {
+                           
+                            level_id: {
                                 validators: {
                                     notEmpty: {
-                                        message: 'رقم الهوية مطلوب',
+                                        message: 'المرحلة مطلوبة',
                                     },
-                                    stringLength: {
-                                        min: 9,
-                                        max: 9,
-                                        message: 'رقم الهوية يتكون من 9 خانات',
-                                    },
-                                    regexp: {
-                                        regexp: /^[0-9]+$/,
-                                        message: 'رقم الهوية فقط أرقام',
+                                   
+                                },
+                            },
+                           
+                        
+                            kindergarten_id: {
+                                validators: {
+                                    notEmpty: {
+                                        message: 'الروضة مطلوبة',
                                     },
                                 },
                             },
-                            mobile: {
+                            max_children: {
                                 validators: {
                                     notEmpty: {
-                                        message: 'رقم الجوال مطلوب',
-                                    },
-                                    stringLength: {
-                                        min: 10,
-                                        max: 10,
-                                        message: 'رقم الجوال يتكون من 10 خانات',
-                                    },
-                                    regexp: {
-                                        regexp: /^[0-9]+$/,
-                                        message: 'رقم الجوال فقط أرقام',
-                                    },
-                                },
-                            },
-                            dob: {
-                                validators: {
-                                    notEmpty: {
-                                        message: 'تاريخ الميلاد مطلوب',
-                                    },
-                                },
-                            },
-                            states_id: {
-                                validators: {
-                                    notEmpty: {
-                                        message: 'المحافظة مطلوب',
-                                    },
-                                },
-                            },
-                            cities_id: {
-                                validators: {
-                                    notEmpty: {
-                                        message: 'المدينة مطلوب',
-                                    },
-                                },
-                            },
-                            gender: {
-                                validators: {
-                                    notEmpty: {
-                                        message: 'الجنس مطلوب',
+                                        message: 'الحد الاقصى للشعبة مطلوب',
                                     },
                                 },
                             },

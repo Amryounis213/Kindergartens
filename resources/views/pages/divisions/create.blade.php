@@ -31,7 +31,7 @@
                                 class="form-select form-select-solid form-select-lg fw-bold"
                                 {{ Auth::user()->kindergarten_id !=null ? 'disabled' : '' }}
                                 >
-                                <option value="-1">{{ __('Select') }} الروضة...
+                                <option value="">{{ __('Select') }} الروضة...
                                 </option>
                                 @foreach ($kindergartens as $kindergartens)
                                     <option value="{{ $kindergartens->id }}"
@@ -42,23 +42,23 @@
                         </div>
                     </div>
 
-                    <div class="card-body border-top p-9">
+                    
                         <div class="row mb-6">
-                        <label class="col-lg-4 col-form-label required fw-bold fs-6"> المستوى </label>
+                        <label class="col-lg-4 col-form-label required fw-bold fs-6"> المرحلة </label>
                         <div class="col-lg-8">
-                            <select name="level_id" aria-label="{{ __('Select') }} المستوى" id="kindergarten_id"
-                                data-control="select2" data-placeholder="{{ __('Select') }} المستوى .."
+                            <select name="level_id" aria-label="{{ __('Select') }} المرحلة" id="level_id"
+                                data-control="select2" data-placeholder="{{ __('Select') }} المرحلة .."
                                 class="form-select form-select-solid form-select-lg fw-bold">
-                                <option value="-1">{{ __('Select') }} المستوى...
+                                <option value="">{{ __('Select') }} المرحلة...
                                 </option>
                                 @foreach ($levels as $levels)
                                     <option value="{{ $levels->id }}"
-                                        {{ $levels->id == old('kindergarten_id') ? 'selected' : '' }}>
+                                        {{ $levels->id == old('level_id') ? 'selected' : '' }}>
                                         {{ $levels->name }} </option>
                                 @endforeach
                             </select>
                         </div>
-                    </div>
+                        </div>
 
 
                         <!--begin::Input group-->
@@ -129,40 +129,40 @@
             $(".flatpickr-input").flatpickr();
         </script>
         <script>
-            $(document).on("click", "#kt_gov_data_submit", function() {
-                $('.loader-pub').show();
-                $('.search-title').hide();
-                var e = document.getElementById("gov_identity");
-                var govIdentity = e.value;
-                $.ajax({
-                    url: "{{-- route('order.gov.data') --}}",
-                    method: 'GET',
-                    data: {
-                        'gov_identity': govIdentity
-                    },
-                    dataType: "JSON",
-                    success: function(data) {
-                        $('.loader-pub').hide();
-                        $('.search-title').show();
-                        $(".name").val(data['DATA'][0]['FNAME_ARB'] + " " + data['DATA'][0]['SNAME_ARB'] +
-                            " " + data['DATA'][0]['TNAME_ARB'] + " " + data['DATA'][0]['LNAME_ARB']);
-                        $(".dob").val(data['DATA'][0]['BIRTH_DT']);
-                        $(".address").val(data['DATA'][0]['STREET_ARB']);
-                        let region_cd = data['DATA'][0]['REGION_CD'];
-                        let city_cd = data['DATA'][0]['CITY_CD'];
-                        setSelectValue($(".states_id"), region_cd, '.states_id');
-                        setSelectValue($(".cities_id"), city_cd, '.cities_id');
-                        let gender_id = data['DATA'][0]['SEX_CD'];
-                        if (gender_id == 1) {
-                            $("#gender-male").prop("checked", true);
+            // $(document).on("click", "#kt_gov_data_submit", function() {
+            //     $('.loader-pub').show();
+            //     $('.search-title').hide();
+            //     var e = document.getElementById("gov_identity");
+            //     var govIdentity = e.value;
+            //     $.ajax({
+            //         url: "{{-- route('order.gov.data') --}}",
+            //         method: 'GET',
+            //         data: {
+            //             'gov_identity': govIdentity
+            //         },
+            //         dataType: "JSON",
+            //         success: function(data) {
+            //             $('.loader-pub').hide();
+            //             $('.search-title').show();
+            //             $(".name").val(data['DATA'][0]['FNAME_ARB'] + " " + data['DATA'][0]['SNAME_ARB'] +
+            //                 " " + data['DATA'][0]['TNAME_ARB'] + " " + data['DATA'][0]['LNAME_ARB']);
+            //             $(".dob").val(data['DATA'][0]['BIRTH_DT']);
+            //             $(".address").val(data['DATA'][0]['STREET_ARB']);
+            //             let region_cd = data['DATA'][0]['REGION_CD'];
+            //             let city_cd = data['DATA'][0]['CITY_CD'];
+            //             setSelectValue($(".states_id"), region_cd, '.states_id');
+            //             setSelectValue($(".cities_id"), city_cd, '.cities_id');
+            //             let gender_id = data['DATA'][0]['SEX_CD'];
+            //             if (gender_id == 1) {
+            //                 $("#gender-male").prop("checked", true);
 
-                        } else {
-                            $('#gender-female').prop("checked", true);
-                        }
+            //             } else {
+            //                 $('#gender-female').prop("checked", true);
+            //             }
 
-                    }
-                });
-            });
+            //         }
+            //     });
+            // });
 
             ///////////////////////////////////////////
             function setSelectValue(object, value, cls) {
@@ -177,67 +177,32 @@
                 FormValidation.formValidation(
                     document.getElementById('details_form'), {
                         fields: {
+                            kindergarten_id: {
+                                validators: {
+                                    notEmpty: {
+                                        message: 'الروضة مطلوبة',
+                                    },
+                                  
+                                },
+                            },
                             name: {
                                 validators: {
                                     notEmpty: {
-                                        message: 'اسم الروضة مطلوب',
+                                        message: 'اسم الشعبة مطلوب',
                                     },
                                 },
                             },
-                            identity: {
+                            level_id: {
                                 validators: {
                                     notEmpty: {
-                                        message: 'رقم الهوية مطلوب',
+                                        message: 'المرحلة الدراسية مطلوبة',
                                     },
-                                    stringLength: {
-                                        min: 9,
-                                        max: 9,
-                                        message: 'رقم الهوية يتكون من 9 خانات',
-                                    },
-                                    regexp: {
-                                        regexp: /^[0-9]+$/,
-                                        message: 'رقم الهوية فقط أرقام',
-                                    },
+                                    
                                 },
                             },
-                            mobile: {
-                                validators: {
-                                    notEmpty: {
-                                        message: 'رقم الجوال مطلوب',
-                                    },
-                                    stringLength: {
-                                        min: 10,
-                                        max: 10,
-                                        message: 'رقم الجوال يتكون من 10 خانات',
-                                    },
-                                    regexp: {
-                                        regexp: /^[0-9]+$/,
-                                        message: 'رقم الجوال فقط أرقام',
-                                    },
-                                },
-                            },
-                            dob: {
-                                validators: {
-                                    notEmpty: {
-                                        message: 'تاريخ الميلاد مطلوب',
-                                    },
-                                },
-                            },
-                            states_id: {
-                                validators: {
-                                    notEmpty: {
-                                        message: 'المحافظة مطلوب',
-                                    },
-                                },
-                            },
-                            cities_id: {
-                                validators: {
-                                    notEmpty: {
-                                        message: 'المدينة مطلوب',
-                                    },
-                                },
-                            },
-                            gender: {
+                           
+                       
+                            max_children: {
                                 validators: {
                                     notEmpty: {
                                         message: 'الجنس مطلوب',

@@ -12,7 +12,9 @@
                 <!--begin::Card title-->
                 <div class="card-title ">
                     <!--begin::Search-->
+                    <form class="">
                     <div class="d-flex align-items-center position-relative my-1 m-3">
+                        
                         <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
                         <span class="svg-icon svg-icon-1 position-absolute ms-6">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -24,17 +26,18 @@
                                     fill="black"></path>
                             </svg>
                         </span>
+                        
 
                         <input type="text" id="myInputSearchField"
                             class="form-control form-control-solid w-250px ps-15 ml-5"
                             placeholder="البحث عن اسم الطالب ...">
-                        <button type="submit" class="btn btn-success m-3">{{ __('Search') }}</button>
-
+                        <button type="submit" class="btn btn-success m-3 typeahead">{{ __('Search') }}</button>
+                       
                         <strong> أو </strong>
                         <!--end::Svg Icon-->
 
                     </div>
-
+                </form>
                     <!--begin::Search-->
                     <div class="d-flex align-items-center position-relative my-1 m-3">
                         <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->

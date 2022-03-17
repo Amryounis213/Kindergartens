@@ -219,9 +219,9 @@
         <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
         <script type="text/javascript">
             $(".flatpickr-input").flatpickr({
-                enableTime: true,
-                minDate: new Date(),
-                dateFormat: 'd/m/Y H:i:S',
+               // enableTime: true,
+               // minDate: new Date(),
+                dateFormat: 'd/m/Y ',
             });
         </script>
         <script>

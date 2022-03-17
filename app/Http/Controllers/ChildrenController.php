@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\Childrens\ChildrensDataTable;
+use App\DataTables\Childrens\TrashedDataTable;
 use App\Models\Children;
 use App\Models\ClassPlacment;
 use App\Models\Division;
@@ -50,7 +51,7 @@ class ChildrenController extends Controller
       
         $request->merge([
             'age'=> 10 ,
-            'bth_date'=> Carbon::createFromFormat('d/m/Y h:m:i', $request->bth_date)->format('Y-m-d'),
+            'bth_date'=> Carbon::createFromFormat('d/m/Y', $request->bth_date)->format('Y-m-d'),
             'added_by'=> Auth::guard('web')->id(),
             'status'=>1,
         ]);
@@ -120,8 +121,14 @@ class ChildrenController extends Controller
      */
     public function destroy($id)
     {
-        $info = Children::find($id);
-        $info->delete();
+       
+        $children = Children::withTrashed()->where('id' , $id)->first();
+        if($children->trashed())
+        {
+            $children->forceDelete();
+            return response()->json(['status' => 'success', 'message' => 'تم حذف الطالب بشكل نهائي ']);
+        }
+        $children->delete();
         return response()->json(['status' => 'success', 'message' => 'تم الحذف بنجاح']);
 
     }
@@ -146,11 +153,25 @@ class ChildrenController extends Controller
     }
     public function classPlacementStore(Request $request)
     {
+        $exists = ClassPlacment::where('children_id' , $request->children_id)->exists();
+
         $request->merge([
-            'year'=>date('Y-m-d'),
+            'year'=> $request->year,
         ]);
-       ClassPlacment::create($request->all());
-       return redirect()->route('childrens.index')->with('success' , 'تم التسكين بنجاح');
+        if($exists)
+        {
+            //تعديل
+            $class_placement =ClassPlacment::where('children_id' , $request->children_id)->first();
+            $class_placement->update($request->all());
+            return redirect()->route('childrens.index')->with('success' , 'تم تعديل التسكين بنجاح');
+
+        }
+
+        else{
+            //اضافة
+            ClassPlacment::create($request->all());
+            return redirect()->route('childrens.index')->with('success' , 'تم التسكين بنجاح');
+        }
     }
 
 
@@ -159,5 +180,20 @@ class ChildrenController extends Controller
         $id = $request->get('id');
         $info = Children::find($id);
         return updateModelStatus($info);
+    }
+
+    public function GetTrashed(TrashedDataTable $dataTable)
+    {
+        $children=Children::onlyTrashed()->get();
+        return $dataTable->render('pages.childrens.index.index');
+    }
+
+
+    public function RestoreTrashed($id)
+    {
+        $children = Children::withTrashed()->where('id' , $id)->first();
+        $children->deleted_at = null ;
+        $children->save();
+        return redirect()->back()->with('success' , 'تم استرجاع الطالب بنجاح');
     }
 }

@@ -19,7 +19,7 @@
                 </td>
 
                 <td class="text-center">
-                    @can('employees.edit')
+                    @can('childrens.edit')
                         <!--begin::Options-->
                         @if (!$model->attendance()->where('attendence_date', date('Y-m-d'))->first())
                             <!--begin::Option-->
@@ -39,22 +39,14 @@
                             <!--end::Option-->
                             <!--end::Options-->
                         @else
-                            <!--begin::Option-->
-                            <label class="form-check form-check-inline form-check-solid ">
-                                <input class="form-check-input box1" name="attendences[{{ $model->id }}]" disabled
-                                    {{ $model->attendance()->latest()->first()->attendence_status == 1? 'checked': '' }}
-                                    type="radio" id="gender-male" value="1">
-                                <span class="fw-bold ps-2 fs-6 gender">حاضر </span>
-                            </label>
+                        <label class="form-check form-check-inline form-check-solid">
+                            @if($model->attendance()->latest()->first()->attendence_status == 1)
+                            <strong class="fs-6 text-success">حاضر </strong>
+                            @else
+                            <strong class="fs-6 text-danger">غائب </strong>
 
-                            <!--end::Option-->
-                            <!--begin::Option-->
-                            <label class="form-check form-check-inline form-check-solid">
-                                <input class="form-check-input" name="attendences{{ $model->id }}" disabled
-                                    {{ $model->attendance()->latest()->first()->attendence_status == 0? 'checked': '' }}
-                                    type="radio" id="gender-female" value="2">
-                                <span class="fw-bold ps-2 fs-6">غائب</span>
-                            </label>
+                            @endif
+                        </label>
                         @endif
                     @endcan
 
@@ -115,7 +107,23 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.2/bootstrap3-typeahead.min.js"
+        integrity="sha512-HWlJyU4ut5HkEj0QsK/IxBCY55n5ZpskyjVlAoV9Z7XQwwkqXoYdCIC93/htL3Gu5H3R4an/S0h2NXfbZk3g7w=="
+        crossorigin="anonymous"></script>
+
     <script>
+        let x = document.getElementsByClassName('typeahead');
+        
+        var path = "{{ route('autocomplete') }}";
+        $('input.typeahead').typeahead({
+            source: function(terms, process) {
+                return $.get(path, {
+                    terms: terms
+                }, function(data) {
+                    return process(data);
+                });
+            }
+        });
 
         function CheckAll(className, elem) {
 
@@ -124,22 +132,19 @@
 
             if (elem.checked) {
                 for (var i = 0; i < l; i++) {
-                   if( elements[i].hasAttribute('disabled'))
-                   {
-                    elements[i].checked = false
-                   }
+                    if (elements[i].hasAttribute('disabled')) {
+                        elements[i].checked = false
+                    }
                     elements[i].checked = true;
                 }
             } else {
                 for (var i = 0; i < l; i++) {
-                    if( elements[i].hasAttribute('disabled'))
-                   {
-                    elements[i].checked = true;
-                   }
-                   else{
-                    elements[i].checked = false;
+                    if (elements[i].hasAttribute('disabled')) {
+                        elements[i].checked = true;
+                    } else {
+                        elements[i].checked = false;
 
-                   }
+                    }
                 }
             }
         }

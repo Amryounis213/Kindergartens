@@ -9,4 +9,10 @@ class Father extends Model
 {
     use HasFactory;
     protected $fillable = ['name' , 'address' , 'mobile' ,'occupation'];
+
+    public function Children()
+    {
+        return $this->hasMany(Children::class , 'father_id' , 'id');
+    }
+    
 }

@@ -1,7 +1,15 @@
 <x-base-layout>
 
     @include('.layout.error')
-
+    @php
+    if ($emp) {
+        $children = App\Models\Children::with('ClassPlacement')
+            ->where('id', $emp->id)
+            ->first();
+    } else {
+        $children = null;
+    }
+    @endphp
     <div id="kt_content" class="content d-flex flex-column flex-column-fluid">
         <div>
             <!--begin::Patient info-->
@@ -36,7 +44,7 @@
                                             <option value="">اختر الروضة....</option>
                                             @foreach ($kinder as $item)
                                                 <option value="{{ $item->id }}"
-                                                    {{ $item->id == old('kindergarden_id') ? 'selected' : '' }}>
+                                                    {{ $item->id == ($children->ClassPlacement ?? null ? $children->ClassPlacement->kindergarten_id : old('kindergarten_id')) ? 'selected' : '' }} }}>
                                                     {{ $item->name }}</option>
                                             @endforeach
                                         </select>
@@ -53,14 +61,19 @@
                                             <option value="">اختر اسم الطالب...</option>
                                             @foreach ($childrens as $item)
                                                 <option value="{{ $item->id }}"
-                                                    {{ $item->id == ($emp->id ?? null) || old('children_id') ? 'selected' : '' }}>
+                                                    {{ $item->id == ($emp->id ?? old('children_id')) ? 'selected' : '' }}>
                                                     {{ $item->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                 </div>
                                 <!--end::Input group-->
-
+                                <div class="row mb-6 fv-plugins-icon-container">
+                                    <label class="col-lg-4 col-form-label required fw-bold fs-6">العام الدراسي</label>
+                                    <div class="col-lg-8">
+                                        <input type="text" name="year" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 address" placeholder="مثال : 2020-2021" value="{{ ($children->ClassPlacement ?? null ? $children->ClassPlacement->year : old('year')) }}">
+                                    <div class="fv-plugins-message-container invalid-feedback"></div></div>
+                                </div>
                                 <!--begin::Input group-->
                                 <div class="row mb-6">
                                     <label class="col-lg-4 col-form-label required fw-bold fs-6"> اسم المربية</label>
@@ -71,7 +84,7 @@
                                             <option value="">اختر اسم المربية...</option>
                                             @foreach ($employees as $item)
                                                 <option value="{{ $item->id }}"
-                                                    {{ $item->id == old('employee_id')   ? 'selected' : '' }}>
+                                                    {{ $item->id == ($children->ClassPlacement ?? null ? $children->ClassPlacement->employee_id : old('employee_id'))? 'selected' : '' }}>
                                                     {{ $item->name }}</option>
                                             @endforeach
                                         </select>
@@ -91,7 +104,7 @@
                                             <option value="">اختر فترة الدوام...</option>
                                             @foreach ($periods as $item)
                                                 <option value="{{ $item->id }}"
-                                                    {{ $item->id == old('period_id') ? 'selected' : '' }}>
+                                                    {{ $item->id == ($children->ClassPlacement ?? null ? $children->ClassPlacement->period_id : old('period_id')) ? 'selected' : '' }}>
                                                     {{ $item->name }}</option>
                                             @endforeach
                                         </select>
@@ -100,15 +113,15 @@
                                 <!--end::Input group-->
                                 <!--begin::Input group-->
                                 <div class="row mb-6">
-                                    <label class="col-lg-4 col-form-label required fw-bold fs-6">المستوى</label>
+                                    <label class="col-lg-4 col-form-label required fw-bold fs-6">المرحلة</label>
                                     <div class="col-lg-8 fv-row">
-                                        <select id="level_id" name="level_id" aria-label="اختر المستوى الدراسي."
-                                            data-control="select2" data-placeholder="اختر المستوى الدراسي..."
+                                        <select id="level_id" name="level_id" aria-label="اختر المرحلة الدراسي."
+                                            data-control="select2" data-placeholder="اختر المرحلة الدراسي..."
                                             class="form-select form-select-solid form-select-lg period_id">
-                                            <option value="">اختر المستوى الدراسي....</option>
+                                            <option value="">اختر المرحلة الدراسي....</option>
                                             @foreach ($levels as $item)
                                                 <option value="{{ $item->id }}"
-                                                    {{ $item->id == old('level_id') ? 'selected' : '' }}>
+                                                    {{ $item->id == ($children->ClassPlacement ?? null ? $children->ClassPlacement->level_id : old('level_id')) ? 'selected' : '' }}>
                                                     {{ $item->name }}</option>
                                             @endforeach
                                         </select>
@@ -125,7 +138,7 @@
                                             <option value="">اختر الشعبة الدراسية ...</option>
                                             @foreach ($divisions as $item)
                                                 <option value="{{ $item->id }}"
-                                                    {{ $item->id == old('division_id') ? 'selected' : '' }}>
+                                                    {{ $item->id == ($children->ClassPlacement ?? null ? $children->ClassPlacement->division_id : old('division_id')) ? 'selected' : '' }}>
                                                     {{ $item->name }}</option>
                                             @endforeach
                                         </select>
@@ -206,6 +219,13 @@
                                 },
                             },
                         },
+                        year: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'العام الدراسي مطلوب',
+                                },
+                            },
+                        },
                         kindergarten_id: {
                             validators: {
                                 notEmpty: {
@@ -216,14 +236,14 @@
                         period_id: {
                             validators: {
                                 notEmpty: {
-                                    message: 'الفترة مطلوبة مطلوب',
+                                    message: 'الفترة مطلوبة ',
                                 },
                             },
                         },
                         level_id: {
                             validators: {
                                 notEmpty: {
-                                    message: 'المستوى مطلوب',
+                                    message: 'المرحلة مطلوب',
                                 },
                             },
                         },

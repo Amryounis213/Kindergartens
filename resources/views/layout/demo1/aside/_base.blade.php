@@ -1,5 +1,5 @@
 @php
-    $logoFileName = 'logo-3-app.svg';
+    $logoFileName = 'logo.jpeg';
 
     if (theme()->getOption('layout', 'aside/theme') === 'light') {
         $logoFileName = 'logo-1.svg';

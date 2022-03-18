@@ -38,7 +38,8 @@
                                 <div class="row mb-6">
                                     <label class="col-lg-4 col-form-label required fw-bold fs-6">الروضة</label>
                                     <div class="col-lg-8 fv-row">
-                                        <select name="kindergarten_id" aria-label="اختر الروضة ." data-control="select2"
+                                        <select id="kindergarten_id" name="kindergarten_id" aria-label="اختر الروضة ." 
+                                        {{-- data-control="select2" --}}
                                             data-placeholder="اختر الروضة..."
                                             class="form-select form-select-solid form-select-lg period_id">
                                             <option value="">اختر الروضة....</option>
@@ -115,8 +116,9 @@
                                 <div class="row mb-6">
                                     <label class="col-lg-4 col-form-label required fw-bold fs-6">المرحلة</label>
                                     <div class="col-lg-8 fv-row">
-                                        <select id="level_id" name="level_id" aria-label="اختر المرحلة الدراسي."
-                                            data-control="select2" data-placeholder="اختر المرحلة الدراسي..."
+                                        <select id="level" name="level_id" aria-label="اختر المرحلة الدراسي."
+                                            {{-- data-control="select2"  --}}
+                                            data-placeholder="اختر المرحلة الدراسي..."
                                             class="form-select form-select-solid form-select-lg period_id">
                                             <option value="">اختر المرحلة الدراسي....</option>
                                             @foreach ($levels as $item)
@@ -132,7 +134,7 @@
                                 <div class="row mb-6">
                                     <label class="col-lg-4 col-form-label required fw-bold fs-6">الشعبة</label>
                                     <div class="col-lg-8 fv-row">
-                                        <select id="division_id" name="division_id" aria-label="اختر الشعبة الدراسية."
+                                        <select id="division" name="division_id" aria-label="اختر الشعبة الدراسية."
                                             data-control="select2" data-placeholder="اختر الشعبة الدراسية"
                                             class="form-select form-select-solid form-select-lg period_id">
                                             <option value="">اختر الشعبة الدراسية ...</option>
@@ -274,23 +276,104 @@
         });
     </script>
     <script>
-      
-            $('#level_id').on('change', function() {
+        $(document).ready(function() {
 
-                alert(123);
-                // $.ajax({
-                //     type: 'GET',
-                //     url: 'GetDivisionByLevel/' + id,
-                //     success: function (response) {
-                //     $('#division_id').empty();
-                //     $('#division_id').append(`<option value="0" disabled selected>اختيار شعبة*</option>`);
-                //     response.forEach(element => {
-                //         $('#division_id').append(`<option value="${element['id']}">${element['name']}</option>`);
-                //         });
-                //     }
-                // });  
+            //  alert($('#employee_id').val());
+
+            $('#level').change(function() {
+                
+                // let e = document.getElementById("doctor_id");
+                let id = $(this).val();
+                let kinder = $('#kindergarten_id').val();
+
+                $.ajax({
+                    url: "/GetDivisionByLevel/" + id + '/' + kinder,
+                    method: 'GET',
+                    data: {
+
+
+                    },
+                    dataType: "JSON",
+                    success: function(data) {
+
+
+                        if (data != null) {
+                            $('#division').empty();
+
+                            data.forEach(element => {
+                                $('#division').append(
+                                    `<option value="${element['id']}">${element['name']}</option>`
+                                );
+                            });
+
+
+
+
+
+                        }
+                    }
+                });
+
+
+
+
+
             });
-       
+
+
+
+            $('#kindergarten_id').change(function() {
+
+                
+                let id = $(this).val();
+
+                $.ajax({
+                    url: "/GetDivisionByKindergarten/" + id,
+                    method: 'GET',
+                    data: {
+
+
+                    },
+                    dataType: "JSON",
+                    success: function(data) {
+
+
+                        if (data != null) {
+
+                            $('#level').empty();
+                            $('#level').append(
+                                `<option value="1">تمهيدي</option>
+                                    <option value="2">بستان</option>
+                                    <option value="3">حضانة</option>
+                                    `
+                            );
+
+
+                            $('#division').empty();
+                            data.forEach(element => {
+                                $('#division').append(
+                                    `<option value="${element['id']}">${element['name']}</option>`
+                                );
+                            });
+
+
+
+
+
+
+                        }
+                    }
+                });
+
+
+
+
+
+            });
+
+
+
+        });
     </script>
 @endsection
 

@@ -45,7 +45,7 @@
                                             <option value="">اختر اسم الروضة...</option>
                                             @foreach ($kinder as $item)
                                                 <option value="{{ $item->id }}"
-                                                    {{ $item->id == ($emp->id ?? old('kindergarten_id')) ? 'selected' : '' }}>
+                                                    {{ $item->id == ($employee->JobPlacement ?? null ? $employee->JobPlacement->kindergarten_id : old('job_id'))? 'selected': '' }}>
                                                     {{ $item->name }}</option>
                                             @endforeach
                                         </select>

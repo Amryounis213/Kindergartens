@@ -9,6 +9,7 @@ use App\Models\ClassPlacment;
 use App\Models\Division;
 use App\Models\Employee;
 use App\Models\Father;
+use App\Models\FatherRelation;
 use App\Models\Kindergarten;
 use App\Models\Level;
 use App\Models\Period;
@@ -37,7 +38,13 @@ class ChildrenController extends Controller
     {
         $fathers = Father::select('id' , 'name')->get();
         $kinder = Kindergarten::select('id' , 'name')->get();
-        return view('pages.childrens.create.create' , ['fathers'=>$fathers , 'kindergartens'=>$kinder]);
+        $relations = FatherRelation::where('status' , 1)->get();
+
+        return view('pages.childrens.create.create' , [
+            'fathers'=>$fathers ,
+             'kindergartens'=>$kinder ,
+             'relations'=>$relations ,
+            ]);
     }
 
     /**
@@ -50,10 +57,10 @@ class ChildrenController extends Controller
     {
       
         $request->merge([
-            'age'=> 10 ,
             'bth_date'=> Carbon::createFromFormat('d/m/Y', $request->bth_date)->format('Y-m-d'),
+            'add_date'=> Carbon::createFromFormat('d/m/Y', $request->add_date)->format('Y-m-d'),
             'added_by'=> Auth::guard('web')->id(),
-            'status'=>1,
+            'status'=> $request->status ?? 0 ,
         ]);
         Children::create($request->all());
         return redirect()->route('childrens.index');
@@ -81,12 +88,12 @@ class ChildrenController extends Controller
         $children = Children::find($id);
         $fathers = Father::select('id' , 'name')->get();
         $kinder = Kindergarten::select('id' , 'name')->get();
-
+        $relations = FatherRelation::where('status' , 1)->get();
         return view('pages.childrens.edit.edit' , [
 
             'children'=>$children ,
             'fathers'=>$fathers , 
-            'kindergartens'=>$kinder
+            'relations'=>$relations
             
         ]);
 
@@ -101,11 +108,12 @@ class ChildrenController extends Controller
      */
     public function update(Request $request, $id)
     {
-       
         $child=Children::find($id);
         $request->merge([
-            'age'=> 10 ,
-            'bth_date'=> Carbon::parse($request->bth_date)->format('Y-m-d'),
+            
+            'bth_date'=>$request->bth_date,
+            'add_date'=>$request->add_date,
+
             'added_by'=> Auth::guard('web')->id(),
             'status'=>1,
         ]);

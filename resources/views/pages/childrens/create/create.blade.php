@@ -29,35 +29,62 @@
                                 <div class="col-lg-12">
                                     <!--begin::Row-->
                                     <div class="row">
-
                                         <label
-                                        class="col-lg-2 col-form-label required fw-bold fs-6">{{ __('Full Name') }}</label>
-
-                                    <div class="col-lg-4">
-                                        <input type="text" name="name"
-                                            class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 name"
-                                            placeholder="{{ __('Full Name') }}" value="{{ old('name') }}" />
-
-                                    </div>
-
-
-                                        <label class="col-lg-2 col-form-label required fw-bold fs-6">ولي الأمر</label>
-
-                                        <div class="col-lg-4">
-                                            <select name="father_id" aria-label="{{ __('Select') }} ولي الأمر"
-                                                id="father_id" data-control="select2"
-                                                data-placeholder="{{ __('Select') }} ولي الأمر .."
-                                                class="form-select form-select-solid form-select-lg fw-bold">
-                                                <option value="-1">{{ __('Select') }} ولي الأمر...
-                                                </option>
-                                                @foreach ($fathers as $father)
-                                                    <option value="{{ $father->id }}"
-                                                        {{ $father->id == old('father_id') ? 'selected' : '' }}>
-                                                        {{ $father->name }} </option>
-                                                @endforeach
-                                            </select>
+                                            class="col-lg-2 col-form-label required fw-bold fs-6">{{ __('identity no.') }}</label>
+                                        <div class="col-lg-3">
+                                            <input type="text" name="identity" id="gov_identity" max="9"
+                                                class="form-control form-control-lg form-control-solid item_no patient_search"
+                                                placeholder="{{ __('identity no.') }}"
+                                                value="{{ old('identity') }}" />
+                                            <input type="hidden" value="" name="patient_id" class="search-val">
                                         </div>
-                                       
+                                        <div class="col-lg-1">
+                                            <a class="btn btn-secondary" id="kt_gov_data_submit"
+                                                style="min-width: 66px">
+                                                <i class="fa fa-spinner fa-spin loader-pub"
+                                                    style="display:none; margin-bottom: 5px"></i>
+                                                <span class="search-title">{{ __('Search') }}</span>
+                                            </a>
+                                        </div>
+                                        <label
+                                            class="col-lg-2 col-form-label required fw-bold fs-6">{{ __('Full Name') }}</label>
+                                        <div class="col-lg-4">
+                                            <input type="text" name="name"
+                                                class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 name"
+                                                placeholder="{{ __('Full Name') }}" value="{{ old('name') }}" />
+                                        </div>
+                                    </div>
+                                    <!--end::Row-->
+                                </div>
+                                <!--end::Col-->
+                            </div>
+                            <!--end::Input group-->
+                            <!--begin::Input group-->
+                            <div class="row mb-2">
+                                <!--begin::Col-->
+                                <div class="col-lg-12">
+                                    <!--begin::Row-->
+                                    <div class="row">
+                                        <label class="col-lg-2 col-form-label required fw-bold fs-6">تاريخ
+                                            التعيين</label>
+                                        <div class="col-lg-4">
+                                            <div class="position-relative d-flex align-items-center">
+                                                {!! theme()->getSvgIcon('icons/duotune/general/gen014.svg', 'svg-icon svg-icon-2 position-absolute mx-4') !!}
+                                                <input class="form-control form-control-solid ps-12 flatpickr-input dob"
+                                                    placeholder="{{ __('Select a date') }}" name="add_date"
+                                                    type="text" value="{{ old('dob') }}" readonly="readonly">
+                                            </div>
+                                        </div>
+                                        <label
+                                            class="col-lg-2 col-form-label required fw-bold fs-6">{{ __('dob') }}</label>
+                                        <div class="col-lg-4">
+                                            <div class="position-relative d-flex align-items-center">
+                                                {!! theme()->getSvgIcon('icons/duotune/general/gen014.svg', 'svg-icon svg-icon-2 position-absolute mx-4') !!}
+                                                <input class="form-control form-control-solid ps-12 flatpickr-input dob"
+                                                    placeholder="{{ __('Select a date') }}" name="bth_date"
+                                                    type="text" value="{{ old('dob') }}" readonly="readonly">
+                                            </div>
+                                        </div>
                                     </div>
                                     <!--end::Row-->
                                 </div>
@@ -71,42 +98,13 @@
                                     <!--begin::Row-->
                                     <div class="row">
 
-                                        <label
-                                            class="col-lg-2 col-form-label required fw-bold fs-6">{{ __('dob') }}</label>
-                                        <div class="col-lg-4">
-                                            <div class="position-relative d-flex align-items-center">
-                                                {!! theme()->getSvgIcon('icons/duotune/general/gen014.svg', 'svg-icon svg-icon-2 position-absolute mx-4') !!}
-                                                <input class="form-control form-control-solid ps-12 flatpickr-input dob"
-                                                    placeholder="{{ __('Select a date') }}" name="bth_date"
-                                                    type="text" value="{{ old('dob') }}" readonly="readonly">
-                                            </div>
-                                        </div>
 
-
-
-                                        <label class="col-lg-2 col-form-label required fw-bold fs-6"> الروضة </label>
-
-                                        <div class="col-lg-4">
-                                            <select name="kindergarten_id" aria-label="{{ __('Select') }} الروضة"
-                                                id="kindergarten_id" data-control="select2"
-                                                data-placeholder="{{ __('Select') }} الروضة .."
-                                                class="form-select form-select-solid form-select-lg fw-bold">
-                                                <option value="-1">{{ __('Select') }} الروضة...
-                                                </option>
-                                                @foreach ($kindergartens as $kindergartens)
-                                                    <option value="{{ $kindergartens->id }}"
-                                                        {{ $kindergartens->id == old('kindergarten_id') ? 'selected' : '' }}>
-                                                        {{ $kindergartens->name }} </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
                                     </div>
                                     <!--end::Row-->
                                 </div>
                                 <!--end::Col-->
                             </div>
                             <!--end::Input group-->
-                            
                             <!--begin::Input group-->
                             <div class="row mb-2">
                                 <!--begin::Col-->
@@ -150,30 +148,169 @@
                                 <!--end::Col-->
                             </div>
                             <!--end::Input group-->
-                            <!--begin::Input group-->
+
+                            {{-- <!--begin::Input group-->
                             <div class="row mb-2">
                                 <!--begin::Col-->
                                 <div class="col-lg-12">
                                     <!--begin::Row-->
-                                    <div class="row fv-plugins-icon-container">
-                                        <label class="col-lg-2 col-form-label  fw-bold fs-6">الحالة</label>
-                                        <div class="col-lg-4 d-flex align-items-center">
-                                            <div class="form-check form-check-solid form-switch fv-row">
-                                                <input type="hidden" name="status" value="0">
-                                                <input class="form-check-input w-45px h-30px" type="checkbox" id="status" name="status" value="1" checked>
-                                                <label class="form-check-label" for="status"></label>
+                                    <div class="row">
+                                        <label class="col-lg-2 col-form-label required fw-bold fs-6">تاريخ
+                                            التعيين</label>
+                                        <div class="col-lg-4">
+                                            <div class="position-relative d-flex align-items-center">
+                                                {!! theme()->getSvgIcon('icons/duotune/general/gen014.svg', 'svg-icon svg-icon-2 position-absolute mx-4') !!}
+                                                <input class="form-control form-control-solid ps-12 flatpickr-input dob"
+                                                    placeholder="{{ __('Select a date') }}" name="add_date"
+                                                    type="text" value="{{ old('dob') }}" readonly="readonly">
                                             </div>
                                         </div>
 
-
-
-                                       
                                     </div>
                                     <!--end::Row-->
                                 </div>
                                 <!--end::Col-->
                             </div>
-                            <!--end::Input group-->
+                            <!--end::Input group--> --}}
+
+                            <!--begin::Order info-->
+                            <div class="card mb-5 mb-xl-10">
+                                <!--begin::Card header-->
+                                <div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse"
+                                    data-bs-target="#kt_order_profile_details" aria-expanded="true"
+                                    aria-controls="kt_order_profile_details">
+                                    <!--begin::Card title-->
+                                    <div class="card-title m-0">
+                                        <h3 class="fw-bolder m-0">{{ __('info') }} اضافية </h3>
+                                    </div>
+                                    <!--end::Card title-->
+                                </div>
+                                <!--begin::Card header-->
+                                <!--begin::Content-->
+                                <div id="kt_order_profile_details" class="collapse show">
+                                    <!--begin::Card body-->
+                                    <div class=" border-top pt-9">
+                                        <!--begin::Input group-->
+                                        <div class="row mb-6">
+                                            <!--begin::Col-->
+                                            <div class="col-lg-12">
+                                                <!--begin::Row-->
+                                                <div class="row mb-2">
+                                                    <label class="col-lg-2 col-form-label required fw-bold fs-6">ولي امر
+                                                        الطالب</label>
+
+                                                    <div class="col-lg-4">
+                                                        <select name="father_id"
+                                                            aria-label="{{ __('Select') }}ولي أمر الطالب"
+                                                            id="father_id" data-control="select2"
+                                                            data-placeholder="{{ __('Select') }}ولي أمر الطالب .."
+                                                            class="form-select form-select-solid form-select-lg fw-bold">
+                                                            <option value="">{{ __('Select') }}ولي أمر الطالب...
+                                                            </option>
+                                                            @foreach ($fathers as $item)
+                                                            <option
+                                                                value="{{$item->id}}" {{ $item->id == old('father_id') ? 'selected' :'' }}> {{$item->name}}  </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                    <label class="col-lg-2 col-form-label required fw-bold fs-6">صلة
+                                                        قرابة ولي الأمر</label>
+                                                    <div class="col-lg-4">
+                                                        <select name="father_rel"
+                                                            aria-label="{{ __('Select') }}  صلة ولي  أمر "
+                                                            id="father_rel" data-control="select2"
+                                                            data-placeholder="{{ __('Select') }}  صلة ولي  أمر  .."
+                                                            class="form-select form-select-solid form-select-lg fw-bold">
+                                                            <option value="">{{ __('Select') }}  صلة ولي أمر ...
+                                                            </option>
+                                                            @foreach ($relations as $item)
+                                                    <option
+                                                        value="{{$item->id}}" {{ $item->id == old('father_rel') ? 'selected' :'' }}> {{$item->name}}  </option>
+                                                    @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <!--end::Row-->
+                                                <!--begin::Row-->
+                                                <div class="row mb-3">
+                                                    <label
+                                                        class="col-lg-2 col-form-label  fw-bold fs-6"> اسم والدة الطفل</label>
+                                                    <div class="col-lg-4">
+                                                        <input type="text" name="mother_name"
+                                                        class="form-control form-control-lg form-control-solid mobile"
+                                                        placeholder="الهاتف" value="">
+                                                    </div>
+                                                    <label class="col-lg-2 col-form-label  fw-bold fs-6">رقم المحمول لوالدة الطفل  </label>
+                                                       
+                                                    <div class="col-lg-4">
+                                                        <input type="text" name="mother_mob"
+                                                            class="form-control form-control-lg form-control-solid mobile"
+                                                            placeholder="  رقم المحمول لوالدة الطفل" value="">
+                                                        <div class="fv-plugins-message-container invalid-feedback">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--end::Row-->
+                                                <!--begin::Row-->
+                                                <div class="row mb-3">
+
+                                                    <!--begin::Col-->
+                                                    <label class="col-lg-2 col-form-label required fw-bold fs-6">الحالة</label>
+
+                                                        <div class="col-lg-4 d-flex align-items-center">
+                                                            <div class="form-check form-check-solid form-switch fv-row">
+                                                                <input type="hidden" name="status" value="0">
+                                                                <input class="form-check-input w-45px h-30px"
+                                                                    type="checkbox" id="status" name="status" value="1">
+                                                                <label class="form-check-label" for="status"></label>
+                                                            </div>
+                                                        </div>
+
+                                                    <label class="col-lg-2 col-form-label required fw-bold fs-6">بحاجة مواصلات</label>
+
+                                                        <div class="col-lg-4 d-flex align-items-center">
+                                                            <div class="form-check form-check-solid form-switch fv-row">
+                                                                <input type="hidden" name="want_transport" value="0">
+                                                                <input class="form-check-input w-45px h-30px"
+                                                                    type="checkbox" id="status" name="want_transport" value="1">
+                                                                <label class="form-check-label" for="status"></label>
+                                                            </div>
+                                                        </div>
+                                                    <!--begin::Row-->
+                                                    {{-- <div class="row fv-plugins-icon-container">
+                                                        <label
+                                                            class="col-lg-2 col-form-label required fw-bold fs-6">الحالة</label>
+                                                        <div class="col-lg-4 d-flex align-items-center">
+                                                            <div class="form-check form-check-solid form-switch fv-row">
+                                                                <input type="hidden" name="status" value="0">
+                                                                <input class="form-check-input w-45px h-30px"
+                                                                    type="checkbox" id="status" name="status" value="1">
+                                                                <label class="form-check-label" for="status"></label>
+                                                            </div>
+                                                        </div> --}}
+
+                                                    </div>
+
+
+                                                    </div>
+                                                    <!--end::Row-->
+
+
+
+
+
+                                                </div>
+                                                <!--end::Row-->
+                                            </div>
+                                            <!--end::Col-->
+                                        </div>
+                                        <!--end::Input group-->
+                                    </div>
+                                    <!--end::Card body-->
+                                </div>
+                                <!--end::Content-->
+                            </div>
+                            <!--end::Order info-->
                             <!--begin::Actions-->
                             <div class="card-footer d-flex justify-content-end py-6 px-9">
                                 <button type="reset" id="btn-dscrd"
@@ -219,8 +356,8 @@
         <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
         <script type="text/javascript">
             $(".flatpickr-input").flatpickr({
-               // enableTime: true,
-               // minDate: new Date(),
+                // enableTime: true,
+                // minDate: new Date(),
                 dateFormat: 'd/m/Y ',
             });
         </script>
@@ -282,7 +419,8 @@
                 });
             });
         </script>
-        ////////////////////////////////////////
+        
+        
         <script>
             document.addEventListener('DOMContentLoaded', function(e) {
                 FormValidation.formValidation(
@@ -336,18 +474,19 @@
                             },
                             father_id: {
                                 validators: {
-                                    required: {
+                                    notEmpty: {
                                         message: 'ولي الأمر مطلوب',
                                     },
                                 },
                             },
-                            kindergarten_id: {
+                            father_rel: {
                                 validators: {
                                     notEmpty: {
-                                        message: 'المدينة مطلوب',
+                                        message: 'صلة القرابة مطلوبة',
                                     },
                                 },
                             },
+                            
                             gender: {
                                 validators: {
                                     notEmpty: {
@@ -362,10 +501,10 @@
                                     },
                                 },
                             },
-                            doctor_id: {
+                            add_date: {
                                 validators: {
                                     notEmpty: {
-                                        message: 'الطبيب مطلوب',
+                                        message: 'تاريخ التسجيل مطلوب',
                                     },
                                 },
                             },

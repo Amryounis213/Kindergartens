@@ -15,15 +15,30 @@ class CreateChildrensTable extends Migration
     {
         Schema::create('childrens', function (Blueprint $table) {
             $table->id();
+            $table->string('identity')->unique();
             $table->string('name');
-            $table->unsignedInteger('age');
             $table->date('bth_date');
+            $table->date('add_date');
+
             $table->foreignId('father_id')->constrained('fathers')->cascadeOnDelete();
-            $table->foreignId('kindergarten_id')->constrained('kindergartens')->cascadeOnDelete();
+            $table->foreignId('father_rel')->constrained('father_relations')->cascadeOnDelete();
+
+            $table->foreignId('kindergarten_id')->nullable()->constrained('kindergartens')->cascadeOnDelete();
             $table->enum('gender' , [1 ,2]);
             $table->foreignId('added_by')->constrained('users')->cascadeOnDelete();
             $table->boolean('status');
+            $table->boolean('want_transport');
+
+            $table->string('mother_name')->nullable();
+            $table->string('mother_mob')->nullable();
+            $table->string('address')->nullable();
+
+
+
             $table->timestamps();
+
+
+
         });
     }
 

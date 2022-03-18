@@ -9,7 +9,7 @@ class JobPlacement extends Model
 {
     use HasFactory;
     protected $fillable = [
-         'period_id' , 'job_id' , 'employee_id' , 'level_id' , 'is_mother','division_id', 'year' , 'is_mother'
+        'kindergarten_id', 'period_id' , 'job_id' , 'employee_id' , 'level_id' , 'division_id', 'year' 
     ];
     public function Kindergarten()
     {

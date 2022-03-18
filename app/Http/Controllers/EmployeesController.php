@@ -157,6 +157,7 @@ class EmployeesController extends Controller
     }
     public function jobPlacementStore(Request $request)
     {
+      
         $exists = JobPlacement::where('employee_id' , $request->employee_id)->exists();
 
 

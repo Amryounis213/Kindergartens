@@ -118,7 +118,9 @@ Route::resource('drivers' , DriverController::class);
 Route::post('drivers/status', [DriverController::class, 'status'])->name('drivers.status');
 
 //ajax filter 
-Route::get('GetDivisionByLevel/{id}', [FormAjaxController::class, 'GetDivisionByLevel'])->name('GetDivisionByLevel');
+Route::get('GetDivisionByLevel/{id}/{kinder}', [FormAjaxController::class, 'GetDivisionByLevel'])->name('GetDivisionByLevel');
+Route::get('GetDivisionByKindergarten/{id}', [FormAjaxController::class, 'GetDivisionByKindergarten'])->name('GetDivisionByKindergarten');
+
 Route::get('GetEmployeeData/{id}', [FormAjaxController::class, 'GetEmployeeData'])->name('GetEmployeeData');
 
 //Auto complete search for student attendance -- بحث تلقائي للحضور والغياب الطلابي

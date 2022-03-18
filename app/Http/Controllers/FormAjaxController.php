@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 
 class FormAjaxController extends Controller
 {
-    public function GetDivisionByLevel($id)
+    public function GetDivisionByLevel($id , $kinder)
     {
         if(Auth::user()->kindergarten_id != null)
         {
@@ -17,7 +17,20 @@ class FormAjaxController extends Controller
 
         }
         else{
-            $divisions = Division::where('level_id', $id)->get();
+            $divisions = Division::where('level_id', $id)->where('kindergarten_id' , $kinder)->get();
+        }
+        return response()->json($divisions);
+    }
+
+    public function GetDivisionByKindergarten($id)
+    {
+        if(Auth::user()->kindergarten_id != null)
+        {
+            $divisions = Division::where('kindergarten_id' , Auth::user()->kindergarten_id)->get();
+
+        }
+        else{
+            $divisions = Division::where('level_id',1)->where('kindergarten_id' , $id)->get();
         }
         return response()->json($divisions);
     }

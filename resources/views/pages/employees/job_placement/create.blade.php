@@ -36,28 +36,28 @@
                             <!--begin::Input group-->
                             <div class="card-body border-top p-9">
 
-                                {{-- <div class="row mb-6">
+                                <div class="row mb-6">
                                     <label class="col-lg-4 col-form-label required fw-bold fs-6"> اسم الروضة</label>
                                     <div class="col-lg-8 fv-row">
-                                        <select name="employee_id" aria-label="اختر اسم الروضة" data-control="select2"
-                                            data-placeholder="اختر اسم الروضة.."
-                                            class="form-select form-select-solid form-select-lg employee_id">
-                                            <option value="">اختر المسمى الوظيفي...</option>
+                                        <select id="kindergarten_id" name="kindergarten_id" aria-label="اختر اسم الروضة"
+                                            {{-- data-control="select2" --}} data-placeholder="اختر اسم الروضة.."
+                                            class="form-select form-select-solid form-select-lg kindergarten_id">
+                                            <option value="">اختر اسم الروضة...</option>
                                             @foreach ($kinder as $item)
                                                 <option value="{{ $item->id }}"
-                                                    {{ $item->id == ($emp->id ?? old('employee_id')) ? 'selected' : '' }}>
+                                                    {{ $item->id == ($emp->id ?? old('kindergarten_id')) ? 'selected' : '' }}>
                                                     {{ $item->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
-                                </div> --}}
+                                </div>
 
                                 <!--begin::Input group-->
                                 <div class="row mb-6">
                                     <label class="col-lg-4 col-form-label required fw-bold fs-6"> اسم الموظف</label>
                                     <div class="col-lg-8 fv-row">
-                                        <select name="employee_id" aria-label="اختر اسم الموظف" data-control="select2"
-                                            data-placeholder="اختر اسم الموظف.."
+                                        <select id="employee_id" name="employee_id" aria-label="اختر اسم الموظف"
+                                            data-control="select2" data-placeholder="اختر اسم الموظف.."
                                             class="form-select form-select-solid form-select-lg employee_id">
                                             <option value="">اختر المسمى الوظيفي...</option>
                                             @foreach ($employees as $item)
@@ -97,7 +97,7 @@
                                 </div>
                                 <!--end::Input group-->
                                 <!--begin::Input group-->
-                                <div  class="row mb-6">
+                                <div class="row mb-6">
                                     <label class="col-lg-4 col-form-label required fw-bold fs-6">الفترة</label>
                                     <div class="col-lg-8 fv-row">
                                         <select name="period_id" aria-label="اختر فترة الدوام." data-control="select2"
@@ -120,9 +120,9 @@
                                         <div class="col-9 col-form-label">
                                             <div class="checkbox-list">
                                                 <label class="checkbox">
-                                                    <input id="is_mother" name="is_mother" type="checkbox" name="Checkboxes4" value="1"
-                                                    {{ ($employee->JobPlacement ?? null ? $employee->JobPlacement->is_mother : old('is_mother'))? 'checked': '' }}
-                                                    />
+                                                    <input id="is_mother" name="is_mother" type="checkbox"
+                                                        name="Checkboxes4" value="1"
+                                                        {{ ($employee->JobPlacement ?? null ? $employee->JobPlacement->is_mother : old('is_mother')) ? 'checked' : '' }} />
                                                     <span></span>
 
                                                 </label>
@@ -137,7 +137,7 @@
                                     <label class="col-lg-4 col-form-label  fw-bold fs-6">المرحلة</label>
                                     <div class="col-lg-8 fv-row">
                                         <select id="level" name="level_id" aria-label="اختر المرحلة الدوام."
-                                            data-control="select2" data-placeholder="اختر المرحلة الدوام..."
+                                            {{-- data-control="select2" --}} data-placeholder="اختر المرحلة الدوام..."
                                             class="form-select form-select-solid form-select-lg level_id">
                                             <option value="">اختر المرحلة الدوام....</option>
                                             @foreach ($levels as $item)
@@ -153,7 +153,7 @@
                                 <div id="division_id" class="row mb-6">
                                     <label class="col-lg-4 col-form-label  fw-bold fs-6">الشعبة</label>
                                     <div class="col-lg-8 fv-row">
-                                        <select name="division_id" aria-label="اختر الشعبة الدراسية."
+                                        <select id="division" name="division_id" aria-label="اختر الشعبة الدراسية."
                                             data-control="select2" data-placeholder="اختر الشعبة الدراسية..."
                                             class="form-select form-select-solid form-select-lg division_id">
                                             <option value="">اختر الشعبة الدراسية....</option>
@@ -209,13 +209,108 @@
         </style>
     @endsection
     @section('scripts')
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"
-                integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA=="
-                crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        
-        
-        ////////////////////////////////////////
+        <script>
+            $(document).ready(function() {
+
+                //  alert($('#employee_id').val());
+
+                $('#level').change(function() {
+
+                    // let e = document.getElementById("doctor_id");
+                    let id = $(this).val();
+                    let kinder = $('#kindergarten_id').val();
+
+                    $.ajax({
+                        url: "/GetDivisionByLevel/" + id + '/' + kinder,
+                        method: 'GET',
+                        data: {
+
+
+                        },
+                        dataType: "JSON",
+                        success: function(data) {
+
+
+                            if (data != null) {
+                                $('#division').empty();
+
+                                data.forEach(element => {
+                                    $('#division').append(
+                                        `<option value="${element['id']}">${element['name']}</option>`
+                                    );
+                                });
+
+
+
+
+
+                            }
+                        }
+                    });
+
+
+
+
+
+                });
+
+
+
+                $('#kindergarten_id').change(function() {
+
+
+                    let id = $(this).val();
+
+                    $.ajax({
+                        url: "/GetDivisionByKindergarten/" + id,
+                        method: 'GET',
+                        data: {
+
+
+                        },
+                        dataType: "JSON",
+                        success: function(data) {
+
+
+                            if (data != null) {
+
+                                $('#level').empty();
+                                $('#level').append(
+                                    `<option value="1">تمهيدي</option>
+                                        <option value="2">بستان</option>
+                                        <option value="3">حضانة</option>
+                                        `
+                                );
+
+
+                                $('#division').empty();
+                                data.forEach(element => {
+                                    $('#division').append(
+                                        `<option value="${element['id']}">${element['name']}</option>`
+                                    );
+                                });
+
+
+
+
+
+
+                            }
+                        }
+                    });
+
+
+
+
+
+                });
+
+
+
+            });
+        </script>
+
+
         <script>
             document.addEventListener('DOMContentLoaded', function(e) {
                 FormValidation.formValidation(
@@ -249,8 +344,6 @@
                                     notEmpty: {
                                         message: 'المسمى الوظيفي مطلوب',
                                     },
-
-
                                 },
                             },
                             period_id: {
@@ -305,107 +398,31 @@
                     });
             });
         </script>
+
         <script>
-            let enableSRB = false;
-           
-            let options = {
-                source: function(request, response) {
-                    $.ajax({
-                        url: "{{ url('order/searchPatients') }}",
-                        data: request,
-                        success: function(data) {
-                            response(data);
-                            if (data.length === 0) {
-                                enableSRB = true;
-                                $('#kt_gov_data_submit').removeClass('btn-secondary');
-                                $('#kt_gov_data_submit').addClass('btn-success');
-                            } else {
-                                enableSRB = false;
-                                $('#kt_gov_data_submit').addClass('btn-secondary');
-                                $('#kt_gov_data_submit').removeClass('btn-success');
-                            }
-                        },
-                        error: function() {
-                            response([]);
-                        }
-                    });
-                },
-                minLength: 1,
-                ///////////////////////////////////////////
-                focus: function(event, ui) {
-                    let val = $(this).closest('.item').find('.search-val');
-                    identity = $(this).closest('.item').find('.item_no');
-                    identity.val(ui.item.label);
-                    val.val(ui.item.value);
-                    return false;
-                },
-                ///////////////////////////////////////////
-                select: function(event, ui) {
-                    let val = $(this).closest('.item').find('.search-val');
-                    identity = $(this).closest('.item').find('.item_no');
-                    let cname = $(this).closest('.item').find('.name');
-                    let mobile = $(this).closest('.item').find('.mobile');
-                    let dob = $(this).closest('.item').find('.dob');
-                    let states_id = $(this).closest('.item').find('.states_id');
-                    let cities_id = $(this).closest('.item').find('.cities_id');
-                    let address = $(this).closest('.item').find('.address');
-                    /////////////////////////////////////
-                    setSelectValue(states_id, ui.item.states_id, '.states_id');
-                    setSelectValue(cities_id, ui.item.cities_id, '.cities_id');
+            $('#level').attr("disabled", true);
+            $('#division').attr("disabled", true);
 
-                    identity.val(ui.item.label);
-                    val.val(ui.item.value);
-                    cname.val(ui.item.name);
-                    mobile.val(ui.item.mobile);
-                    dob.val(ui.item.dob);
-
-                    if (ui.item.gender == 1) {
-                        $("#gender-male").prop("checked", true);
+            if (!$('#level').val() != '') {
+                period = $('#division_id').hide();
+                level = $('#level_id').hide();
+                checkBox = document.getElementById('is_mother').addEventListener('click', event => {
+                    if (event.target.checked) {
+                        $('#division_id').show();
+                        $('#division').removeAttr("disabled");
+                        $('#level_id').show();
+                        $('#level').removeAttr("disabled");
 
                     } else {
-                        $('#gender-female').prop("checked", true);
+                        $('#division_id').hide();
+                        $('#level_id').hide();
+                        $('#level').attr("disabled", true);
+                        $('#division').attr("disabled", true);
+
+
                     }
-                    address.val(ui.item.address);
-                    // document.location.reload();
-                    return false;
-                }
-            };
-            ///////////////////////////////////////////
-            $(".patient_search").autocomplete(options);
-            ///////////////////////////////////////////
-            function setSelectValue(object, value, cls) {
-                object.val(value).trigger('change');
-                let title = $(cls + ' option:selected').text();
-                $(cls + ' .select2-selection__rendered').text(title);
-                $(cls + ' .select2-selection__rendered').attr('title', title);
+                });
             }
-        </script>
-
-        <script>
-
-           
-           
-
-
-            if(!$('#level').val() != '')
-            {
-            period = $('#division_id').hide();
-            level = $('#level_id').hide();   
-            checkBox = document.getElementById('is_mother').addEventListener('click', event => {
-                if (event.target.checked) {
-                    $('#division_id').show();
-                    $('#level_id').show();
-                }
-                else{
-                    $('#division_id').hide();
-                    $('#level_id').hide();
-                }
-            });
-
-            }
-           
-
-           
         </script>
     @endsection
 </x-base-layout>

@@ -80,15 +80,13 @@ class KindergartenDataTable extends DataTable
     {
         return [
             Column::make('table_index')->title(__('#'))->addClass('text-center'),
-            
+
             Column::make('name')->title(__('name'))->addClass('text-center'),
             Column::make('phone')->title(__('mobile'))->addClass('text-center'),
             Column::make('address')->title('العنوان')->addClass('text-center'),
-           // Column::make('created_by')->title(__('created by')),
             Column::computed('children')
-            ->title('عدد الطلاب')
-            ->addClass('text-center')
-            ,
+                ->title('عدد الطلاب')
+                ->addClass('text-center'),
             Column::computed('status')
                 ->exportable(false)
                 ->printable(false)
@@ -98,7 +96,6 @@ class KindergartenDataTable extends DataTable
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
-                ->addClass('text-center')
                 ->responsivePriority(-1)
                 ->title(__('action')),
         ];

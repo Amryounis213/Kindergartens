@@ -24,7 +24,7 @@ class EmployeesDataTable extends DataTable
             ->eloquent($query)
             ->addColumn('table_index', '')
             ->editColumn('job', function(Employee $model){
-                return $model->JobPlacement ? $model->JobPlacement->Job->name : '---' ; 
+                return $model->JobPlacement ? $model->JobPlacement->Job->name : '---' ;
             })
             ->editColumn('active', function (Employee $model) {
                 return view('pages.employees.index._status2', compact('model'));
@@ -44,7 +44,7 @@ class EmployeesDataTable extends DataTable
             ->addColumn('action', function (Employee $model) {
                 return view('pages.employees.index._action-menu', compact('model'));
             });
-            
+
     }
 
     /**
@@ -106,17 +106,14 @@ class EmployeesDataTable extends DataTable
             Column::computed('division')->title('الشعبة')->addClass('text-center'),
             Column::computed('level')->title('المستوى')->addClass('text-center'),
             Column::computed('active')->title('مفعل')->addClass('text-start'),
-
             Column::computed('status')
                 ->exportable(false)
                 ->printable(false)
-                ->addClass('text-center')
                 ->responsivePriority(-1)
                 ->title(__('Status')),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
-                ->addClass('text-center')
                 ->responsivePriority(-1)
                 ->title(__('action')),
         ];

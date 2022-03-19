@@ -23,8 +23,8 @@
                 @method('POST')
                 <!--begin::Card body-->
                     <div class="card-body border-top p-9">
-                        
-                       
+
+
                         <!--begin::Input group-->
                         <div class="row mb-6">
                             <label class="col-lg-4 col-form-label required fw-bold fs-6">اسم الروضة</label>
@@ -35,7 +35,7 @@
                             </div>
                         </div>
                         <!--end::Input group-->
-                      
+
                         <div class="row mb-6 fv-plugins-icon-container">
                             <label class="col-lg-4 col-form-label fw-bold fs-6">
                                 <span class="required">رقم التواصل</span>
@@ -45,17 +45,17 @@
                             <div class="fv-plugins-message-container invalid-feedback"></div></div>
                         </div>
 
-                        
+
                         <div class="row mb-6">
                             <label class="col-lg-4 col-form-label fw-bold fs-6">العنوان</label>
                             <div class="col-lg-8">
                                 <input type="text" name="address" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 address" placeholder="العنوان" value="">
                             </div>
                         </div>
-                        
-                      
 
-                     
+
+
+
                         <!--begin::Input group-->
                         <div class="row mb-0">
                             <label class="col-lg-4 col-form-label fw-bold fs-6">الحالة</label>
@@ -182,7 +182,7 @@
                             address: {
                                 validators: {
                                     notEmpty: {
-                                        message: 'تاريخ الميلاد مطلوب',
+                                        message: 'العنوان مطلوب',
                                     },
                                 },
                             },

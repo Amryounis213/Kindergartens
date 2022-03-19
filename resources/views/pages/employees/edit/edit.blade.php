@@ -18,11 +18,12 @@
                 <div id="kt_account_profile_details" class="collapse show">
                     <!--begin::Card body-->
                     <div class="card-body border-top p-9 item">
-                        <form id="details_form" class="form" method="POST" action="{{ route('employees.update' ,$employee->id) }}"
+                        <form id="details_form" class="form" method="POST"
+                              action="{{ route('employees.update' ,$employee->id) }}"
                               enctype="multipart/form-data">
-                            @csrf
-                            @method('PUT')
-                            <!--begin::Input group-->
+                        @csrf
+                        @method('PUT')
+                        <!--begin::Input group-->
                             <div class="row mb-2">
                                 <!--begin::Col-->
                                 <div class="col-lg-12">
@@ -30,20 +31,20 @@
                                     <div class="row">
                                         <label
                                             class="col-lg-2 col-form-label required fw-bold fs-6">{{ __('identity no.') }}</label>
-                                        <div class="col-lg-3">
+                                        <div class="col-lg-4">
                                             <input type="text" name="identity" id="gov_identity" max="9"
                                                    class="form-control form-control-lg form-control-solid item_no patient_search"
                                                    placeholder="{{ __('identity no.') }}"
                                                    value="{{$employee->identity}}"/>
                                             <input type="hidden" value="" name="patient_id" class="search-val">
                                         </div>
-                                        <div class="col-lg-1">
-                                            <a class="btn btn-secondary" id="kt_gov_data_submit" style="min-width: 66px">
-                                                <i class="fa fa-spinner fa-spin loader-pub"
-                                                   style="display:none; margin-bottom: 5px"></i>
-                                                <span class="search-title">{{ __('Search') }}</span>
-                                            </a>
-                                        </div>
+                                        {{--                                        <div class="col-lg-1">--}}
+                                        {{--                                            <a class="btn btn-secondary" id="kt_gov_data_submit" style="min-width: 66px">--}}
+                                        {{--                                                <i class="fa fa-spinner fa-spin loader-pub"--}}
+                                        {{--                                                   style="display:none; margin-bottom: 5px"></i>--}}
+                                        {{--                                                <span class="search-title">{{ __('Search') }}</span>--}}
+                                        {{--                                            </a>--}}
+                                        {{--                                        </div>--}}
                                         <label
                                             class="col-lg-2 col-form-label required fw-bold fs-6">{{ __('Full Name') }}</label>
                                         <div class="col-lg-4">
@@ -78,7 +79,8 @@
                                             <div class="position-relative d-flex align-items-center">
                                                 {!! theme()->getSvgIcon("icons/duotune/general/gen014.svg", "svg-icon svg-icon-2 position-absolute mx-4") !!}
                                                 <input class="form-control form-control-solid ps-12 flatpickr-input dob"
-                                                       placeholder="{{ __('Select a date')}}" name="bth_date" type="text" value="{{$employee->bth_date}}"
+                                                       placeholder="{{ __('Select a date')}}" name="bth_date"
+                                                       type="text" value="{{$employee->bth_date}}"
                                                        readonly="readonly">
                                             </div>
                                         </div>
@@ -94,8 +96,8 @@
                                 <div class="col-lg-12">
                                     <!--begin::Row-->
                                     <div class="row">
-                                        
-                                        
+
+
                                     </div>
                                     <!--end::Row-->
                                 </div>
@@ -146,8 +148,8 @@
                                 <!--end::Col-->
                             </div>
                             <!--end::Input group-->
-                             <!--begin::Input group-->
-                             <div class="row mb-2">
+                            <!--begin::Input group-->
+                            <div class="row mb-2">
                                 <!--begin::Col-->
                                 <div class="col-lg-12">
                                     <!--begin::Row-->
@@ -158,11 +160,12 @@
                                             <div class="position-relative d-flex align-items-center">
                                                 {!! theme()->getSvgIcon("icons/duotune/general/gen014.svg", "svg-icon svg-icon-2 position-absolute mx-4") !!}
                                                 <input class="form-control form-control-solid ps-12 flatpickr-input dob"
-                                                       placeholder="{{ __('Select a date')}}" name="add_date" type="text" value="{{ $employee->add_date }}"
+                                                       placeholder="{{ __('Select a date')}}" name="add_date"
+                                                       type="text" value="{{ $employee->add_date }}"
                                                        readonly="readonly">
                                             </div>
                                         </div>
-                                        
+
                                     </div>
                                     <!--end::Row-->
                                 </div>
@@ -192,20 +195,21 @@
                                             <div class="col-lg-12">
                                                 <!--begin::Row-->
                                                 <div class="row mb-2">
-                                                    <label  class="col-lg-2 col-form-label required fw-bold fs-6">المستوى التعليمي</label>
-                                                       
+                                                    <label class="col-lg-2 col-form-label required fw-bold fs-6">المستوى
+                                                        التعليمي</label>
+
                                                     <div class="col-lg-4">
-                                                        <select name="clinic_id"
+                                                        <select name="education_id"
                                                                 aria-label="{{ __('Select') }} المستوى التعليمي"
-                                                                id="clinic_id"
+                                                                id="education_id"
                                                                 data-control="select2"
                                                                 data-placeholder="{{ __('Select') }} المستوى التعليمي .."
                                                                 class="form-select form-select-solid form-select-lg fw-bold">
-                                                            <option value="-1">{{ __('Select') }} المستوى التعليمي...
+                                                            <option value="">{{ __('Select') }} المستوى التعليمي...
                                                             </option>
-                                                            @foreach($majors as $item)
-                                                            <option
-                                                                value="{{$item->id}}" {{ $item->id == $employee->major_id ? 'selected' :'' }}> {{$item->name}}  </option>
+                                                            @foreach($education as $item)
+                                                                <option
+                                                                    value="{{$item->id}}" {{ $item->id == $employee->education_id ? 'selected' :'' }}> {{$item->name}}  </option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -213,18 +217,18 @@
                                                         class="col-lg-2 col-form-label required fw-bold fs-6">التخصص</label>
                                                     <div class="col-lg-4">
                                                         <select name="major_id"
-                                                        aria-label="{{ __('Select') }} التخصص"
-                                                        id="clinic_id"
-                                                        data-control="select2"
-                                                        data-placeholder="{{ __('Select') }} التخصص .."
-                                                        class="form-select form-select-solid form-select-lg fw-bold">
-                                                    <option value="-1">{{ __('Select') }} التخصص...
-                                                    </option>
-                                                    @foreach($majors as $item)
-                                                    <option
-                                                        value="{{$item->id}}" {{ $item->id == $employee->major_id ? 'selected' :'' }}> {{$item->name}}  </option>
-                                                    @endforeach
-                                                </select>
+                                                                aria-label="{{ __('Select') }} التخصص"
+                                                                id="clinic_id"
+                                                                data-control="select2"
+                                                                data-placeholder="{{ __('Select') }} التخصص .."
+                                                                class="form-select form-select-solid form-select-lg fw-bold">
+                                                            <option value="">{{ __('Select') }} التخصص...
+                                                            </option>
+                                                            @foreach($majors as $item)
+                                                                <option
+                                                                    value="{{$item->id}}" {{ $item->id == $employee->major_id ? 'selected' :'' }}> {{$item->name}}  </option>
+                                                            @endforeach
+                                                        </select>
                                                     </div>
                                                 </div>
                                                 <!--end::Row-->
@@ -234,59 +238,65 @@
                                                         class="col-lg-2 col-form-label required fw-bold fs-6">الروضة</label>
                                                     <div class="col-lg-4">
                                                         <select name="kindergartens"
-                                                        aria-label="{{ __('Select') }} الروضة"
-                                                        id="clinic_id"
-                                                        data-control="select2"
-                                                        data-placeholder="{{ __('Select') }} الروضة .."
-                                                        class="form-select form-select-solid form-select-lg fw-bold"
-                                                        {{ Auth::user()->kindergarten_id !=null ? 'disabled' :'' }}
+                                                                aria-label="{{ __('Select') }} الروضة"
+                                                                id="clinic_id"
+                                                                data-control="select2"
+                                                                data-placeholder="{{ __('Select') }} الروضة .."
+                                                                class="form-select form-select-solid form-select-lg fw-bold"
+                                                            {{ Auth::user()->kindergarten_id !=null ? 'disabled' :'' }}
                                                         >
-                                                    <option value="-1">{{ __('Select') }} الروضة...
-                                                    </option>
-                                                    @foreach($kinder as $item)
-                                                    <option
-                                                        value="{{$item->id}}" {{ $item->id == $employee->kindergartens ? 'selected' :'' }}> {{$item->name}}  </option>
-                                                    @endforeach
-                                                </select>
+                                                            <option value="-1">{{ __('Select') }} الروضة...
+                                                            </option>
+                                                            @foreach($kinder as $item)
+                                                                <option
+                                                                    value="{{$item->id}}" {{ $item->id == $employee->kindergartens ? 'selected' :'' }}> {{$item->name}}  </option>
+                                                            @endforeach
+                                                        </select>
                                                     </div>
-                                                    <label class="col-lg-2 col-form-label  fw-bold fs-6">البريد الالكتروني (اختياري)</label>
+                                                    <label class="col-lg-2 col-form-label  fw-bold fs-6">البريد
+                                                        الالكتروني (اختياري)</label>
                                                     <div class="col-lg-4">
-                                                        <input type="text" name="email" class="form-control form-control-lg form-control-solid mobile" placeholder="البريد" value="{{$employee->email}}">
-                                                    <div class="fv-plugins-message-container invalid-feedback"></div></div>
+                                                        <input type="text" name="email"
+                                                               class="form-control form-control-lg form-control-solid mobile"
+                                                               placeholder="البريد" value="{{$employee->email}}">
+                                                        <div
+                                                            class="fv-plugins-message-container invalid-feedback"></div>
+                                                    </div>
                                                 </div>
                                                 <!--end::Row-->
                                                 <!--begin::Row-->
                                                 <div class="row">
-                                                    
-                                                        <!--begin::Col-->
-                                                        <div class="col-lg-12">
-                                                            <!--begin::Row-->
-                                                            <div class="row fv-plugins-icon-container">
-                                                                <label class="col-lg-2 col-form-label  fw-bold fs-6">الحالة</label>
-                                                                <div class="col-lg-4 d-flex align-items-center">
-                                                                    <div class="form-check form-check-solid form-switch fv-row">
-                                                                        <input type="hidden" 
-                                                                        name="status" 
-                                                                        value="0"
+
+                                                    <!--begin::Col-->
+                                                    <div class="col-lg-12">
+                                                        <!--begin::Row-->
+                                                        <div class="row fv-plugins-icon-container">
+                                                            <label
+                                                                class="col-lg-2 col-form-label  fw-bold fs-6">الحالة</label>
+                                                            <div class="col-lg-4 d-flex align-items-center">
+                                                                <div
+                                                                    class="form-check form-check-solid form-switch fv-row">
+                                                                    <input type="hidden"
+                                                                           name="status"
+                                                                           value="0"
                                                                         {{ !$employee->status ? 'checked' :'' }}
-                                                                        >
-                                                                        <input class="form-check-input w-45px h-30px"
-                                                                         type="checkbox"
-                                                                          id="status" name="status"
-                                                                          {{ $employee->status ? 'checked' :'' }}
+                                                                    >
+                                                                    <input class="form-check-input w-45px h-30px"
+                                                                           type="checkbox"
+                                                                           id="status" name="status"
+                                                                           {{ $employee->status ? 'checked' :'' }}
                                                                            value="1">
-                                                                        <label class="form-check-label" for="status"></label>
-                                                                    </div>
+                                                                    <label class="form-check-label"
+                                                                           for="status"></label>
                                                                 </div>
-
-
-
-                                                               
                                                             </div>
-                                                            <!--end::Row-->
+
+
                                                         </div>
-                                                        <!--end::Col-->
-                                                    
+                                                        <!--end::Row-->
+                                                    </div>
+                                                    <!--end::Col-->
+
                                                 </div>
                                                 <!--end::Row-->
                                             </div>
@@ -368,7 +378,7 @@
 
             ///////////////////////////////////////////
             function setSelectValue(value) {
-                    $("#s_doctor_id").val("");
+                $("#s_doctor_id").val("");
                 $('#doctor_id').val(value).trigger('change');
                 let title = $('#select2-doctor_id-container option:selected').text();
                 $('#select2-doctor_id-container').text(title);
@@ -378,97 +388,104 @@
         <script>
             document.addEventListener('DOMContentLoaded', function (e) {
                 FormValidation.formValidation(
-                        document.getElementById('details_form'), {
-                    fields: {
-                        name: {
-                            validators: {
-                                notEmpty: {
-                                    message: 'الاسم مطلوب',
+                    document.getElementById('details_form'), {
+                        fields: {
+                            name: {
+                                validators: {
+                                    notEmpty: {
+                                        message: 'الاسم مطلوب',
+                                    },
+                                },
+                            },
+                            identity: {
+                                validators: {
+                                    notEmpty: {
+                                        message: 'رقم الهوية مطلوب',
+                                    },
+                                    stringLength: {
+                                        min: 9,
+                                        max: 9,
+                                        message: 'رقم الهوية يتكون من 9 خانات',
+                                    },
+                                    regexp: {
+                                        regexp: /^[0-9]+$/,
+                                        message: 'رقم الهوية فقط أرقام',
+                                    },
+                                },
+                            },
+                            mobile: {
+                                validators: {
+                                    notEmpty: {
+                                        message: 'رقم الجوال مطلوب',
+                                    },
+                                    stringLength: {
+                                        min: 10,
+                                        max: 10,
+                                        message: 'رقم الجوال يتكون من 10 خانات',
+                                    },
+                                    regexp: {
+                                        regexp: /^[0-9]+$/,
+                                        message: 'رقم الجوال فقط أرقام',
+                                    },
+                                },
+                            },
+                            dob: {
+                                validators: {
+                                    notEmpty: {
+                                        message: 'تاريخ الميلاد مطلوب',
+                                    },
+                                },
+                            },
+                            education_id: {
+                                validators: {
+                                    notEmpty: {
+                                        message: 'المستوى التعليمي مطلوب',
+                                    },
+                                },
+                            },
+                            major_id: {
+                                validators: {
+                                    notEmpty: {
+                                        message: 'التخصص مطلوب',
+                                    },
+                                },
+                            },
+                            address: {
+                                validators: {
+                                    notEmpty: {
+                                        message: 'العنوان مطلوب',
+                                    },
+                                },
+                            },
+                            gender: {
+                                validators: {
+                                    notEmpty: {
+                                        message: 'الجنس مطلوب',
+                                    },
+                                },
+                            },
+                            clinic_id: {
+                                validators: {
+                                    notEmpty: {
+                                        message: 'العيادة مطلوب',
+                                    },
+                                },
+                            },
+                            kindergartens: {
+                                validators: {
+                                    notEmpty: {
+                                        message: 'الروضة مطلوبة',
+                                    },
                                 },
                             },
                         },
-                        identity: {
-                            validators: {
-                                notEmpty: {
-                                    message: 'رقم الهوية مطلوب',
-                                },
-                                stringLength: {
-                                    min: 9,
-                                    max: 9,
-                                    message: 'رقم الهوية يتكون من 9 خانات',
-                                },
-                                regexp: {
-                                    regexp: /^[0-9]+$/,
-                                    message: 'رقم الهوية فقط أرقام',
-                                },
-                            },
+                        plugins: {
+                            trigger: new FormValidation.plugins.Trigger(),
+                            submitButton: new FormValidation.plugins.SubmitButton(),
+                            defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
+                            bootstrap: new FormValidation.plugins.Bootstrap5(),
                         },
-                        mobile: {
-                            validators: {
-                                notEmpty: {
-                                    message: 'رقم الجوال مطلوب',
-                                },
-                                stringLength: {
-                                    min: 10,
-                                    max: 10,
-                                    message: 'رقم الجوال يتكون من 10 خانات',
-                                },
-                                regexp: {
-                                    regexp: /^[0-9]+$/,
-                                    message: 'رقم الجوال فقط أرقام',
-                                },
-                            },
-                        },
-                        dob: {
-                            validators: {
-                                notEmpty: {
-                                    message: 'تاريخ الميلاد مطلوب',
-                                },
-                            },
-                        },
-                        major_id: {
-                            validators: {
-                                notEmpty: {
-                                    message: 'التخصص مطلوب',
-                                },
-                            },
-                        },
-                        address: {
-                            validators: {
-                                notEmpty: {
-                                    message: 'العنوان مطلوب',
-                                },
-                            },
-                        },
-                        gender: {
-                            validators: {
-                                notEmpty: {
-                                    message: 'الجنس مطلوب',
-                                },
-                            },
-                        },
-                        clinic_id: {
-                            validators: {
-                                notEmpty: {
-                                    message: 'العيادة مطلوب',
-                                },
-                            },
-                        },
-                        kindergartens: {
-                            validators: {
-                                notEmpty: {
-                                    message: 'الروضة مطلوبة',
-                                },
-                            },
-                        },
-                    },
-                    plugins: {
-                        trigger: new FormValidation.plugins.Trigger(),
-                        submitButton: new FormValidation.plugins.SubmitButton(),
-                        defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
-                        bootstrap: new FormValidation.plugins.Bootstrap5(),
-                    },
-                });
+                    });
             });
         </script>
     @endsection

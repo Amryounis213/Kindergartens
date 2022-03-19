@@ -470,8 +470,8 @@ class OrdersController extends Controller {
             $curl = curl_init();
             $data_in = array("package" => "MOI_GENERAL_PKG", "procedure" => "CITZN_INFO", "user_id" => $identity);
             $in = array(
-                "WB_USER_NAME_IN" => "PFBS",
-                "WB_USER_PASS_IN" => "9ACA9w9E15975368AA6SFD5DB80FD18E9",
+                "WB_USER_NAME_IN" => "",
+                "WB_USER_PASS_IN" => "",
                 "DATA_IN" => $data_in
             );
             curl_setopt_array($curl, array(

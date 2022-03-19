@@ -22,8 +22,8 @@ class DatabaseSeeder extends Seeder
             //UsersSeeder::class,
             // PermissionsSeeder::class,
             // RolesSeeder::class,
-           //ChildrenTableSeeder::class ,
-           ClassPlacementTableSeeder::class ,
+           ChildrenTableSeeder::class ,
+          // ClassPlacementTableSeeder::class ,
         ]);
     }
 }

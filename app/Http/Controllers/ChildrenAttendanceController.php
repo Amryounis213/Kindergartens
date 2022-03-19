@@ -47,7 +47,6 @@ class ChildrenAttendanceController extends Controller
      */
     public function store(Request $request)
     {
-        
          try {
             
             
@@ -64,7 +63,7 @@ class ChildrenAttendanceController extends Controller
               
                 ChildrenAttendances::create([
                     'children_id'=> $employeeid,
-                    'kindergarten_id'=> $child->kindergarten_id ,
+                    'kindergarten_id'=> $child->ClassPlacement->kindergarten_id ,
                     'division_id'=> $child->ClassPlacement->division_id , 
                     'attendence_date'=> date('Y-m-d'),
                     'attendence_status'=> $attendence_status,

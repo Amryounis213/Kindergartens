@@ -21,4 +21,9 @@ class Driver extends Model
     {
         return $this->belongsTo(Kindergarten::class , 'kindergarten_id' ,'id');
     }
+
+    public function DriverPlacment()
+    {
+        return $this->hasOne(DriverPlacment::class , 'driver_id' , 'id');
+    }
 }

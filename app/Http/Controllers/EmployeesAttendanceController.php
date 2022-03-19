@@ -133,4 +133,12 @@ class EmployeesAttendanceController extends Controller
         
            
     }
+
+
+    public function autocomplete(Request $request)
+    {
+        $query = $request->get('terms');
+        $data = Employee::where('name', 'LIKE', '%'. $query. '%')->get();
+        return response()->json($data);
+    }
 }

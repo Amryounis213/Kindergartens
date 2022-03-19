@@ -154,7 +154,8 @@ class ChildrenAttendanceController extends Controller
 
     public function autocomplete(Request $request)
     {
-        $data = Children::select('name')->where('name', 'LIKE' , "%{$request->terms}")->get();
+        $query = $request->get('terms');
+        $data = Children::whereHas('ClassPlacement')->where('name', 'LIKE', '%'. $query. '%')->get();
         return response()->json($data);
     }
 

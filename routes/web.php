@@ -10,6 +10,7 @@ use App\Http\Controllers\ClinicsController;
 use App\Http\Controllers\DivisionController;
 use App\Http\Controllers\Documentation\ReferencesController;
 use App\Http\Controllers\DriverController;
+use App\Http\Controllers\DriverPlacmentController;
 use App\Http\Controllers\EducationalLevelController;
 use App\Http\Controllers\EmployeesAttendanceController;
 use App\Http\Controllers\EmployeesController;
@@ -87,6 +88,7 @@ Route::post('employee/status', [EmployeesController::class, 'status'])->name('em
 
 //المستويات
 Route::resource('levels' , LevelsController::class);
+Route::post('level/status', [LevelsController::class, 'status'])->name('levels.status');
 
 //الشعب الدراسية
 Route::resource('divisions' , DivisionController::class);
@@ -116,7 +118,7 @@ Route::post('/switch',[ChangeDivisionController::class, 'switchDivision'])->name
 // السائقين
 Route::resource('drivers' , DriverController::class);
 Route::post('drivers/status', [DriverController::class, 'status'])->name('drivers.status');
-
+Route::resource('driverplacment' , DriverPlacmentController::class);
 //ajax filter 
 Route::get('GetDivisionByLevel/{id}/{kinder}', [FormAjaxController::class, 'GetDivisionByLevel'])->name('GetDivisionByLevel');
 Route::get('GetDivisionByKindergarten/{id}', [FormAjaxController::class, 'GetDivisionByKindergarten'])->name('GetDivisionByKindergarten');
@@ -125,7 +127,8 @@ Route::get('GetEmployeeData/{id}', [FormAjaxController::class, 'GetEmployeeData'
 
 //Auto complete search for student attendance -- بحث تلقائي للحضور والغياب الطلابي
 Route::get('authcomplete' , [ChildrenAttendanceController::class , 'autocomplete'])->name('autocomplete');
-
+//Auto complete search for student attendance -- بحث تلقائي للحضور والغياب للموظفين
+Route::get('authcomplete' , [EmployeesAttendanceController::class , 'autocomplete'])->name('Empautocomplete');
 
 
 //ثوابث النظام

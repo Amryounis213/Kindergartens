@@ -50,7 +50,7 @@
             const checkedValue = $(this).is(":checked");
             $.ajax({
                 type: "POST",
-                url: "{{-- route('levels.status') --}}",
+                url: "{{ route('levels.status') }}",
                 data: {'id': id},
                 success: function (data) {
                     if (data.type === 'yes') {

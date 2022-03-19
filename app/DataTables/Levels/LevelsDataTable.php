@@ -2,7 +2,6 @@
 
 namespace App\DataTables\Levels;
 
-use App\Models\Kindergarten;
 use App\Models\Level;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Services\DataTable;
@@ -22,14 +21,11 @@ class LevelsDataTable extends DataTable
             ->eloquent($query)
             ->addColumn('table_index', '')
             ->addColumn('status', function (Level $model) {
-                return view('pages.kindergartens.parts._status', compact('model'));
+                return view('pages.levels.parts._status', compact('model'));
+            })
+            ->addColumn('action', function (Level $model) {
+                return view('pages.levels.parts._action-menu', compact('model'));
             });
-            // ->editColumn('division', function (Level $model) {
-            //     return $model->Division ? $model->Division->count() : 0;
-            // })
-            // ->addColumn('action', function (Level $model) {
-            //     return view('pages.kindergartens.parts._action-menu', compact('model'));
-            // });
     }
 
     /**
@@ -77,24 +73,19 @@ class LevelsDataTable extends DataTable
     protected function getColumns()
     {
         return [
-            Column::make('table_index')->title(__('#'))->addClass('text-center'),
-            Column::make('name')->title(__('name'))->addClass('text-center'), 
-            // Column::computed('status')
-            //     ->exportable(false)
-            //     ->printable(false)
-            //     ->addClass('text-center')
-            //     ->responsivePriority(-1)
-            //     ->title(__('Status')),
-            // Column::computed('division')
-            //     ->addClass('text-center')
-            //     ->responsivePriority(-1)
-            //     ->title('عدد الشعب'),
-            // Column::computed('action')
-            //     ->exportable(false)
-            //     ->printable(true)
-            //     ->addClass('text-center')
-            //     ->responsivePriority(-1)
-            //     ->title(__('action')),
+            Column::make('table_index')
+                ->title(__('#'))
+                ->addClass('text-center'),
+            Column::make('name')->title(__('name'))
+                ->responsivePriority(-1),
+            Column::computed('status')
+                ->exportable(false)
+                ->printable(false)
+                ->title(__('Status')),
+            Column::computed('action')
+                ->exportable(false)
+                ->printable(true)
+                ->title(__('action')),
         ];
     }
 

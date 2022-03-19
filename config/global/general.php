@@ -2,8 +2,8 @@
 return array(
     // Product
     'product' => array(
-        'name'        => 'ادارة الروضات',
-        'description' => 'ادارة الروضات',
+        'name'        => 'الجمعية الإسلامية - خان يونس',
+        'description' => 'الجمعية الإسلامية - خان يونس',
         'preview'     => '',
         'purchase'    => 'https://1.envato.market/EA4JP',
         'license'     => 'For each use you must have a valid license purchased only from above link in order to legally use the theme for your project.',
@@ -91,20 +91,20 @@ return array(
 
     // Meta
     'meta'    => array(
-        'title'       => 'ادارة رياض الأطفال',
-        'description' => 'ادارة رياض الأطفال',
-        'keywords'    => 'ادارة رياض الأطفال',
-        'canonical'   => 'https://pfsgaza.com',
+        'title'       => 'الجمعية الإسلامية - خان يونس',
+        'description' => 'الجمعية الإسلامية - خان يونس',
+        'keywords'    => 'الجمعية الإسلامية - خان يونس',
+        'canonical'   => 'https://islamic-association-kh.com',
     ),
 
     // General
     'general' => array(
-        'website'             => 'https://pfsgaza.com',
-        'about'               => 'https://pfsgaza.com',
-        'contact'             => 'mailto:info@pfsgaza.com',
-        'support'             => 'https://pfsgaza.com',
+        'website'             => 'https://islamic-association-kh.com',
+        'about'               => 'https://islamic-association-kh.com',
+        'contact'             => 'mailto:info@islamic-association-kh.com',
+        'support'             => 'https://islamic-association-kh.com',
         'bootstrap-docs-link' => 'https://getbootstrap.com/docs/5.0',
-        'licenses'            => 'https://keenthemes.com/licensing',
+        'licenses'            => 'https://islamic-association-kh.com',
         'social-accounts'     => array(
             array(
                 'name' => 'Youtube', 'url' => 'https://www.youtube.com/c/KeenThemesTuts/videos', 'logo' => 'svg/social-logos/youtube.svg', "class" => "h-20px",

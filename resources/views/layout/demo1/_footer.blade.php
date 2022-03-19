@@ -5,7 +5,7 @@
         <!--begin::Copyright-->
         <div class="text-dark order-2 order-md-1">
             <span class="text-muted fw-bold me-1">{{ date("Y") }}&copy;</span>
-            <a href="{{ theme()->getOption('product', 'website') }}" target="_blank" class="text-gray-800 text-hover-primary">Patient's Friends Society</a>
+            <a href="{{ theme()->getOption('product', 'website') }}" target="_blank" class="text-gray-800 text-hover-primary">Islamic Association - Khanyunis</a>
         </div>
         <!--end::Copyright-->
 

@@ -30,21 +30,21 @@
                                     <div class="row">
                                         <label
                                             class="col-lg-2 col-form-label required fw-bold fs-6">{{ __('identity no.') }}</label>
-                                        <div class="col-lg-3">
+                                        <div class="col-lg-4">
                                             <input type="text" name="identity" id="gov_identity" max="9"
                                                 class="form-control form-control-lg form-control-solid item_no patient_search"
                                                 placeholder="{{ __('identity no.') }}"
                                                 value="{{ $children->identity }}" />
                                             <input type="hidden" value="" name="children_id" class="search-val">
                                         </div>
-                                        <div class="col-lg-1">
-                                            <a class="btn btn-secondary" id="kt_gov_data_submit"
-                                                style="min-width: 66px">
-                                                <i class="fa fa-spinner fa-spin loader-pub"
-                                                    style="display:none; margin-bottom: 5px"></i>
-                                                <span class="search-title">{{ __('Search') }}</span>
-                                            </a>
-                                        </div>
+{{--                                        <div class="col-lg-1">--}}
+{{--                                            <a class="btn btn-secondary" id="kt_gov_data_submit"--}}
+{{--                                                style="min-width: 66px">--}}
+{{--                                                <i class="fa fa-spinner fa-spin loader-pub"--}}
+{{--                                                    style="display:none; margin-bottom: 5px"></i>--}}
+{{--                                                <span class="search-title">{{ __('Search') }}</span>--}}
+{{--                                            </a>--}}
+{{--                                        </div>--}}
                                         <label
                                             class="col-lg-2 col-form-label required fw-bold fs-6">{{ __('Full Name') }}</label>
                                         <div class="col-lg-4">
@@ -66,7 +66,7 @@
                                     <!--begin::Row-->
                                     <div class="row">
                                         <label class="col-lg-2 col-form-label required fw-bold fs-6">تاريخ
-                                            التعيين</label>
+                                            التسجيل</label>
                                         <div class="col-lg-4">
                                             <div class="position-relative d-flex align-items-center">
                                                 {!! theme()->getSvgIcon('icons/duotune/general/gen014.svg', 'svg-icon svg-icon-2 position-absolute mx-4') !!}
@@ -243,7 +243,7 @@
                                                     <div class="col-lg-4">
                                                         <input type="text" name="mother_name"
                                                             class="form-control form-control-lg form-control-solid mobile"
-                                                            placeholder="الهاتف"
+                                                            placeholder="اسم والدة الطفل"
                                                             value="{{ $children->mother_name }}">
                                                     </div>
                                                     <label class="col-lg-2 col-form-label  fw-bold fs-6">رقم المحمول
@@ -467,7 +467,7 @@
                                     },
                                 },
                             },
-                            
+
                             gender: {
                                 validators: {
                                     notEmpty: {

@@ -104,10 +104,10 @@ class RolesController extends Controller
     //////////////////////////////////////////////////
     public function permissions(Role $role)
     {
-        if($role->id == 1  && auth()->user()->id != 1){
-            return redirect()->route('role.index')
-                ->with('danger', 'لا يمكن تعديل صلاحيات المشرف العام.');
-        }
+//        if($role->id == 1  && auth()->user()->id != 1){
+//            return redirect()->route('role.index')
+//                ->with('danger', 'لا يمكن تعديل صلاحيات المشرف العام.');
+//        }
         $permissionGroup =  PermissionsGroup::all();
         return view('pages.role.edit.permissions', compact(['role','permissionGroup']));
     }

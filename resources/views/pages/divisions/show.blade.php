@@ -1,4 +1,4 @@
-<x-base-layout> 
+<x-base-layout>
     @include('layout.error')
     <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
         <!--begin::Post-->
@@ -31,8 +31,8 @@
                                     <!--end::Logo-->
                                     <!--begin::Text-->
                                     <div class="fw-bold fs-4 text-muted mt-2 text-center">
-                                        <div>مستفى أصدقاء المريض</div>
-                                        <div>Patient's Friends Society</div>
+                                        <div>الجمعية الإسلامية - خانيونس</div>
+                                        <div>Islamic Association - Khanyunis</div>
                                     </div>
                                     <!--end::Text-->
                                 </div>

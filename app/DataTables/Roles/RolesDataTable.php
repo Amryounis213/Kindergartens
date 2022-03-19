@@ -6,7 +6,7 @@ use Spatie\Permission\Models\Role;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Services\DataTable;
 
-class RolesDataTable extends DataTable
+class   RolesDataTable extends DataTable
 {
     public function dataTable($query)
     {

@@ -35,8 +35,8 @@
                                     <!--end::Logo-->
                                     <!--begin::Text-->
                                     <div class="fw-bold text-muted mt-2 text-center">
-                                        <div>مستفى أصدقاء المريض</div>
-                                        <div>Patient's Friends Society</div>
+                                        <div>الجمعية الإسلامية - خانيونس</div>
+                                        <div>Islamic Association - Khanyunis</div>
                                     </div>
                                     <!--end::Text-->
                                 </div>

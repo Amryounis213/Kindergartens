@@ -1,5 +1,4 @@
 <!--begin::Action--->
-@if($model->id != 1 || auth()->user()->id == 1)
 <td class="text-end">
     @can('permissions.edit')
     <a href="{{ route('role.permissions', $model) }}"
@@ -21,6 +20,5 @@
     </a>
     @endcan
 </td>
-@endif
 <!--end::Action--->
 

@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Children;
+use App\Models\ClassPlacment;
+use App\Models\Discount;
 use App\Models\Division;
 use App\Models\JobPlacement;
+use App\Models\Subscriptions;
 use Auth;
 use Illuminate\Http\Request;
 
@@ -44,4 +48,37 @@ class FormAjaxController extends Controller
         return response()->json($emp);
     }
 
+
+    public function GetChildrenData($id)
+    {
+        $emp = ClassPlacment::with(['Period' , 'Division' , 'Level'])->where('children_id' , $id)->first();
+       
+        return response()->json($emp);
+    }
+
+
+    public function GetSubscriptionData($id)
+    {
+        $emp = Subscriptions::with('YearSubscription')->where('id' , $id)->first();
+        return response()->json($emp);
+    }
+
+
+    public function GetDiscountData($id)
+    {
+        $emp = Discount::find($id);
+        return response()->json($emp);
+    }
+    
+
+    public function GetFeeData($id)
+    {
+        $sub_amount = Children::find($id)->ChildrenSubscriptions()->sum('total');
+        $payment_amount = Children::find($id)->PayFee()->sum('payment_amount');
+        return response()->json([
+            'sub_amount'=>$sub_amount ,
+            'payment_amount'=>$payment_amount ,
+        ]);
+
+    }
 }

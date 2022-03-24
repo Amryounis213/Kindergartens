@@ -105,4 +105,8 @@ class DriverController extends Controller
         $info = Driver::find($id);
         return updateModelStatus($info);
     }
+
+    
+
+    
 }

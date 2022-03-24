@@ -31,4 +31,21 @@ class Children extends Model
    {
        return $this->hasMany(ChildrenAttendances::class, 'children_id');
    }
+
+   public function Subscription()
+   {
+        return $this->belongsToMany(Subscriptions::class , ChildrenSubscriptions::class , 'children_id' , 'subscription_id');
+   }
+
+   public function ChildrenSubscriptions()
+   {
+        return $this->hasMany(ChildrenSubscriptions::class , 'children_id' , 'id');
+   }
+   
+   public function PayFee()
+   {
+        return $this->hasMany(PayFees::class , 'children_id' , 'id');
+   }
+
+   
 }

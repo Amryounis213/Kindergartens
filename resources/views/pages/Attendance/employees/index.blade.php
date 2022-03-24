@@ -25,7 +25,7 @@
                                 </svg>
                             </span>
                             
-                                <input type="text" id="myInputSearchField" class="form-control form-control-solid w-250px ps-15 ml-5" placeholder="البحث عن اسم موظف ...">
+                                <input type="text" id="myInputSearchField" name="terms" class="form-control form-control-solid w-250px ps-15 ml-5 typeahead" placeholder="البحث عن اسم موظف ...">
                                 <button type="submit" class="btn btn-success">{{__('Search')}}</button>
                             
 

@@ -7,7 +7,7 @@
             <!--begin::Card header-->
             <div class="card-header border-0 pt-6">
                 <!--begin::Card title-->
-                <div class="card-title">
+                <div class="card-title ">
                     <!--begin::Search-->
                     <div class="d-flex align-items-center position-relative my-1">
                         <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
@@ -26,6 +26,39 @@
                                class="form-control form-control-solid w-250px ps-15" placeholder="{{__('Search')}}">
                     </div>
                     <!--end::Search-->
+
+                    <div class="d-flex align-items-center position-relative my-1 ml-2">
+                    <select  name="division_id" aria-label="{{ __('Select') }} الشعبة" id="division_id"
+                            {{-- data-control="select2"  --}}
+                            data-placeholder="{{ __('Select') }} الشعبة .."
+                            class="form-select form-select-solid form-select-md fw-bold w-250px ps-15 ml-5"
+                            >
+                            <option value="">{{ __('Select') }}الشعبة...
+                            </option>
+                    
+                            @foreach ($division as $item)
+                                <option value="{{ $item->id }}"
+                                    {{ $item->id ==  ($selected ?? old('division_id'))  ? 'selected' : '' }}> {{ $item->name }}
+                                </option>
+                            @endforeach
+                        </select>
+
+
+                        <select  name="kindergarten_id" aria-label="{{ __('Select') }} الروضة" id="kindergarten_id"
+                            {{-- data-control="select2"  --}}
+                            data-placeholder="{{ __('Select') }} الروضة .."
+                            class="form-select form-select-solid form-select-md fw-bold w-250px ps-15 ml-5"
+                            >
+                            <option value="">{{ __('Select') }}الروضة...
+                            </option>
+                    
+                            @foreach ($kindergartens as $item)
+                                <option value="{{ $item->id }}"
+                                    {{ $item->id ==  ($selected ?? old('kindergarten_id'))  ? 'selected' : '' }}> {{ $item->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
                 <!--begin::Card title-->
                 <!--begin::Card toolbar-->

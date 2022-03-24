@@ -26,7 +26,9 @@ class ChildrenController extends Controller
      */
     public function index(ChildrensDataTable $dataTable)
     {
-        return $dataTable->render('pages.childrens.index.index');
+        $division = Division::where('status' , 1)->get();
+        $kindergartens= Kindergarten::where('status' , 1)->get();
+        return $dataTable->render('pages.childrens.index.index' ,compact('division' , 'kindergartens'));
     }
 
     /**

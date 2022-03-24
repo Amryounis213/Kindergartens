@@ -274,6 +274,25 @@ return array(
         
     ),
 ),
+'children-subscriptions' => array(
+    'title' => 'اشتراكات الأطفال',
+    'assets' => array(
+        'custom' => array(
+            'css' => array(
+                'plugins/custom/datatables/datatables.bundle.css',
+            ),
+            'js' => array(
+                'plugins/custom/datatables/datatables.bundle.js',
+            ),
+        ),
+    ),
+    '*' => array(
+        'title' => 'اشتراكات الأطفال',
+        
+       
+        
+    ),
+),
 
 
     'patient' => array(

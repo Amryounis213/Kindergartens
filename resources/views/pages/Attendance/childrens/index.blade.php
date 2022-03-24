@@ -29,9 +29,9 @@
                         
 
                         <input type="text" id="myInputSearchField"
-                            class="form-control form-control-solid w-250px ps-15 ml-5"
+                            class="form-control form-control-solid w-250px ps-15 ml-5 typeahead"
                             placeholder="البحث عن اسم الطالب ...">
-                        <button type="submit" class="btn btn-success m-3 typeahead">{{ __('Search') }}</button>
+                        <button type="submit" class="btn btn-success m-3 ">{{ __('Search') }}</button>
                        
                         <strong> أو </strong>
                         <!--end::Svg Icon-->

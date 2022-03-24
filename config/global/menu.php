@@ -444,7 +444,55 @@ return array(
                 ),
             ),
         ),
+         // الرسوم والاشتراكات
+         array(
+            'title' => 'الرسوم الدراسية والاشتراكات',
+            'permission' => array('orders.show', 'orders.create', 'orders.edit', 'orders.delete'),
+            'icon' => array(
+                'svg' => theme()->getSvgIcon("demo1/media/icons/duotune/general/gen055.svg", "svg-icon-2"),
+                'font' => '<i class="bi bi-person fs-2"></i>',
+            ),
+            'classes' => array('item' => 'menu-accordion'),
+            'badge' => '',
+            'attributes' => array(
+                "data-kt-menu-trigger" => "click",
+            ),
+            'sub' => array(
+                'class' => 'menu-sub-accordion menu-active-bg',
+                'items' => array(
+                    array(
+                        'title' => 'الاشتراكات',
+                        'path' => 'subscriptions',
+                        'classes' => array('item' => 'show-menu-bdg'),
+                        'permission' => 'childrens.show',
+                        'bullet' => '<span class="bullet bullet-dot"></span>',
+                    ),
+                    array(
+                        'title' => 'الاشتراكات السنوية',
+                        'permission' => 'childrens.show',
+                        'path' => 'year-sub',
+                        'bullet' => '<span class="bullet bullet-dot"></span>',
+                    ),
+                    array(
+                        'title' => ' اشتراكات الأطفال',
+                        'permission' => 'childrens.create',
+                        'path' => 'children-subscriptions',
+                        'bullet' => '<span class="bullet bullet-dot"></span>',
+                    ),
+                    array(
+                        'title' => 'تسديد الرسوم',
+                        'permission' => 'childrens.create',
+                        'path' => 'pay-fees',
+                        'bullet' => '<span class="bullet bullet-dot"></span>',
+                    ),
+                   
 
+                ),
+            ),
+        ),
+
+
+        
         // الثوابث
         array(
             'title' => 'الثوابث',

@@ -6,10 +6,12 @@ use App\Http\Controllers\ChangeDivisionController;
 use App\Http\Controllers\CheckupsController;
 use App\Http\Controllers\ChildrenAttendanceController;
 use App\Http\Controllers\ChildrenController;
+use App\Http\Controllers\ChildrenSubscriptionsController;
 use App\Http\Controllers\ClinicsController;
 use App\Http\Controllers\DivisionController;
 use App\Http\Controllers\Documentation\ReferencesController;
 use App\Http\Controllers\DriverController;
+use App\Http\Controllers\DriverPlacmentController;
 use App\Http\Controllers\EducationalLevelController;
 use App\Http\Controllers\EmployeesAttendanceController;
 use App\Http\Controllers\EmployeesController;
@@ -32,11 +34,15 @@ use App\Http\Controllers\OrderXraysController;
 use App\Http\Controllers\OrderCollectionsController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\PatientsController;
+use App\Http\Controllers\PayFeesController;
 use App\Http\Controllers\PermissionsController;
 use App\Http\Controllers\RolesController;
+use App\Http\Controllers\SubscriptionsController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\XraysController;
+use App\Http\Controllers\YearSubController;
 use App\Models\EducationalLevels;
+use App\Models\Subscriptions;
 use Illuminate\Support\Facades\Route;
 use Maatwebsite\Excel\Row;
 
@@ -87,6 +93,7 @@ Route::post('employee/status', [EmployeesController::class, 'status'])->name('em
 
 //المستويات
 Route::resource('levels' , LevelsController::class);
+Route::post('level/status', [LevelsController::class, 'status'])->name('levels.status');
 
 //الشعب الدراسية
 Route::resource('divisions' , DivisionController::class);
@@ -116,16 +123,21 @@ Route::post('/switch',[ChangeDivisionController::class, 'switchDivision'])->name
 // السائقين
 Route::resource('drivers' , DriverController::class);
 Route::post('drivers/status', [DriverController::class, 'status'])->name('drivers.status');
-
+Route::resource('driverplacment' , DriverPlacmentController::class);
 //ajax filter 
 Route::get('GetDivisionByLevel/{id}/{kinder}', [FormAjaxController::class, 'GetDivisionByLevel'])->name('GetDivisionByLevel');
 Route::get('GetDivisionByKindergarten/{id}', [FormAjaxController::class, 'GetDivisionByKindergarten'])->name('GetDivisionByKindergarten');
-
+Route::get('GetChildrenData/{id}' , [FormAjaxController::class , 'GetChildrenData'])->name('GetChildrenData');
 Route::get('GetEmployeeData/{id}', [FormAjaxController::class, 'GetEmployeeData'])->name('GetEmployeeData');
+Route::get('GetSubscriptionData/{id}', [FormAjaxController::class, 'GetSubscriptionData'])->name('GetSubscriptionData');
+Route::get('GetDiscountData/{id}', [FormAjaxController::class, 'GetDiscountData'])->name('GetDiscountData');
+Route::get('GetFeeData/{id}', [FormAjaxController::class, 'GetFeeData'])->name('GetFeeData');
+
 
 //Auto complete search for student attendance -- بحث تلقائي للحضور والغياب الطلابي
-Route::get('authcomplete' , [ChildrenAttendanceController::class , 'autocomplete'])->name('autocomplete');
-
+Route::get('autocomplete' , [ChildrenAttendanceController::class , 'autocomplete'])->name('autocomplete');
+//Auto complete search for student attendance -- بحث تلقائي للحضور والغياب للموظفين
+Route::get('empautocomplete' , [EmployeesAttendanceController::class , 'autocomplete'])->name('Empautocomplete');
 
 
 //ثوابث النظام
@@ -135,6 +147,15 @@ Route::resource('majors' , MajorsController::class);
 Route::resource('father-relations' , FatherRelationController::class);
 Route::resource('father-jobs' , FatherJobsController::class);
 
+/*************************** الاشتراكات والرسوم ****** */
+Route::resource('subscriptions' , SubscriptionsController::class);
+Route::post('subscription/status', [SubscriptionsController::class, 'status'])->name('subscriptions.status');
+// -------الاشتراكات السنوية
+Route::resource('year-sub' , YearSubController::class);
+//------- اشتركات الأطفال
+ Route::resource('children-subscriptions' , ChildrenSubscriptionsController::class );
+//------- تسديد الرسوم
+Route::resource('pay-fees' , PayFeesController::class);
 
 
 

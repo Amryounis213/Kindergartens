@@ -47,7 +47,6 @@ class ChildrenAttendanceController extends Controller
      */
     public function store(Request $request)
     {
-        
          try {
             
             
@@ -64,7 +63,7 @@ class ChildrenAttendanceController extends Controller
               
                 ChildrenAttendances::create([
                     'children_id'=> $employeeid,
-                    'kindergarten_id'=> $child->kindergarten_id ,
+                    'kindergarten_id'=> $child->ClassPlacement->kindergarten_id ,
                     'division_id'=> $child->ClassPlacement->division_id , 
                     'attendence_date'=> date('Y-m-d'),
                     'attendence_status'=> $attendence_status,
@@ -155,7 +154,8 @@ class ChildrenAttendanceController extends Controller
 
     public function autocomplete(Request $request)
     {
-        $data = Children::select('name')->where('name', 'LIKE' , "%{$request->terms}")->get();
+        $query = $request->get('terms');
+        $data = Children::whereHas('ClassPlacement')->where('name', 'LIKE', '%'. $query. '%')->get();
         return response()->json($data);
     }
 

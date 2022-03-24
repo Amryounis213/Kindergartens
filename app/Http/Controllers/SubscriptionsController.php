@@ -2,21 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\DataTables\Drivers\DriversDataTable;
-use App\Models\Driver;
-use App\Models\Kindergarten;
+use App\DataTables\Subscriptions\SubscriptionsDataTable;
+use App\Models\Subscriptions;
 use Illuminate\Http\Request;
 
-class DriverController extends Controller
+class SubscriptionsController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(DriversDataTable $datatable)
+    public function index(SubscriptionsDataTable $datatable)
     {
-        return $datatable->render('pages.drivers.index');
+        return $datatable->render('pages.subscriptions.index');
     }
 
     /**
@@ -26,8 +25,7 @@ class DriverController extends Controller
      */
     public function create()
     {
-        $kinder = Kindergarten::select('id' , 'name')->where('status' , 1)->get();
-        return view('pages.drivers.create' , ['kindergartens'=>$kinder]);
+        return view('pages.subscriptions.create');
     }
 
     /**
@@ -38,10 +36,9 @@ class DriverController extends Controller
      */
     public function store(Request $request)
     {
-       
-        Driver::create($request->all());
-        return redirect()->route('drivers.index')->with('success' , 'تمت اضافة السائق بنجاح');
-        
+        Subscriptions::create($request->all());
+        return redirect()->route('subscriptions.index')->with('success' , 'تم اضافة الاشتراك بنجاح');
+
     }
 
     /**
@@ -63,12 +60,10 @@ class DriverController extends Controller
      */
     public function edit($id)
     {
-        $driver = Driver::find($id);
-        $kinder = Kindergarten::select('id' , 'name')->where('status' , 1)->get();
-        return view('pages.drivers.edit' , [
-            'kindergartens'=>$kinder , 
-            'driver'=>$driver ,
-        ]);
+
+        $sub = Subscriptions::find($id);
+        return view('pages.subscriptions.edit' , compact('sub'));
+
     }
 
     /**
@@ -80,10 +75,9 @@ class DriverController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $driver = Driver::find($id);
-        $driver->update($request->all());
-
-        return redirect()->route('drivers.index')->with('success' , 'تم تعديل السائق بنجاح');
+        $sub = Subscriptions::find($id);
+        $sub->update($request->all());
+        return redirect()->route('subscriptions.index')->with('success' , 'تم تعديل الاشتراك بنجاح');
     }
 
     /**
@@ -94,19 +88,16 @@ class DriverController extends Controller
      */
     public function destroy($id)
     {
-        $info = Driver::find($id);
-        $info->delete();
+        $sub = Subscriptions::find($id);
+        $sub->delete();
         return response()->json(['status' => 'success', 'message' => 'تم الحذف بنجاح']);
 
     }
+
     public function status(Request $request)
     {
         $id = $request->get('id');
-        $info = Driver::find($id);
+        $info = Subscriptions::find($id);
         return updateModelStatus($info);
     }
-
-    
-
-    
 }

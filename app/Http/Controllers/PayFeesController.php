@@ -2,21 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\DataTables\Drivers\DriversDataTable;
-use App\Models\Driver;
-use App\Models\Kindergarten;
+use App\DataTables\ChildrensPayment\ChildrenPayFeesDataTable;
+use App\Models\Children;
+use App\Models\PayFees;
 use Illuminate\Http\Request;
 
-class DriverController extends Controller
+class PayFeesController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(DriversDataTable $datatable)
+    public function index(ChildrenPayFeesDataTable $datatable)
     {
-        return $datatable->render('pages.drivers.index');
+        $childrens = Children::select('id', 'name')->where('status', 1)->get();
+        return $datatable->render('pages.childrenpayment.index' , compact('childrens'));
     }
 
     /**
@@ -26,8 +27,7 @@ class DriverController extends Controller
      */
     public function create()
     {
-        $kinder = Kindergarten::select('id' , 'name')->where('status' , 1)->get();
-        return view('pages.drivers.create' , ['kindergartens'=>$kinder]);
+        //
     }
 
     /**
@@ -38,10 +38,8 @@ class DriverController extends Controller
      */
     public function store(Request $request)
     {
-       
-        Driver::create($request->all());
-        return redirect()->route('drivers.index')->with('success' , 'تمت اضافة السائق بنجاح');
-        
+        $sub = PayFees::create($request->all());
+        return response()->json(['status' => 'success', 'message' => trans('تم دفع رسوم جديدة للطفل')]);
     }
 
     /**
@@ -63,12 +61,11 @@ class DriverController extends Controller
      */
     public function edit($id)
     {
-        $driver = Driver::find($id);
-        $kinder = Kindergarten::select('id' , 'name')->where('status' , 1)->get();
-        return view('pages.drivers.edit' , [
-            'kindergartens'=>$kinder , 
-            'driver'=>$driver ,
-        ]);
+        
+        $pay = PayFees::find($id);
+
+        $childrens = Children::find($pay->children_id);
+        return view('pages.childrenpayment.edit' , compact('childrens' , 'pay'));
     }
 
     /**
@@ -80,10 +77,10 @@ class DriverController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $driver = Driver::find($id);
-        $driver->update($request->all());
+        $sub = PayFees::find($id);
+        $sub->update($request->all());
+        return redirect()->route('pay-fees.index')->with('success' , 'تم تعديل الدفعة بنجاح');
 
-        return redirect()->route('drivers.index')->with('success' , 'تم تعديل السائق بنجاح');
     }
 
     /**
@@ -94,19 +91,9 @@ class DriverController extends Controller
      */
     public function destroy($id)
     {
-        $info = Driver::find($id);
-        $info->delete();
+        $sub = PayFees::find($id);
+        $sub->delete();
         return response()->json(['status' => 'success', 'message' => 'تم الحذف بنجاح']);
 
     }
-    public function status(Request $request)
-    {
-        $id = $request->get('id');
-        $info = Driver::find($id);
-        return updateModelStatus($info);
-    }
-
-    
-
-    
 }

@@ -54,6 +54,26 @@ class ChildrensDataTable extends DataTable
      */
     public function query(Children $model)
     {
+        /** REQUEST ALL ATTRIBUTE */
+        $division = $this->request()->get('division');
+        $kindergarten = $this->request()->get('kindergarten');
+        if( !empty($division))
+        {
+           return $model->whereHas('ClassPlacement' , function($query) use ($division){
+                $query->where('division_id' , $division);
+            });
+           // return $model->ClassPlacement->where('division_id' , $division)->get();
+        }
+
+        if( !empty($kindergarten))
+        {
+           return $model->whereHas('ClassPlacement' , function($query) use ($kindergarten){
+                $query->where('kindergarten_id' , $kindergarten);
+            });
+           // return $model->ClassPlacement->where('division_id' , $division)->get();
+        }
+
+
         if(Auth::user()->kindergarten_id != null)
         {
             return $model->where('kindergarten_id' , Auth::user()->kindergarten_id)->newQuery();

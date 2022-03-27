@@ -294,6 +294,24 @@ return array(
     ),
 ),
 
+'installments' => array(
+    'title' => ' الاقساط',
+    'assets' => array(
+        'custom' => array(
+            'css' => array(
+                'plugins/custom/datatables/datatables.bundle.css',
+            ),
+            'js' => array(
+                'plugins/custom/datatables/datatables.bundle.js',
+            ),
+        ),
+    ),
+    '*' => array(
+        'title' => 'الاقساط',
+        
+        
+    ),
+),
 
     'patient' => array(
         'title' => 'قائمة المرضى',

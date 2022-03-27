@@ -47,5 +47,10 @@ class Children extends Model
         return $this->hasMany(PayFees::class , 'children_id' , 'id');
    }
 
+   public function Installment()
+   {
+        return $this->hasMany(Installment::class , 'children_id' , 'id');
+   }
+   
    
 }

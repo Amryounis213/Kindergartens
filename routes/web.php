@@ -19,6 +19,7 @@ use App\Http\Controllers\FatherController;
 use App\Http\Controllers\FatherJobsController;
 use App\Http\Controllers\FatherRelationController;
 use App\Http\Controllers\FormAjaxController;
+use App\Http\Controllers\InstallmentController;
 use App\Http\Controllers\JobTitlesLevelController;
 use App\Http\Controllers\KindergardenController;
 use App\Http\Controllers\LevelsController;
@@ -42,6 +43,7 @@ use App\Http\Controllers\UsersController;
 use App\Http\Controllers\XraysController;
 use App\Http\Controllers\YearSubController;
 use App\Models\EducationalLevels;
+use App\Models\Installment;
 use App\Models\Subscriptions;
 use Illuminate\Support\Facades\Route;
 use Maatwebsite\Excel\Row;
@@ -156,7 +158,10 @@ Route::resource('year-sub' , YearSubController::class);
  Route::resource('children-subscriptions' , ChildrenSubscriptionsController::class );
 //------- تسديد الرسوم
 Route::resource('pay-fees' , PayFeesController::class);
-
+//------ تسديد عن طريق الاقساط
+Route::resource('installments' , InstallmentController::class);
+Route::get('pay-installment/{id}' , [InstallmentController::class ,'PayInstallment']);
+//------
 
 
 

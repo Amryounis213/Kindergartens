@@ -2,7 +2,7 @@
 {{ $dataTable->table() }}
 <!--end::Table-->
 @section('styles')
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 @endsection
 {{-- Inject Scripts --}}
 @section('scripts')
@@ -66,66 +66,8 @@
                 }
             });
         });
-        $('#subscription_id').change(function() {
-            let id = this.value;
-            $.ajax({
-                url: "GetSubscriptionData/" + id,
-                method: 'GET',
-                data: {
-                    // 'doctor_id': id,
-                    // 'identity': identity,
-                },
-                dataType: "JSON",
-                success: function(data) {
-                    console.log(data);
-                    if (data != null) {
-                        $('#required_amount').empty();
-                        $('#required_amount').val(data.year_subscription.price)
-                        $('#discount_amount').val(0);
-                        $('#discount').val(0);
-                        $('#total').val(data.year_subscription.price);
-                        // $('#discount_id').find('option:first').attr('selected', 'selected');
-                        $("#discount_id")[0].selectedIndex = '';
-                        if ($('#subscription_id').val() != '') {
-                            $('#discount_id').removeAttr('disabled');
-                        } else {
-                            $('#discount_id').attr('disabled');
-                        }
-                    }
-                }
-            });
-        });
-        $('#discount_id').change(function() {
-            let id = this.value;
-            let sub = $('#required_amount');
-            $.ajax({
-                url: "GetDiscountData/" + id,
-                method: 'GET',
-                data: {
-                    // 'doctor_id': id,
-                    // 'identity': identity,
-                },
-                dataType: "JSON",
-                success: function(data) {
-                    console.log(data);
-                    if (data != null) {
-                        $('#discount').empty();
-                        $('#discount').val(data.per);
-                        let r = $('#required_amount').val();
-                        $('#discount_amount').val(sub.val() * data.per / 100);
-                        let d = $('#discount_amount').val();
-                        $('#total').val(r - d + ' شيكل');
-                    }
-                }
-            });
-        });
-        $("#discount").keyup(function() {
-            let discount = $(this).val();
-            let x = $("#required_amount").val();
-            $('#total').empty();
-            let discounttotal = x * discount / 100;
-            $('#total').val(x - discounttotal + ' شيكل');
-        });
+
+
         // $('#kindergarten_id').change(function() {
         //     let x =Table.DataTable().ajax.reload();
         // });
@@ -143,42 +85,24 @@
                 const oTable = $('#patients-table').DataTable();
                 $.ajax({
                     method: "POST",
-                    url: "{{ route('pay-fees.store') }}",
+                    url: "{{ route('installments.store') }}",
                     data: {
                         "children_id": $('#children_id').val(),
                         "payment_date": $('#payment_date').val(),
                         "payment_amount": $('#payment_amount2').val(),
-                        "Receipt_number": $('#Receipt_number').val(),
-                        "year": $('#year').val(),
+                        "start_date": $('#start_date').val(),
+                        "no_of_installment": $('#no_of_installment').val(),
                     },
                     dataType: "JSON",
                     success: function(data) {
                         oTable.draw();
                         toastr.options.positionClass = 'toast-top-left';
                         toastr[data.status](data.message);
-                        $.ajax({
-                            url: "GetFeeData/" + $('#children_id').val(),
-                            method: 'GET',
-                            data: {
-                                // 'doctor_id': id,
-                                // 'identity': identity,
-                            },
-                            dataType: "JSON",
-                            success: function(data) {
-                                console.log(data);
-                                if (data != null) {
-                                    $('#required_amount').empty();
-                                    let x = Number(data.sub_amount).toFixed(1);
-                                    $('#required_amount').append(`${x}`);
-                                    $('#payment_amount').empty();
-                                    let y = Number(data.payment_amount).toFixed(1);
-                                    $('#payment_amount').append(`${y}`);
-                                    $('#total_amount').empty();
-                                    let z = Number(x - y).toFixed(1);
-                                    $('#total_amount').append(`${z}`);
-                                }
-                            }
-                        });
+
+                        $('#payment_date').val('');
+                        $('#payment_amount2').val('');
+                        $('#start_date').val('');
+                        $('#no_of_installment').val('');
                     }
                 });
             });
@@ -195,7 +119,7 @@
             $(document).on('click', ".del_rec_btn", function(e) {
                 e.preventDefault();
                 const id = $(this).data('id');
-                let url = "{{ route('pay-fees.destroy', ":id") }}";
+                let url = "{{ route('pay-fees.destroy', ':id') }}";
                 url = url.replace(':id', id);
                 Swal.fire({
                     title: 'تحذبر!',
@@ -259,6 +183,55 @@
                 oTable.search($(this).val()).draw();
             });
             oTable.draw();
+        });
+    </script>
+
+    <script>
+        $(document).on('click', ".pay", function(e) {
+            const oTable = $('#patients-table').DataTable();
+            id = $(this).attr('id');
+
+            $.ajax({
+                url: "pay-installment/" + id,
+                method: 'GET',
+                data: {
+                    // 'doctor_id': id,
+                    // 'identity': identity,
+                },
+                dataType: "JSON",
+                success: function(data) {
+                    console.log(data);
+                    if (data != null) {
+                        oTable.draw();
+                        toastr.options.positionClass = 'toast-top-left';
+                        toastr[data.status](data.message);
+                    }
+
+                    $.ajax({
+                        url: "GetFeeData/" + data.children_id,
+                        method: 'GET',
+                        data: {
+                            // 'doctor_id': id,
+                            // 'identity': identity,
+                        },
+                        dataType: "JSON",
+                        success: function(data) {
+                            //console.log(data);
+                            if (data != null) {
+                                $('#required_amount').empty();
+                                let x = Number(data.sub_amount).toFixed(1);
+                                $('#required_amount').append(`${x}`);
+                                $('#payment_amount').empty();
+                                let y = Number(data.payment_amount).toFixed(1);
+                                $('#payment_amount').append(`${y}`);
+                                $('#total_amount').empty();
+                                let z = Number(x - y).toFixed(1);
+                                $('#total_amount').append(`${z}`);
+                            }
+                        }
+                    });
+                }
+            });
         });
     </script>
 @endsection

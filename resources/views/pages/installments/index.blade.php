@@ -50,22 +50,22 @@
 
                     <div class="row mb-6">
                         <div class="col-lg-2 mb-lg-0 mb-6">
-                            <label>قيمة الدفعة :</label>
+                            <label>المبلغ المراد تقسيطه :</label>
                             <input id="payment_amount2" name="payment_amount" type="text"
-                                class="form-control datatable-input" placeholder="المبلغ المدفوع" data-col-index="4">
+                                class="form-control datatable-input" placeholder="  المبلغ المراد تقسيطه" data-col-index="4">
                         </div>
                         <div class="col-lg-2 mb-lg-0 mb-6">
-                            <label>تاريخ الدفع</label>
+                            <label>تاريخ أول قسط</label>
                             {!! theme()->getSvgIcon('icons/duotune/general/gen014.svg', 'svg-icon svg-icon-2 position-absolute mx-4') !!}
-                            <input id="payment_date" class="form-control  ps-12 datatable-input flatpickr-input "
-                                placeholder="{{ __('Select a date') }}" name="payment_date" type="text"
-                                value="{{ old('payment_date') }}" readonly>
+                            <input id="start_date" class="form-control  ps-12 datatable-input flatpickr-input "
+                                placeholder="{{ __('Select a date') }}" name="start_date" type="text"
+                                value="{{ old('start_date') }}" readonly>
                             {{-- <label>تاريخ الدفع</label>
                             <input id="payment_date" name="payment_date"  type="text" class="form-control datatable-input flatpickr-input" placeholder="" data-col-index="4"> --}}
                         </div>
                         <div class="col-lg-2 mb-lg-0 mb-6">
-                            <label>رقم الوصل :</label>
-                            <input name="Receipt_number" id="Receipt_number" type="text"
+                            <label>عدد الأقساط :</label>
+                            <input name="no_of_installment" id="no_of_installment" type="number"
                                 class="form-control datatable-input" placeholder="" data-col-index="4">
                         </div>
                         <div class="col-lg-3 mb-lg-0 mb-6">
@@ -77,7 +77,7 @@
                             <button class="btn btn-primary btn-primary--icon mt-5" id="sub">
                                 <span>
                                     <i class="la la-plus"></i>
-                                    <span>تسديد دفعة</span>
+                                    <span>جدولة الاقساط</span>
                                 </span>
                             </button>&nbsp;&nbsp;
                         </div>
@@ -107,7 +107,7 @@
             <!--end::Card header-->
             <!--begin::Card body-->
             <div class="card-body pt-0">
-                @include('pages.childrenpayment.parts._table')
+                @include('pages.installments.parts._table')
             </div>
             <!--end::Card body-->
         </div>

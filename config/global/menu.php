@@ -485,6 +485,13 @@ return array(
                         'path' => 'pay-fees',
                         'bullet' => '<span class="bullet bullet-dot"></span>',
                     ),
+
+                    array(
+                        'title' => 'الأقساط  الدراسية',
+                        'permission' => 'childrens.create',
+                        'path' => 'installments',
+                        'bullet' => '<span class="bullet bullet-dot"></span>',
+                    ),
                    
 
                 ),

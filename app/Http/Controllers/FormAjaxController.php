@@ -75,9 +75,10 @@ class FormAjaxController extends Controller
     {
         $sub_amount = Children::find($id)->ChildrenSubscriptions()->sum('total');
         $payment_amount = Children::find($id)->PayFee()->sum('payment_amount');
+        $installment = Children::find($id)->Installment()->sum('paid_amount');
         return response()->json([
             'sub_amount'=>$sub_amount ,
-            'payment_amount'=>$payment_amount ,
+            'payment_amount'=>$payment_amount + $installment ,
         ]);
 
     }

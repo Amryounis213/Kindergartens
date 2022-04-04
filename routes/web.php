@@ -91,7 +91,8 @@ Route::resource('employees', EmployeesController::class);
 Route::get('jobplacement/employees/{id?}', [EmployeesController::class , 'jobPlacementView'])->name('jobplacement.create');
 Route::post('jobplacement/employees', [EmployeesController::class , 'jobPlacementStore'])->name('jobplacement.store');
 Route::post('employee/status', [EmployeesController::class, 'status'])->name('employee.status');
-
+Route::get('trashed-employee' , [EmployeesController::class ,'getTrashed'])->name('employee.trashed'); // صفحة الطلاب المحذوفين
+Route::get('restore-employee/{id}' , [EmployeesController::class , 'RestoreTrashed'])->name('employee.restore');
 
 //المستويات
 Route::resource('levels' , LevelsController::class);
@@ -100,7 +101,8 @@ Route::post('level/status', [LevelsController::class, 'status'])->name('levels.s
 //الشعب الدراسية
 Route::resource('divisions' , DivisionController::class);
 Route::post('divisions/status', [DivisionController::class, 'status'])->name('divisions.status');
-
+Route::get('trashed-division' , [DivisionController::class ,'getTrashed'])->name('division.trashed'); // صفحة الطلاب المحذوفين
+Route::get('restore-division/{id}' , [DivisionController::class , 'RestoreTrashed'])->name('division.restore');
 //اولياء الامور
 Route::resource('fathers' , FatherController::class);
 //الاطفال
@@ -154,10 +156,13 @@ Route::resource('subscriptions' , SubscriptionsController::class);
 Route::post('subscription/status', [SubscriptionsController::class, 'status'])->name('subscriptions.status');
 // -------الاشتراكات السنوية
 Route::resource('year-sub' , YearSubController::class);
+Route::post('year-subs/status', [YearSubController::class, 'updateStaticFee'])->name('year-sub.status');
 //------- اشتركات الأطفال
  Route::resource('children-subscriptions' , ChildrenSubscriptionsController::class );
 //------- تسديد الرسوم
 Route::resource('pay-fees' , PayFeesController::class);
+Route::get('trashed-pay-fees' , [PayFeesController::class ,'getTrashed'])->name('pay-fees.trashed'); // صفحة الطلاب المحذوفين
+Route::get('restore-pay-fees/{id}' , [PayFeesController::class , 'RestoreTrashed'])->name('pay-fees.restore');
 //------ تسديد عن طريق الاقساط
 Route::resource('installments' , InstallmentController::class);
 Route::get('pay-installment/{id}' , [InstallmentController::class ,'PayInstallment']);

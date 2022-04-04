@@ -13,6 +13,7 @@ use App\Models\FatherRelation;
 use App\Models\Kindergarten;
 use App\Models\Level;
 use App\Models\Period;
+use App\Models\Year;
 use Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -149,7 +150,7 @@ class ChildrenController extends Controller
      
         $kinder =Kindergarten::all();
         $employee = Children::find($id);
-        
+        $years = Year::where('status' , 1)->get();
         return view('pages.childrens.class_placement.create' ,[
             'childrens'=>Children::all(),
             'kinder'=>$kinder ,
@@ -158,12 +159,13 @@ class ChildrenController extends Controller
             'levels'=>Level::select('id' , 'name')->get(),
             'divisions'=>Division::select('id' ,'name')->get(),
             'emp'=>$employee,
+            'years'=>$years,
         
         ]);
     }
     public function classPlacementStore(Request $request)
     {
-        $exists = ClassPlacment::where('children_id' , $request->children_id)->exists();
+        $exists = ClassPlacment::where('children_id' , $request->children_id)->where('year' , $request->year)->exists();
 
         $request->merge([
             'year'=> $request->year,

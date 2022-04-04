@@ -36,7 +36,7 @@
 
                         $('#year').empty();
                         $('#year').append(
-                            ` <option value="${data.year}" selected> ${data.year} </option>  `);
+                            ` <option value="${data.year.id}" selected> ${data.year.name} </option>  `);
 
 
 
@@ -45,6 +45,16 @@
 
                         $('#level_id').empty();
                         $('#level_id').val(data.level.name)
+
+                        $('#required_amount').val('');
+                        $('#discount').val(0);
+                        $('#discount_amount').val('');
+                        $('#total').val(0);
+                        $('#subscription_id').prop('selectedIndex',0);
+                        let dis =$('#discount_id');
+                        dis.prop('selectedIndex',0);
+                        dis.prop("disabled", true);
+                        
 
                     }
                 }
@@ -173,6 +183,9 @@
                         "discount": $('#discount').val(),
                         "children_id": $('#children_id').val(),
                         "subscription_id": $('#subscription_id').val(),
+                        "discount_id" : $('#discount_id').val() ,
+                        "year" : $('#year').val() ,
+
                     },
                     dataType: "JSON",
                     success: function(data) {
@@ -180,6 +193,16 @@
                         oTable.draw();
                         toastr.options.positionClass = 'toast-top-left';
                         toastr[data.status](data.message);
+                        $('#division_id').empty();
+                        $('#level_id').empty();
+                        $('#required_amount').val('');
+                        $('#discount').val(0);
+                        $('#discount_amount').val('');
+                        $('#total').val(0);
+                        $('#subscription_id').prop('selectedIndex',0);
+                        let dis =$('#discount_id');
+                        dis.prop('selectedIndex',0);
+                        dis.prop("disabled", true);
                     }
 
                 });

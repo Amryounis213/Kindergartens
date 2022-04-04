@@ -35,10 +35,10 @@ class InstallmentDataTable extends DataTable
             })
             ->addColumn('status', function (Installment $model) {
                 return view('pages.installments.parts._status', compact('model'));
-            })
-            ->addColumn('action', function (Installment $model) {
-                return view('pages.installments.parts._action-menu', compact('model'));
             });
+            // ->addColumn('action', function (Installment $model) {
+            //     return view('pages.installments.parts._action-menu', compact('model'));
+            // });
     }
 
     /**
@@ -105,11 +105,11 @@ class InstallmentDataTable extends DataTable
             Column::computed('status')->title('الحالة')->addClass('text-center'),
             Column::computed('pay_fee')->title('دفع قسط')->addClass('text-center'),
 
-            Column::computed('action')
-                ->exportable(false)
-                ->printable(false)
-                ->responsivePriority(-1)
-                ->title(__('action')),
+            // Column::computed('action')
+            //     ->exportable(false)
+            //     ->printable(false)
+            //     ->responsivePriority(-1)
+            //     ->title(__('action')),
         ];
     }
 

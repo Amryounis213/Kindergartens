@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Employee extends Model
 {
     use HasFactory;
+    use SoftDeletes;
     protected $fillable = ['identity' ,'name' ,'mobile' ,'telephone' ,'gender' , 'address' ,'kindergartens',
         'major_id' ,'status' , 'bth_date' , 'add_date' , 'added_by' , 'notice', 'education_id' ];
 

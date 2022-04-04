@@ -20,7 +20,7 @@ class CreatePayFeesTable extends Migration
             $table->unsignedFloat('payment_amount')->default(0);
             $table->unsignedBigInteger('Receipt_number')->nullable();
             $table->text('notices')->nullable();
-            $table->string('year');
+            $table->foreignId('year')->constrained('years')->cascadeOnDelete();
             $table->foreignId('children_id')->constrained('childrens')->cascadeOnDelete();
             $table->timestamps();
         });

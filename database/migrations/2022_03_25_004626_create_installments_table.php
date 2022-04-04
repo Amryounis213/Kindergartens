@@ -22,7 +22,7 @@ class CreateInstallmentsTable extends Migration
             $table->enum('status' , ['paid' , 'unpaid'])->default('unpaid');
             $table->text('notices')->nullable();
             $table->unsignedFloat('paid_amount')->default(0);
-            $table->string('year')->nullable();
+            $table->foreignId('year')->constrained('years')->cascadeOnDelete();
             $table->timestamps();
         });
     }

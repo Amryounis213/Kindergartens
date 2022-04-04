@@ -46,10 +46,20 @@ class InstallmentController extends Controller
         $count_of_installment =$request->no_of_installment ;
         $x = Carbon::parse($start_date)->format('m');
         
-     
+        $dd = Carbon::parse($start_date)->format('d');
+        $yy = Carbon::parse($start_date)->format('Y');
         $month = [ '09', '10', '11', '12',  '01', '02', '03', '04'];
-        $y = array_search($x, $month);
-      
+
+
+       
+        
+        if($count_of_installment == 8)
+        {
+            $y = 0 ;
+        }
+        else{
+            $y = array_search($x, $month);
+        }
 
         for ($i = 0; $i < $count_of_installment; $i++) {
            
@@ -60,15 +70,15 @@ class InstallmentController extends Controller
                 $m = $month[$y + $i] ?? null ;
                
                 if($m){
-                    $ins->payment_date = '2022' . '-' . $m . '-' . '25';
+                    $ins->payment_date = $yy . '-' . $m . '-' . $dd;
                 }
                 else{
                     $m =$month[($y + $i) - 8] ;
-                    $ins->payment_date = '2022' . '-' . $m . '-' . '25';
+                    $ins->payment_date = $yy . '-' . $m . '-' . $dd;
                 }
             }
             else{
-                $ins->payment_date = '2022' . '-' . $month[$i] . '-' . '25';
+                $ins->payment_date = $yy . '-' . $month[$i] . '-' . $dd;
  
             }
             $ins->payment_amount = $request->get('payment_amount') / $count_of_installment ;

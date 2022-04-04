@@ -2,14 +2,16 @@
 
 namespace App\DataTables\ChildrensPayment;
 
-use App\Models\ChildrenSubscriptions;
+use App\Models\Children;
+use App\Models\Employee;
 use App\Models\PayFees;
-use App\Models\Subscriptions;
-use Illuminate\Cache\RateLimiting\Limit;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Services\DataTable;
 
-class ChildrenPayFeesDataTable extends DataTable
+
+class TrashedDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -21,18 +23,21 @@ class ChildrenPayFeesDataTable extends DataTable
     public function dataTable($query)
     {
         return datatables()
-            ->eloquent($query)
-            ->addColumn('table_index', '')
-           
-            ->addColumn('status', function (PayFees $model) {
-                return view('pages.childrenpayment.parts._status', compact('model'));
-            })
-            ->editColumn('year', function (PayFees $model) {
-                return $model->Year->name;
-            })
-            ->editColumn('action', function (PayFees $model) {
-                return view('pages.childrenpayment.parts._action-menu', compact('model'));
-            });
+        ->eloquent($query)
+        ->addColumn('table_index', '')
+        ->editColumn('children', function (PayFees $model) {
+            return $model->Children ? $model->Children->name : '';
+        })
+        ->addColumn('status', function (PayFees $model) {
+            return view('pages.childrenpayment.parts._status', compact('model'));
+        })
+        ->editColumn('year', function (PayFees $model) {
+            return $model->Year->name;
+        })
+        ->editColumn('action', function (PayFees $model) {
+            return view('pages.childrenpayment.parts.restore', compact('model'));
+        });
+            
     }
 
     /**
@@ -44,15 +49,11 @@ class ChildrenPayFeesDataTable extends DataTable
      */
     public function query(PayFees $model)
     {
-        $children = $this->request()->get('children');
-
-        if(!empty($children))
-        {
-            return $model->where('children_id' , $children)->newQuery();
-        }
-       
-        return $model->where('created_at' , null)->newQuery();
- 
+        // if(Auth::user()->kindergarten_id != null)
+        // {
+        //     return $model->onlyTrashed()->where('kindergarten_id' , Auth::user()->kindergarten_id)->newQuery();
+        // }
+        return $model->onlyTrashed()->newQuery();
     }
 
     /**
@@ -63,7 +64,7 @@ class ChildrenPayFeesDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-            ->setTableId('patients-table')
+            ->setTableId('orders-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
             ->stateSave(true)
@@ -89,6 +90,8 @@ class ChildrenPayFeesDataTable extends DataTable
     {
         return [
             Column::make('table_index')->title(__('#'))->addClass('text-center'),
+            Column::computed('children')->title('اسم الطالب')->addClass('text-center'),
+
             Column::make('payment_date')->title('تاريخ الدفعة')->addClass('text-center'),
             Column::make('payment_amount')->title('المبلغ المدفوع')->addClass('text-center'),
             Column::make('Receipt_number')->title('رقم الوصل')->addClass('text-center'),

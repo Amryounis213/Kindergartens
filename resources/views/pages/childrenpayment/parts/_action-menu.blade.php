@@ -1,5 +1,10 @@
 <!--begin::Action--->
 <td class="text-end">
+    <a href="{{-- route('pay-fees.edit', $model) --}}"
+           title="طباعة"
+           class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm mb-1">
+            {!! theme()->getSvgIcon("icons/duotune/general/gen005.svg", "svg-icon-3") !!}
+        </a>
     @can('kindergarten.edit')
         <a href="{{ route('pay-fees.edit', $model) }}"
            title="تعديل"

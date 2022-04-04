@@ -2,7 +2,7 @@
 {{ $dataTable->table() }}
 <!--end::Table-->
 @section('styles')
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 @endsection
 {{-- Inject Scripts --}}
 @section('scripts')
@@ -34,11 +34,19 @@
                     if (data != null) {
                         $('#year').empty();
                         $('#year').append(
-                            ` <option value="${data.year}" selected> ${data.year} </option>  `);
-                        $('#division_id').empty();
-                        $('#division_id').val(data.division.name)
-                        $('#level_id').empty();
-                        $('#level_id').val(data.level.name)
+                            ` <option value="${data.year.id}" selected> ${data.year.name} </option>  `);
+                            $('#payment_amount2').val('');
+                        $('#Receipt_number').val('');
+                        $('#notices').val('');
+                        $('#payment_date').val('');
+
+                        var today = new Date();
+                        var dd = String(today.getDate()).padStart(2, '0');
+                        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+                        var yyyy = today.getFullYear();
+
+                        today = yyyy + '-' + mm + '-' + dd ;
+                        $('#payment_date').val(today);
                     }
                 }
             });
@@ -149,6 +157,7 @@
                         "payment_date": $('#payment_date').val(),
                         "payment_amount": $('#payment_amount2').val(),
                         "Receipt_number": $('#Receipt_number').val(),
+                        "notices": $('#notices').val(),
                         "year": $('#year').val(),
                     },
                     dataType: "JSON",
@@ -156,6 +165,14 @@
                         oTable.draw();
                         toastr.options.positionClass = 'toast-top-left';
                         toastr[data.status](data.message);
+
+
+                        $('#payment_amount2').val('');
+                        $('#Receipt_number').val('');
+                        $('#notices').val('');
+                        $('#payment_date').val('');
+
+
                         $.ajax({
                             url: "GetFeeData/" + $('#children_id').val(),
                             method: 'GET',
@@ -195,7 +212,7 @@
             $(document).on('click', ".del_rec_btn", function(e) {
                 e.preventDefault();
                 const id = $(this).data('id');
-                let url = "{{ route('pay-fees.destroy', ":id") }}";
+                let url = "{{ route('pay-fees.destroy', ':id') }}";
                 url = url.replace(':id', id);
                 Swal.fire({
                     title: 'تحذبر!',

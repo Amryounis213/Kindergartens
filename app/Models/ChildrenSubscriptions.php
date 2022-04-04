@@ -4,11 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ChildrenSubscriptions extends Model
 {
     use HasFactory;
-    protected $fillable = ['children_id' , 'subscription_id' , 'total' , 'required_amount' , 'discount'];
+    use SoftDeletes;
+    protected $fillable = ['children_id' , 'subscription_id' , 'total' , 'required_amount' , 'discount' , 'discount_id' , 'year'];
 
     
     public function Subscription()

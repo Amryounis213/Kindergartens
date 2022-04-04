@@ -4,13 +4,13 @@
         <div class="card mb-5 mb-xl-10">
             <!--begin::Card header-->
             <div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse"
-                 data-bs-target="#kt_account_profile_details" aria-expanded="true"
-                 aria-controls="kt_account_profile_details">
+                data-bs-target="#kt_account_profile_details" aria-expanded="true"
+                aria-controls="kt_account_profile_details">
                 <!--begin::Card title-->
                 <div class="card-title m-0">
-                    <h6 class="fw-bolder m-0">  تعديل اشتراك سنوي</h6>
+                    <h6 class="fw-bolder m-0"> تعديل اشتراك سنوي</h6>
                     <span class="h-20px border-gray-200 border-start mx-4"></span>
-                    <h3 class="fw-bolder m-0">{{$sub->name}}</h3>
+                    <h3 class="fw-bolder m-0">{{ $sub->name }}</h3>
 
                 </div>
 
@@ -18,100 +18,119 @@
             </div>
             <!--begin::Card header-->
 
-             <!--begin::Content-->
-             <div id="kt_account_profile_details" class="collapse show">
-                <!--begin::Form-->
-                <form id="details_form" class="form" method="POST" action="{{ route('year-sub.update' , $sub->id) }}"
-                    enctype="multipart/form-data">
-                    @csrf
-                    @method('PUT')
-                    <!--begin::Card body-->
-                    <div class="card-body border-top p-9">
+            <div class="card card-custom mb-3">
 
-
-                        <div class="row mb-2">
-                            <label
-                                class="col-lg-2 col-form-label required fw-bold fs-6">نوع الاشتراك</label>
-                            <div class="col-lg-4">
-                                <select name="subsraction_id"
-                                        aria-label="{{ __('Select') }} الاشتراك"
-                                        id="subsraction_id"
-                                        data-control="select2"
-                                        data-placeholder="{{ __('Select') }} الاشتراك .."
-                                        class="form-select form-select-solid form-select-lg fw-bold"
-                                >
-                                    <option value="">{{ __('Select') }} الاشتراك...
-                                    </option>
-                                    @foreach($subs as $item)
-                                        <option
-                                            value="{{$item->id}}" {{ $item->id == $sub->id ? 'selected' :'' }}> {{$item->name}}  </option>
+                <div class="card-body">
+                    <!--begin: Search Form-->
+                    <form class="mb-5" action="{{route('children-subscriptions.update' ,$sub->id)}}" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <div class="row mb-6">
+                            <div class="col-lg-3 mb-lg-0 mb-6">
+                                <label>اسم الطالب:</label>
+                                <select id="children_id" name="children_id" class="form-control datatable-input"
+                                    data-col-index="2">
+                                    <option value="">اختر طالب</option>
+                                    @foreach ($childrens as $children)
+                                        <option value="{{ $children->id }}" selected>{{ $children->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
-                            <label class="col-lg-2 col-form-label required  fw-bold fs-6">  سعر الاشتراك  (شيكل)</label>
-                            <div class="col-lg-4">
-                                <input type="text" name="price"
-                                       class="form-control form-control-lg form-control-solid mobile"
-                                       placeholder="مثال : 100" value="{{$sub->price}}">
-                                <div
-                                    class="fv-plugins-message-container invalid-feedback"></div>
+                            <div class="col-lg-3 mb-lg-0 mb-6">
+                                <label>االشعبة:</label>
+                                <input id="division_id" type="text" disabled class="form-control datatable-input"
+                                    placeholder="" data-col-index="1">
+                            </div>
+
+                            <div class="col-lg-3 mb-lg-0 mb-6">
+                                <label>المستوى:</label>
+                                <input id="level_id" type="text" disabled class="form-control datatable-input"
+                                    placeholder="" data-col-index="4">
+                            </div>
+
+                            <div class="col-lg-3 mb-lg-0 mb-6">
+                                <label>العام الدراسي:</label>
+                                <select id="year" name="year" class="form-control datatable-input" data-col-index="2">
+                                    <option value="">اختيار السنة الدراسية</option>
+
+                                    @foreach ($years as $year)
+                                        <option value="{{ $year->id }}"
+                                            {{ $year->id == $sub->year ? 'selected' : '' }}>{{ $year->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
-                        <!--end::Input group-->
-                        <!--begin::Input group-->
-                        <div class="row mb-2">
-                            <!--begin::Col-->
+                        <div class="row mb-6">
+                            <div class="col-lg-2 mb-lg-0 mb-6">
+                                <label>نوع الاشتراك:</label>
+                                <select id="subscription_id" name="subscription_id" class="form-control datatable-input"
+                                    data-col-index="2">
+                                    <option value="">اختر اشتراك</option>
+                                    @foreach ($subs as $subs)
+                                        <option value="{{ $subs->id }}"
+                                            {{ $subs->id == $sub->subscription_id ? 'selected' : '' }}>
+                                            {{ $subs->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-lg-2 mb-lg-0 mb-6">
+                                <label>القيمة الافتراضية:</label>
+                                <input id="required_amount" name="required_amount" type="text" disabled
+                                    class="form-control datatable-input" placeholder="" data-col-index="1">
+                            </div>
+                            <div class="col-lg-2 mb-lg-0 mb-6">
+                                <label>نوع الخصم:</label>
+                                <select id="discount_id" name="discount_id" class="form-control datatable-input"
+                                    data-col-index="2">
+                                    <option value="">اختر خصم</option>
+                                    @foreach ($dicsounts as $dis)
+                                        <option value="{{ $dis->id }}"
+                                            {{ $dis->id == $sub->discount_id ? 'selected' : '' }}>
+                                            {{ $dis->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-lg-2 mb-lg-0 mb-6">
+                                <label>نسبة الخصم:</label>
+                                <input id="discount" name="discount" disabled type="text"
+                                    class="form-control datatable-input" placeholder="" data-col-index="4">
+                            </div>
+                            <div class="col-lg-2 mb-lg-0 mb-6">
+                                <label>المبلغ المخصوم:</label>
+                                <input name="discount_amount" id="discount_amount" readonly type="text" class="form-control datatable-input"
+                                    placeholder="مثال : 40" data-col-index="4">
+                            </div>
+                            <div class="col-lg-2 mb-lg-0 mb-6">
+                                <label> الاجمالي (المطلوب دفعه) :</label>
+                                <input name="total" id="total" type="text" disabled class="form-control datatable-input"
+                                    placeholder="مثال : 40" data-col-index="4">
+                            </div>
+                        </div>
+                        <div class="row mt-8">
                             <div class="col-lg-12">
-                                <!--begin::Row-->
-                                <div class="row">
-                                    <label class="col-lg-2 col-form-label required fw-bold fs-6">السنة الدراسية</label>
-                                    <div class="col-lg-4">
-                                        <input type="text" name="year"
-                                            class="form-control form-control-lg form-control-solid mobile"
-                                            placeholder="السنة الدراسية" value="{{$sub->year}}" />
-                                    </div>
-                                   
-
-
-                                    <label
-                                    class="col-lg-2 col-form-label required  fw-bold fs-6">رسوم ثابثة</label>
-                                <div class="col-lg-4 d-flex align-items-center">
-                                    <div
-                                        class="form-check form-check-solid form-switch fv-row">
-                                        <input type="hidden" name="static_fee" value="0">
-                                        <input class="form-check-input w-45px h-30px"
-                                               type="checkbox" id="static_fee" name="static_fee"
-                                               {{ $sub->static_fee ? 'checked' : '' }}
-                                               value="1">
-                                        <label class="form-check-label"
-                                               for="static_fee"></label>
-                                    </div>
-                                </div>
-                                </div>
-                                <!--end::Row-->
+                                <button class="btn btn-primary btn-primary--icon" id="sub">
+                                    <span>
+                                        <i class="la la-plus"></i>
+                                        <span> تعديل الاشتراك </span>
+                                    </span>
+                                </button>&nbsp;&nbsp;
+                                <button class="btn btn-secondary btn-secondary--icon" type="reset" id="kt_reset">
+                                    <span>
+                                        <i class="la la-close"></i>
+                                        <span>افراغ</span>
+                                    </span>
+                                </button>
                             </div>
-                            <!--end::Col-->
                         </div>
-                        <!--end::Input group-->
-                       
-                    </div>
-                    <!--end::Card body-->
+                    </form>
+                    <!--begin: Datatable-->
+                    <!--begin: Datatable-->
 
-                    <!--begin::Actions-->
-                    <div class="card-footer d-flex justify-content-end py-6 px-9">
-                        <button type="reset"
-                            class="btn btn-white btn-active-light-primary me-2">{{ __('Discard') }}</button>
-                        <button type="submit" class="btn btn-primary" id="kt_account_profile_details_submit">
-                            @include('partials.general._button-indicator', [
-                                'label' => __('Save'),
-                            ])
-                        </button>
-                    </div>
-                    <!--end::Actions-->
-                </form>
-                <!--end::Form-->
+                    <!--end: Datatable-->
+                </div>
             </div>
-            <!--end::Content-->
         </div>
         <!--end::Basic info-->
     </div>
@@ -119,11 +138,175 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     @endsection
     @section('scripts')
-
         <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-        <script type="text/javascript">$(".flatpickr-input").flatpickr();</script>
+        <script type="text/javascript">
+            $(".flatpickr-input").flatpickr();
+        </script>
         <script>
-             document.addEventListener('DOMContentLoaded', function(e) {
+            let id = $('#subscription_id').val();
+
+            $.ajax({
+                url: "/GetSubscriptionData/" + id,
+                method: 'GET',
+                data: {
+                    // 'doctor_id': id,
+                    // 'identity': identity,
+                },
+                dataType: "JSON",
+                success: function(data) {
+
+                    console.log(data);
+                    if (data != null) {
+
+
+                        $('#required_amount').empty();
+                        $('#required_amount').val(data.year_subscription.price)
+
+                        $('#discount_amount').val(0);
+                        $('#discount').val(0);
+
+                        $('#total').val(data.year_subscription.price);
+                        // $('#discount_id').find('option:first').attr('selected', 'selected');
+                        //   $("#discount_id")[0].selectedIndex = '';
+                        if ($('#discount_id').val() != null) {
+                            let id = $('#discount_id').val();
+                            let sub = $('#required_amount');
+                            $.ajax({
+                                url: "/GetDiscountData/" + id,
+                                method: 'GET',
+                                data: {
+                                    // 'doctor_id': id,
+                                    // 'identity': identity,
+                                },
+                                dataType: "JSON",
+                                success: function(data) {
+
+                                    console.log(data);
+                                    if (data != null) {
+
+                                        $('#discount').empty();
+                                        $('#discount').val(data.per);
+
+                                        let r = $('#required_amount').val();
+
+                                        $('#discount_amount').val(sub.val() * data.per / 100);
+                                        let d = $('#discount_amount').val();
+
+
+                                        $('#total').val(r - d + ' شيكل');
+
+                                    }
+                                }
+                            });
+
+                        }
+                        if ($('#subscription_id').val() != '') {
+                            $('#discount_id').removeAttr('disabled');
+                        } else {
+                            $('#discount_id').attr('disabled');
+
+                        }
+
+                    }
+                }
+            });
+        </script>
+        <script>
+            $('#subscription_id').change(function() {
+
+
+                let id = this.value;
+
+                $.ajax({
+                    url: "/GetSubscriptionData/" + id,
+                    method: 'GET',
+                    data: {
+                        // 'doctor_id': id,
+                        // 'identity': identity,
+                    },
+                    dataType: "JSON",
+                    success: function(data) {
+
+                        console.log(data);
+                        if (data != null) {
+
+
+                            $('#required_amount').empty();
+                            $('#required_amount').val(data.year_subscription.price)
+
+                            $('#discount_amount').val(0);
+                            $('#discount').val(0);
+
+                            $('#total').val(data.year_subscription.price);
+                            // $('#discount_id').find('option:first').attr('selected', 'selected');
+                            $("#discount_id")[0].selectedIndex = '';
+
+                            if ($('#subscription_id').val() != '') {
+                                $('#discount_id').removeAttr('disabled');
+                            } else {
+                                $('#discount_id').attr('disabled');
+
+                            }
+
+                        }
+                    }
+                });
+
+
+            });
+
+
+            $('#discount_id').change(function() {
+
+
+                let id = this.value;
+                let sub = $('#required_amount');
+                $.ajax({
+                    url: "/GetDiscountData/" + id,
+                    method: 'GET',
+                    data: {
+                        // 'doctor_id': id,
+                        // 'identity': identity,
+                    },
+                    dataType: "JSON",
+                    success: function(data) {
+
+                        console.log(data);
+                        if (data != null) {
+
+                            $('#discount').empty();
+                            $('#discount').val(data.per);
+
+                            let r = $('#required_amount').val();
+
+                            $('#discount_amount').val(sub.val() * data.per / 100);
+                            let d = $('#discount_amount').val();
+
+
+                            $('#total').val(r - d + ' شيكل');
+
+                        }
+                    }
+                });
+
+
+            });
+
+
+
+            $("#discount").keyup(function() {
+                let discount = $(this).val();
+                let x = $("#required_amount").val();
+                $('#total').empty();
+                let discounttotal = x * discount / 100;
+
+                $('#total').val(x - discounttotal + ' شيكل');
+
+
+            });
+        </script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function(e) {
                 FormValidation.formValidation(
                     document.getElementById('details_form'), {
                         fields: {
@@ -141,20 +324,20 @@
                                     },
                                 },
                             },
-                          
+
                             price: {
                                 validators: {
                                     notEmpty: {
                                         message: 'السعر  مطلوب',
                                     },
-                                   
+
                                     regexp: {
                                         regexp: /^[0-9]+$/,
                                         message: ' السعر فقط أرقام',
                                     },
                                 },
                             },
-                            
+
                         },
                         plugins: {
                             trigger: new FormValidation.plugins.Trigger(),

@@ -46,17 +46,40 @@
 
     <script>
         const Table = $('#orders-table');
-        Table.on('preXhr.dt' , function(e , settings ,data){
-          data.division = $('#division_id').val();
-          data.kindergarten= $('#kindergarten_id').val();
+        Table.on('preXhr.dt', function(e, settings, data) {
+            data.division = $('#division_id').val();
+            data.kindergarten = $('#kindergarten_id').val();
         });
         $('#division_id').change(function() {
-            let x =Table.DataTable().ajax.reload();
-           
+            let x = Table.DataTable().ajax.reload();
+
         });
 
         $('#kindergarten_id').change(function() {
-            let x =Table.DataTable().ajax.reload();
+            let x = Table.DataTable().ajax.reload();
+            let id = $(this).val();
+            $.ajax({
+                url: "GetDivisionByKindergarten/" + id,
+                method: 'GET',
+                data: {
+                    // 'doctor_id': id,
+                    // 'identity': identity,
+                },
+                dataType: "JSON",
+                success: function(data) {
+                    console.log(data);
+                    if (data != null) {
+                        $('#division_id').empty();
+                        data.forEach(element => {
+                            $('#division_id').append(
+                                `<option value="${element['id']}">${element['name']}</option>`
+                            );
+                        });
+                    }
+
+
+                }
+            });
         });
     </script>
     <script>

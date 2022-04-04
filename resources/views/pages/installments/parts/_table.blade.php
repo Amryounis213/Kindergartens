@@ -30,15 +30,23 @@
                 },
                 dataType: "JSON",
                 success: function(data) {
-                    //console.log(data);
                     if (data != null) {
                         $('#year').empty();
                         $('#year').append(
-                            ` <option value="${data.year}" selected> ${data.year} </option>  `);
+                            ` <option value="${data.year.id}" selected> ${data.year.name} </option>  `);
                         $('#division_id').empty();
                         $('#division_id').val(data.division.name)
                         $('#level_id').empty();
                         $('#level_id').val(data.level.name)
+                    }
+
+
+                    if(data.children.installment.length > 0){
+                        $('#sub').prop('disabled' , true);
+                    }
+                    else{
+                        $('#sub').removeAttr('disabled');
+
                     }
                 }
             });
@@ -62,17 +70,32 @@
                         $('#total_amount').empty();
                         let z = Number(x - y).toFixed(1);
                         $('#total_amount').append(`${z}`);
+
+
+                        $('#payment_amount2').val(z);
                     }
                 }
             });
+
+           
         });
 
-
+       
         // $('#kindergarten_id').change(function() {
         //     let x =Table.DataTable().ajax.reload();
         // });
     </script>
+    <script>
+        $('#no_of_installment').keyup(function() {
+            if ($(this).val() < 8) {
+                $('#start_date').removeAttr('disabled');
 
+            } else {
+                $('#start_date').attr("disabled", true);
+
+            }
+        });
+    </script>
     <script>
         $(document).ready(function() {
             $.ajaxSetup({
@@ -92,6 +115,8 @@
                         "payment_amount": $('#payment_amount2').val(),
                         "start_date": $('#start_date').val(),
                         "no_of_installment": $('#no_of_installment').val(),
+                        "notices": $('#notices').val(),
+                        "year":$('#year').val(),
                     },
                     dataType: "JSON",
                     success: function(data) {
@@ -103,6 +128,7 @@
                         $('#payment_amount2').val('');
                         $('#start_date').val('');
                         $('#no_of_installment').val('');
+                        $('#notices').val('');
                     }
                 });
             });
@@ -190,25 +216,19 @@
         $(document).on('click', ".pay", function(e) {
             const oTable = $('#patients-table').DataTable();
             id = $(this).attr('id');
-
-            $.ajax({
-                url: "pay-installment/" + id,
-                method: 'GET',
-                data: {
-                    // 'doctor_id': id,
-                    // 'identity': identity,
-                },
-                dataType: "JSON",
-                success: function(data) {
-                    console.log(data);
-                    if (data != null) {
-                        oTable.draw();
-                        toastr.options.positionClass = 'toast-top-left';
-                        toastr[data.status](data.message);
-                    }
-
+            Swal.fire({
+                title: 'تأكيد!',
+                text: 'هل أنت متأكد من دفع القسط ؟',
+                icon: 'info',
+                iconColor: '#55DD6B',
+                confirmButtonText: 'نعم، دفع',
+                confirmButtonColor: '#55DD6B',
+                cancelButtonText: 'لا، إلغاء',
+                showCancelButton: true,
+            }).then((result) => {
+                if (result.value) {
                     $.ajax({
-                        url: "GetFeeData/" + data.children_id,
+                        url: "pay-installment/" + id,
                         method: 'GET',
                         data: {
                             // 'doctor_id': id,
@@ -216,22 +236,92 @@
                         },
                         dataType: "JSON",
                         success: function(data) {
-                            //console.log(data);
+                            console.log(data);
                             if (data != null) {
-                                $('#required_amount').empty();
-                                let x = Number(data.sub_amount).toFixed(1);
-                                $('#required_amount').append(`${x}`);
-                                $('#payment_amount').empty();
-                                let y = Number(data.payment_amount).toFixed(1);
-                                $('#payment_amount').append(`${y}`);
-                                $('#total_amount').empty();
-                                let z = Number(x - y).toFixed(1);
-                                $('#total_amount').append(`${z}`);
+                                oTable.draw();
+                                toastr.options.positionClass = 'toast-top-left';
+                                toastr[data.status](data.message);
                             }
+
+                            $.ajax({
+                                url: "GetFeeData/" + data.children_id,
+                                method: 'GET',
+                                data: {
+                                    // 'doctor_id': id,
+                                    // 'identity': identity,
+                                },
+                                dataType: "JSON",
+                                success: function(data) {
+                                    //console.log(data);
+                                    if (data != null) {
+                                        $('#required_amount').empty();
+                                        let x = Number(data.sub_amount).toFixed(1);
+                                        $('#required_amount').append(`${x}`);
+                                        $('#payment_amount').empty();
+                                        let y = Number(data.payment_amount).toFixed(
+                                            1);
+                                        $('#payment_amount').append(`${y}`);
+                                        $('#total_amount').empty();
+                                        let z = Number(x - y).toFixed(1);
+                                        $('#total_amount').append(`${z}`);
+                                    }
+                                }
+                            });
                         }
                     });
                 }
             });
+
+        });
+    </script>
+
+    <script>
+        ////////////////////////////////////////
+        document.addEventListener('DOMContentLoaded', function(e) {
+            FormValidation.formValidation(
+                document.getElementById('details_form'), {
+                    fields: {
+                        year: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'السنة الدراسية مطلوبة',
+                                },
+                            },
+                        },
+                        children_id: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'اسم الطالب مطلوب',
+                                },
+                            },
+                        },
+
+                        no_of_installment: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'عدد الاقساط  مطلوب',
+                                },
+
+                                regexp: {
+                                    regexp: /^[0-8]+$/,
+                                    message: ' القسط  فقط أرقام',
+                                },
+                                stringLength: {
+                                    message: 'الاقساط لا تزيد عن 8',
+                                    max: 1,
+                                }
+                            },
+                        },
+
+
+                    },
+                    plugins: {
+                        trigger: new FormValidation.plugins.Trigger(),
+                        submitButton: new FormValidation.plugins.SubmitButton(),
+                        defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
+                        bootstrap: new FormValidation.plugins.Bootstrap5(),
+                    },
+                });
         });
     </script>
 @endsection

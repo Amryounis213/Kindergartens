@@ -44,7 +44,7 @@ class Children extends Model
    
    public function PayFee()
    {
-        return $this->hasMany(PayFees::class , 'children_id' , 'id');
+        return $this->hasMany(PayFees::class , 'children_id' , 'id')->whereNull('deleted_at');
    }
 
    public function Installment()

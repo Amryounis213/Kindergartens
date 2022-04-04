@@ -274,6 +274,12 @@ return array(
                         'path' => 'divisions/create',
                         'bullet' => '<span class="bullet bullet-dot"></span>',
                     ),
+                    array(
+                        'title' => 'الشعب الدراسية المحذوفة',
+                        'permission' => 'orders.create',
+                        'path' => 'trashed-division',
+                        'bullet' => '<span class="bullet bullet-dot"></span>',
+                    ),
                 ),
             ),
         ),
@@ -319,7 +325,12 @@ return array(
                         'path' => 'switch',
                         'bullet' => '<span class="bullet bullet-dot"></span>',
                     ),
-
+                    array(
+                        'title' => 'الموظفين المحذوفين',
+                        'permission' => 'employees.delete',
+                        'path' => 'trashed-employee',
+                        'bullet' => '<span class="bullet bullet-dot"></span>',
+                    ),
 
                 ),
             ),
@@ -485,7 +496,12 @@ return array(
                         'path' => 'pay-fees',
                         'bullet' => '<span class="bullet bullet-dot"></span>',
                     ),
-
+                    array(
+                        'title' => 'دفعات الرسوم المحذوفة',
+                        'permission' => 'childrens.create',
+                        'path' => 'trashed-pay-fees',
+                        'bullet' => '<span class="bullet bullet-dot"></span>',
+                    ),
                     array(
                         'title' => 'الأقساط  الدراسية',
                         'permission' => 'childrens.create',

@@ -36,4 +36,10 @@ class ClassPlacment extends Model
    {
        return $this->belongsTo(Division::class , 'division_id' , 'id');
    }
+
+   public function Year()
+   {
+    return $this->belongsTo(Year::class , 'year' , 'id');
+
+   }
 }

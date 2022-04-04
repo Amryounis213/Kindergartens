@@ -1,13 +1,23 @@
 <x-base-layout>
     @include('layout.error')
     <!--begin::Container-->
+
+    @section('styles')
+        <style>
+            input[type="text"]:disabled {
+                background: #f3f3f3;
+            }
+
+        </style>
+    @endsection
+
     <div id="kt_content" class="content d-flex flex-column flex-column-fluid">
 
         <div class="card card-custom mb-3">
 
             <div class="card-body">
                 <!--begin: Search Form-->
-                <form class="mb-5">
+                <form class="mb-5" id="details_form">
                     <div class="row mb-6">
                         <div class="col-lg-3 mb-lg-0 mb-6">
                             <label>اسم الطالب:</label>
@@ -51,23 +61,25 @@
                     <div class="row mb-6">
                         <div class="col-lg-2 mb-lg-0 mb-6">
                             <label>المبلغ المراد تقسيطه :</label>
-                            <input id="payment_amount2" name="payment_amount" type="text"
-                                class="form-control datatable-input" placeholder="  المبلغ المراد تقسيطه" data-col-index="4">
-                        </div>
-                        <div class="col-lg-2 mb-lg-0 mb-6">
-                            <label>تاريخ أول قسط</label>
-                            {!! theme()->getSvgIcon('icons/duotune/general/gen014.svg', 'svg-icon svg-icon-2 position-absolute mx-4') !!}
-                            <input id="start_date" class="form-control  ps-12 datatable-input flatpickr-input "
-                                placeholder="{{ __('Select a date') }}" name="start_date" type="text"
-                                value="{{ old('start_date') }}" readonly>
-                            {{-- <label>تاريخ الدفع</label>
-                            <input id="payment_date" name="payment_date"  type="text" class="form-control datatable-input flatpickr-input" placeholder="" data-col-index="4"> --}}
+                            <input disabled id="payment_amount2" name="payment_amount" type="text"
+                                class="form-control datatable-input" placeholder="  المبلغ المراد تقسيطه"
+                                data-col-index="4">
                         </div>
                         <div class="col-lg-2 mb-lg-0 mb-6">
                             <label>عدد الأقساط :</label>
                             <input name="no_of_installment" id="no_of_installment" type="number"
                                 class="form-control datatable-input" placeholder="" data-col-index="4">
                         </div>
+                        <div class="col-lg-2 mb-lg-0 mb-6">
+                            <label>تاريخ أول قسط</label>
+                            {!! theme()->getSvgIcon('icons/duotune/general/gen014.svg', 'svg-icon svg-icon-2 position-absolute mx-4') !!}
+                            <input disabled id="start_date" class="form-control   datatable-input flatpickr-input  "
+                                placeholder="{{ __('Select a date') }}" name="start_date" type="text"
+                                value="{{ old('start_date') }}" readonly>
+                            {{-- <label>تاريخ الدفع</label>
+                            <input id="payment_date" name="payment_date"  type="text" class="form-control datatable-input flatpickr-input" placeholder="" data-col-index="4"> --}}
+                        </div>
+                        
                         <div class="col-lg-3 mb-lg-0 mb-6">
                             <label>ملاحظات :</label>
                             <input name="notices" id="notices" type="text" class="form-control datatable-input"

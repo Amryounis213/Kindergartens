@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\Employees\EmployeesDataTable;
+use App\DataTables\Employees\TrashedDataTable;
 use App\Models\Division;
 use App\Models\EducationalLevels;
 use App\Models\Employee;
@@ -133,5 +134,20 @@ class EmployeesController extends Controller
         $id = $request->get('id');
         $info = Employee::find($id);
         return updateModelStatus($info);
+    }
+
+    public function GetTrashed(TrashedDataTable $dataTable)
+    {
+       // $emp=Employee::onlyTrashed()->get();
+        return $dataTable->render('pages.employees.index.index');
+    }
+
+
+    public function RestoreTrashed($id)
+    {
+        $children = Employee::withTrashed()->where('id' , $id)->first();
+        $children->deleted_at = null ;
+        $children->save();
+        return redirect()->back()->with('success' , 'تم استرجاع الطالب بنجاح');
     }
 }

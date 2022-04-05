@@ -13,6 +13,7 @@ use App\Models\Kindergarten;
 use App\Models\Level;
 use App\Models\Major;
 use App\Models\Period;
+use App\Models\Year;
 use Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -104,6 +105,7 @@ class EmployeesController extends Controller
         $employee = Employee::find($id);
         $levels = Level::get();
         $divisions = Division::get();
+        $years = Year::get();
         return view('pages.employees.job_placement.create', [
             'jobs' => $jobs,
             'kinder' => $kinder,
@@ -112,6 +114,7 @@ class EmployeesController extends Controller
             'emp' => $employee,
             'levels' => $levels,
             'divisions' => $divisions,
+            'years'=>$years
         ]);
     }
 

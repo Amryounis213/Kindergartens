@@ -29,7 +29,8 @@ class ChildrenController extends Controller
     {
         $division = Division::where('status' , 1)->get();
         $kindergartens= Kindergarten::where('status' , 1)->get();
-        return $dataTable->render('pages.childrens.index.index' ,compact('division' , 'kindergartens'));
+        $visable = 'yes';
+        return $dataTable->render('pages.childrens.index.index' ,compact('division' , 'kindergartens' , 'visable'));
     }
 
     /**
@@ -196,8 +197,8 @@ class ChildrenController extends Controller
 
     public function GetTrashed(TrashedDataTable $dataTable)
     {
-        $children=Children::onlyTrashed()->get();
-        return $dataTable->render('pages.childrens.index.index');
+        $visable = 'no';
+        return $dataTable->render('pages.childrens.index.index' , compact('visable'));
     }
 
 

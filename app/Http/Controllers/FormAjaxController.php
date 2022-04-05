@@ -6,6 +6,7 @@ use App\Models\Children;
 use App\Models\ClassPlacment;
 use App\Models\Discount;
 use App\Models\Division;
+use App\Models\Employee;
 use App\Models\JobPlacement;
 use App\Models\Subscriptions;
 use Auth;
@@ -81,5 +82,14 @@ class FormAjaxController extends Controller
             'payment_amount'=>$payment_amount + $installment ,
         ]);
 
+    }
+
+    public function GetEmployeeByKindergarten($id)
+    {
+        $emp =Employee::whereHas('JobPlacement' ,function($query) use($id){
+            $query->where('kindergarten_id' , $id);
+        })->get();
+
+        return response()->json($emp);
     }
 }

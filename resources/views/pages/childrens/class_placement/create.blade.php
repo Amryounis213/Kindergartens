@@ -90,7 +90,7 @@
                                 <div class="row mb-6">
                                     <label class="col-lg-4 col-form-label required fw-bold fs-6"> اسم المربية</label>
                                     <div class="col-lg-8 fv-row">
-                                        <select name="employee_id" aria-label="اختر اسم المربية" data-control="select2"
+                                        <select name="employee_id" id="employee_id" aria-label="اختر اسم المربية" data-control="select2"
                                             data-placeholder="اختر اسم المربية.."
                                             class="form-select form-select-solid form-select-lg employee_id">
                                             <option value="">اختر اسم المربية...</option>
@@ -363,6 +363,42 @@
                             $('#division').empty();
                             data.forEach(element => {
                                 $('#division').append(
+                                    `<option value="${element['id']}">${element['name']}</option>`
+                                );
+                            });
+
+
+
+
+
+
+                        }
+                    }
+                });
+
+
+
+
+
+
+                $.ajax({
+                    url: "/GetEmployeeByKindergarten/" + id,
+                    method: 'GET',
+                    data: {
+
+
+                    },
+                    dataType: "JSON",
+                    success: function(data) {
+
+                        console.log(data);
+                        if (data != null) {
+
+                            
+
+                            $('#employee_id').empty();
+                            data.forEach(element => {
+                                $('#employee_id').append(
                                     `<option value="${element['id']}">${element['name']}</option>`
                                 );
                             });

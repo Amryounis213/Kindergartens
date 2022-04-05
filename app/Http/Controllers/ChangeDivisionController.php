@@ -13,21 +13,40 @@ class ChangeDivisionController extends Controller
 {
     public function switchDivision(Request $request)
     {
-        
+       
         $division1 = $request->division1 ;
         $division2 = $request->division2 ;
        
         $teacher1 = $request->teacher1 ;
         $teacher2 = $request->teacher2 ;
 
+        $level1 = $request->level1 ;
+        $level2 = $request->level2 ;
+
+
         /** التبديل  */
         $job_placment1 = JobPlacement::where('employee_id' , $teacher1)->first();
         $job_placment1->division_id = $division2 ;
-        $job_placment1->save();
+        $job_placment1->level_id = $level2 ;
+
+        $kindergarten1 = $job_placment1->kindergarten_id ;
+        
 
 
         $job_placment2 = JobPlacement::where('employee_id' , $teacher2)->first();
         $job_placment2->division_id = $division1 ;
+        $job_placment2->level_id = $level1 ;
+
+        $kindergarten2 = $job_placment2->kindergarten_id ;
+
+    
+        $job_placment1->kindergarten_id = $kindergarten2;
+        $job_placment2->kindergarten_id = $kindergarten1;
+
+
+
+
+        $job_placment1->save();
         $job_placment2->save();
 
 

@@ -136,6 +136,7 @@ Route::get('GetEmployeeData/{id}', [FormAjaxController::class, 'GetEmployeeData'
 Route::get('GetSubscriptionData/{id}', [FormAjaxController::class, 'GetSubscriptionData'])->name('GetSubscriptionData');
 Route::get('GetDiscountData/{id}', [FormAjaxController::class, 'GetDiscountData'])->name('GetDiscountData');
 Route::get('GetFeeData/{id}', [FormAjaxController::class, 'GetFeeData'])->name('GetFeeData');
+Route::get('GetEmployeeByKindergarten/{id}', [FormAjaxController::class, 'GetEmployeeByKindergarten'])->name('GetEmployeeByKindergarten');
 
 
 //Auto complete search for student attendance -- بحث تلقائي للحضور والغياب الطلابي

@@ -6,22 +6,33 @@
         <tr>
             <th scope="col">#</th>
             <th scope="col">اسم الطالب</th>
+<<<<<<< HEAD
             <th scope="col">الفترة</th>
+=======
+>>>>>>> 172b760fa8e81b90d794e4ccf2a3929081098812
             <th class="text-center" scope="col">الحضور /الغياب</th>
         </tr>
     </thead>
 
     <tbody id="tbody">
+<<<<<<< HEAD
         @foreach ($childrens as $key => $model)
+=======
+        @foreach ($employees as $key => $model)
+>>>>>>> 172b760fa8e81b90d794e4ccf2a3929081098812
             <tr>
                 <td>{{ $key + 1 }}</td>
                 <td>
                     <strong>{{ $model->name }}</strong>
                 </td>
+<<<<<<< HEAD
                 <td>
                     <strong>{{ $model->ClassPlacement->Period->name}}</strong>
                     <input class="form-check-input box1" name="period_id" value="{{ $model->ClassPlacement->Period->id}}" type="hidden" >
                 </td>
+=======
+
+>>>>>>> 172b760fa8e81b90d794e4ccf2a3929081098812
                 <td class="text-center">
                     @can('childrens.edit')
                         <!--begin::Options-->

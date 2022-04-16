@@ -91,7 +91,6 @@
                             {{-- <label>تاريخ الدفع</label>
                             <input id="payment_date" name="payment_date"  type="text" class="form-control datatable-input flatpickr-input" placeholder="" data-col-index="4"> --}}
                         </div>
-
                         <div class="col-lg-3 mb-lg-0 mb-6">
                             <label>ملاحظات :</label>
                             <input name="notices" id="notices" type="text" class="form-control datatable-input"

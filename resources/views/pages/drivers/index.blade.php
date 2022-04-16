@@ -1,11 +1,6 @@
 <x-base-layout>
-<<<<<<< HEAD
     @include('layout.error')
     <!--begin::Container-->
-=======
-@include('layout.error')
-<!--begin::Container-->
->>>>>>> 172b760fa8e81b90d794e4ccf2a3929081098812
     <div id="kt_content" class="content d-flex flex-column flex-column-fluid">
         <!--begin::Card-->
         <div class="card">
@@ -37,7 +32,6 @@
                 <div class="card-toolbar">
                     <!--begin::Toolbar-->
                     <div class="d-flex justify-content-end" data-kt-customer-table-toolbar="base">
-<<<<<<< HEAD
                         {{-- @include('modals.filter_popup_menu') --}}
                         {{-- @include('modals.add_modal') --}}
                         {{-- @include('modals.export_modal') --}}
@@ -58,35 +52,12 @@
                             <!--begin::Add-->
 
                             <!--end::Add-->
-=======
-                        {{--                @include('modals.filter_popup_menu')--}}
-                        {{--                @include('modals.add_modal')--}}
-                        {{--                @include('modals.export_modal')--}}
-                        @can('kindergarten.create')
-                        <!--begin::Add-->
-                        <a href="{{ route('drivers.create') }}" type="button" class="btn btn-primary">
-                        <span class="svg-icon svg-icon-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                 fill="none">
-                                <rect opacity="0.5" x="11.364" y="20.364" width="16" height="2" rx="1"
-                                      transform="rotate(-90 11.364 20.364)" fill="black"></rect>
-                                <rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="black"></rect>
-                            </svg>
-                        </span>
-                            {{__('add')}}
-                        </a>
-                        <!--end::Add-->
->>>>>>> 172b760fa8e81b90d794e4ccf2a3929081098812
                         @endcan
                     </div>
                     <!--end::Toolbar-->
                     <!--begin::Group actions-->
                     <div class="d-flex justify-content-end align-items-center d-none"
-<<<<<<< HEAD
                         data-kt-customer-table-toolbar="selected">
-=======
-                         data-kt-customer-table-toolbar="selected">
->>>>>>> 172b760fa8e81b90d794e4ccf2a3929081098812
                         <div class="fw-bolder me-5">
                             <span class="me-2" data-kt-customer-table-select="selected_count"></span>Selected
                         </div>

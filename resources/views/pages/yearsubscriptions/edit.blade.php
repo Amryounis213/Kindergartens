@@ -44,11 +44,7 @@
                                     </option>
                                     @foreach($subs as $item)
                                         <option
-<<<<<<< HEAD
                                             value="{{$item->id}}" {{ $item->id == $sub->subsraction_id   ? 'selected' :'' }}> {{$item->name}}  </option>
-=======
-                                            value="{{$item->id}}" {{ $item->id == $sub->id ? 'selected' :'' }}> {{$item->name}}  </option>
->>>>>>> 172b760fa8e81b90d794e4ccf2a3929081098812
                                     @endforeach
                                 </select>
                             </div>

@@ -127,7 +127,10 @@ Route::post('/switch',[ChangeDivisionController::class, 'switchDivision'])->name
 // السائقين
 Route::resource('drivers' , DriverController::class);
 Route::post('drivers/status', [DriverController::class, 'status'])->name('drivers.status');
+Route::get('trashed-driver' , [DriverController::class ,'getTrashed'])->name('driver.trashed'); // صفحة الطلاب المحذوفين
+Route::get('restore-driver/{id}' , [DriverController::class , 'RestoreTrashed'])->name('driver.restore');
 Route::resource('driverplacment' , DriverPlacmentController::class);
+
 //ajax filter 
 Route::get('GetDivisionByLevel/{id}/{kinder}', [FormAjaxController::class, 'GetDivisionByLevel'])->name('GetDivisionByLevel');
 Route::get('GetDivisionByKindergarten/{id}', [FormAjaxController::class, 'GetDivisionByKindergarten'])->name('GetDivisionByKindergarten');
@@ -162,6 +165,8 @@ Route::post('year-subs/status', [YearSubController::class, 'updateStaticFee'])->
  Route::resource('children-subscriptions' , ChildrenSubscriptionsController::class );
 //------- تسديد الرسوم
 Route::resource('pay-fees' , PayFeesController::class);
+Route::get('print/pay-fee/{id}', [PayFeesController::class, 'print'])->name('pay-fee.print');
+
 Route::get('trashed-pay-fees' , [PayFeesController::class ,'getTrashed'])->name('pay-fees.trashed'); // صفحة الطلاب المحذوفين
 Route::get('restore-pay-fees/{id}' , [PayFeesController::class , 'RestoreTrashed'])->name('pay-fees.restore');
 //------ تسديد عن طريق الاقساط

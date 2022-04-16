@@ -25,19 +25,67 @@ class PagesController extends Controller
         // Get view file location from menu config
         $view = theme()->getOption('page', 'view');
         // Check if the page view file exist
-        if (view()->exists('pages.'.$view)) {
-            if($view == 'index'){
-                $employeeCount = Employee::count() ; //sizeof(Patient::all());
-                $studentsCount = Children::count();//sizeof(Order::whereDate('created_at', Carbon::today())->get());
-                $driversCount = Driver::count();//sizeof(Clinic::all());
-                $kinderCount =Kindergarten::count();//sizeof(Checkup::all());
-                $employeeAtt =  EmployeesAttendance::whereDate('attendence_date' , date('y-m-d'))->where('attendence_status' , 1)->count();
-                $studentsAtt =  ChildrenAttendances::whereDate('attendence_date' , date('y-m-d'))->where('attendence_status' , 1)->count();
+        if (view()->exists('pages.' . $view)) {
+            if ($view == 'index') {
+                $employeeCount = Employee::count(); //sizeof(Patient::all());
+                $studentsCount = Children::count(); //sizeof(Order::whereDate('created_at', Carbon::today())->get());
+                $driversCount = Driver::count(); //sizeof(Clinic::all());
+                $kinderCount = Kindergarten::count(); //sizeof(Checkup::all());
+                $employeeAtt =  EmployeesAttendance::whereDate('attendence_date', date('y-m-d'))->where('attendence_status', 1)->count();
+                $studentsAtt =  ChildrenAttendances::whereDate('attendence_date', date('y-m-d'))->where('attendence_status', 1)->count();
                 $classplacementstudent = Children::whereHas('ClassPlacement')->count();
-                return view('pages.'.$view, compact('employeeCount', 'studentsCount',
-                'driversCount', 'kinderCount' , 'employeeAtt' , 'studentsAtt' , 'classplacementstudent'));
-            }else{
-                return view('pages.'.$view);
+
+                /**
+                 * Student Attendence
+                 */
+                $ChildrenMorning = ChildrenAttendances::whereDate('attendence_date', date('y-m-d'))->where('attendence_status', 1)->where('period_id' , 1)->count();
+                $ChildrenNight = ChildrenAttendances::whereDate('attendence_date', date('y-m-d'))->where('attendence_status', 1)->where('period_id' , 2)->count();
+                
+                $AllChildrenMorning = Children::whereHas('ClassPlacement' , function($q){
+                    $q->where('period_id' , 1) ;
+                })->count();
+
+                $AllChildrenNight = Children::whereHas('ClassPlacement' , function($q){
+                    $q->where('period_id' , 2) ;
+                })->count();
+
+
+                /**
+                 * Employee Attendence
+                 * 
+                 */
+
+                $EmployeeMorning = EmployeesAttendance::whereDate('attendence_date', date('y-m-d'))->where('attendence_status', 1)->where('period_id' , 1)->count();
+                $EmployeeNight = EmployeesAttendance::whereDate('attendence_date', date('y-m-d'))->where('attendence_status', 1)->where('period_id' , 2)->count();
+                
+                $AllEmployeeMorning = Employee::whereHas('JobPlacement' , function($q){
+                    $q->where('period_id' , 1) ;
+                })->count();
+
+                $AllEmployeeNight = Employee::whereHas('JobPlacement' , function($q){
+                    $q->where('period_id' , 2) ;
+                })->count();
+               
+                
+                return view('pages.' . $view, compact(
+                    'employeeCount',
+                    'studentsCount',
+                    'driversCount',
+                    'kinderCount',
+                    'employeeAtt',
+                    'studentsAtt',
+                    'classplacementstudent',
+                    'ChildrenMorning',
+                    'ChildrenNight',
+                    'AllChildrenMorning' ,
+                    'AllChildrenNight' ,
+                    'EmployeeMorning',
+                    'EmployeeNight',
+                    'AllEmployeeMorning' ,
+                    'AllEmployeeNight'
+                ));
+            } else {
+                return view('pages.' . $view);
             }
         }
 

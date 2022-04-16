@@ -15,6 +15,13 @@ class ChildrenAttendances extends Model
         'attendence_status',
         'kindergarten_id' ,
         'division_id',
-        'children_id'
+        'children_id' ,
+        'period_id',
     ];
+
+
+    public function Children()
+    {
+        return $this->belongsTo(Children::class , 'children_id' , 'id');
+    }
 }

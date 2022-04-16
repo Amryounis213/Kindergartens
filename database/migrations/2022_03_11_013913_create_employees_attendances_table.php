@@ -18,6 +18,8 @@ class CreateEmployeesAttendancesTable extends Migration
             $table->foreignId('employee_id')->constrained('employees')->onDelete('cascade');
             $table->date('attendence_date');
             $table->boolean('attendence_status');
+
+            $table->foreignId('period_id')->nullable()->constrained('periods')->onDelete('cascade');
             $table->timestamps();
         });
     }

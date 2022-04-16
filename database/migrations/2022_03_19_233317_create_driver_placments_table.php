@@ -15,10 +15,9 @@ class CreateDriverPlacmentsTable extends Migration
     {
         Schema::create('driver_placments', function (Blueprint $table) {
             $table->id();
-            
             $table->foreignId('period_id')->constrained('periods')->onDelete('cascade');
             $table->foreignId('driver_id')->constrained('drivers')->onDelete('cascade');
-            $table->enum('trips' , ['رحلة 1'  , 'رحلة 2']);
+            $table->foreignId('trip_id')->constrained('trips')->onDelete('cascade');
             $table->string('itinerary');
             $table->timestamps();
         });

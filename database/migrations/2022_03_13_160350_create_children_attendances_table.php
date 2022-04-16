@@ -23,6 +23,7 @@ class CreateChildrenAttendancesTable extends Migration
             $table->foreignId('children_id')->constrained('childrens')->onDelete('cascade');
             $table->foreignId('division_id')->constrained('divisions')->onDelete('cascade');
             $table->foreignId('kindergarten_id')->constrained('kindergartens')->onDelete('cascade');
+            $table->foreignId('period_id')->nullable()->constrained('periods')->onDelete('cascade');
         });
     }
 

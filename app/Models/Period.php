@@ -10,4 +10,9 @@ class Period extends Model
     use HasFactory;
     protected $fillable=['name' ,'status'];
 
+    public function ClassPlacment()
+    {
+        return $this->hasMany(ClassPlacment::class , 'period_id' , 'id');
+    }
+
 }

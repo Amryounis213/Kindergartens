@@ -31,30 +31,46 @@
                 dataType: "JSON",
                 success: function(data) {
 
-                    //console.log(data);
+                    console.log(data);
                     if (data != null) {
 
-                        $('#year').empty();
-                        $('#year').append(
-                            ` <option value="${data.year.id}" selected> ${data.year.name} </option>  `);
+                        
+
+                        if (data.year != null) {
+                            $('#year').empty();
+                            $('#year').append(
+                                ` <option value="${data.year.id}" selected> ${data.year.name} </option>  
+                            `);
+
+                            $('#division_id').empty();
+
+                            $('#division_id').val(data.division.name)
+
+                            $('#level_id').empty();
+                            $('#level_id').val(data.level.name)
+
+
+                        } else {
+                            $('#division_id').empty();
+
+                            $('#division_id').val('غير مسكن')
+
+                            $('#level_id').empty();
+                            $('#level_id').val('غير مسكن')
+                        }
 
 
 
-                        $('#division_id').empty();
-                        $('#division_id').val(data.division.name)
-
-                        $('#level_id').empty();
-                        $('#level_id').val(data.level.name)
 
                         $('#required_amount').val('');
                         $('#discount').val(0);
                         $('#discount_amount').val('');
                         $('#total').val(0);
-                        $('#subscription_id').prop('selectedIndex',0);
-                        let dis =$('#discount_id');
-                        dis.prop('selectedIndex',0);
+                        $('#subscription_id').prop('selectedIndex', 0);
+                        let dis = $('#discount_id');
+                        dis.prop('selectedIndex', 0);
                         dis.prop("disabled", true);
-                        
+
 
                     }
                 }
@@ -137,7 +153,7 @@
                         $('#discount_amount').val(sub.val() * data.per / 100);
                         let d = $('#discount_amount').val();
 
-                        
+
                         $('#total').val(r - d + ' شيكل');
 
                     }
@@ -183,8 +199,8 @@
                         "discount": $('#discount').val(),
                         "children_id": $('#children_id').val(),
                         "subscription_id": $('#subscription_id').val(),
-                        "discount_id" : $('#discount_id').val() ,
-                        "year" : $('#year').val() ,
+                        "discount_id": $('#discount_id').val(),
+                        "year": $('#year').val(),
 
                     },
                     dataType: "JSON",
@@ -199,9 +215,9 @@
                         $('#discount').val(0);
                         $('#discount_amount').val('');
                         $('#total').val(0);
-                        $('#subscription_id').prop('selectedIndex',0);
-                        let dis =$('#discount_id');
-                        dis.prop('selectedIndex',0);
+                        $('#subscription_id').prop('selectedIndex', 0);
+                        let dis = $('#discount_id');
+                        dis.prop('selectedIndex', 0);
                         dis.prop("disabled", true);
                     }
 

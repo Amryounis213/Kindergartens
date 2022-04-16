@@ -58,7 +58,8 @@ class LevelsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $level =Level::findorfail($id);
+        return view('pages.levels.edit' , compact('level'));
     }
 
     /**
@@ -70,7 +71,10 @@ class LevelsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $level =Level::findorfail($id);
+        $level->name = $request->name ;
+        $level->save();
+        return redirect()->route('levels.index')->with('success' , 'تم التعديل بنجاح');
     }
 
     /**

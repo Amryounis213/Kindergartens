@@ -6,18 +6,22 @@
         <tr>
             <th scope="col">#</th>
             <th scope="col">اسم الطالب</th>
+            <th scope="col">الفترة</th>
             <th class="text-center" scope="col">الحضور /الغياب</th>
         </tr>
     </thead>
 
     <tbody id="tbody">
-        @foreach ($employees as $key => $model)
+        @foreach ($childrens as $key => $model)
             <tr>
                 <td>{{ $key + 1 }}</td>
                 <td>
                     <strong>{{ $model->name }}</strong>
                 </td>
-
+                <td>
+                    <strong>{{ $model->ClassPlacement->Period->name}}</strong>
+                    <input class="form-check-input box1" name="period_id" value="{{ $model->ClassPlacement->Period->id}}" type="hidden" >
+                </td>
                 <td class="text-center">
                     @can('childrens.edit')
                         <!--begin::Options-->

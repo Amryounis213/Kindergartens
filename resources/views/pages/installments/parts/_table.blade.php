@@ -33,7 +33,8 @@
                     if (data != null) {
                         $('#year').empty();
                         $('#year').append(
-                            ` <option value="${data.year.id}" selected> ${data.year.name} </option>  `);
+                            ` <option value="${data.year.id}" selected> ${data.year.name} </option>  `
+                            );
                         $('#division_id').empty();
                         $('#division_id').val(data.division.name)
                         $('#level_id').empty();
@@ -41,10 +42,9 @@
                     }
 
 
-                    if(data.children.installment.length > 0){
-                        $('#sub').prop('disabled' , true);
-                    }
-                    else{
+                    if (data.children.installment.length > 0) {
+                        $('#sub').prop('disabled', true);
+                    } else {
                         $('#sub').removeAttr('disabled');
 
                     }
@@ -77,22 +77,20 @@
                 }
             });
 
-           
+
         });
 
-       
+
         // $('#kindergarten_id').change(function() {
         //     let x =Table.DataTable().ajax.reload();
         // });
     </script>
     <script>
-        $('#no_of_installment').keyup(function() {
-            if ($(this).val() < 8) {
+       $('#no_of_installment').keyup(function() {
+            if ($(this).val() < 8 && $(this).val() > 0 ) {
                 $('#start_date').removeAttr('disabled');
-
             } else {
                 $('#start_date').attr("disabled", true);
-
             }
         });
     </script>
@@ -116,7 +114,7 @@
                         "start_date": $('#start_date').val(),
                         "no_of_installment": $('#no_of_installment').val(),
                         "notices": $('#notices').val(),
-                        "year":$('#year').val(),
+                        "year": $('#year').val(),
                     },
                     dataType: "JSON",
                     success: function(data) {
@@ -303,7 +301,7 @@
                                 },
 
                                 regexp: {
-                                    regexp: /^[0-8]+$/,
+                                    regexp: /^[1-8]+$/,
                                     message: ' القسط  فقط أرقام',
                                 },
                                 stringLength: {
@@ -311,17 +309,17 @@
                                     max: 1,
                                 }
                             },
-                        },
+                    },
 
 
-                    },
-                    plugins: {
-                        trigger: new FormValidation.plugins.Trigger(),
-                        submitButton: new FormValidation.plugins.SubmitButton(),
-                        defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
-                        bootstrap: new FormValidation.plugins.Bootstrap5(),
-                    },
-                });
+                },
+                plugins: {
+                    trigger: new FormValidation.plugins.Trigger(),
+                    submitButton: new FormValidation.plugins.SubmitButton(),
+                    defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
+                    bootstrap: new FormValidation.plugins.Bootstrap5(),
+                },
+            });
         });
     </script>
 @endsection

@@ -445,6 +445,14 @@ return array(
                         'permission' => 'orders.create',
                         'bullet' => '<span class="bullet bullet-dot"></span>',
                     ),
+
+                    array(
+                        'title' => 'اضافة سائقين',
+                        'path' => 'drivers.create',
+                        'classes' => array('item' => 'show-menu-bdg'),
+                        'permission' => 'drivers.create',
+                        'bullet' => '<span class="bullet bullet-dot"></span>',
+                    ),
                     array(
                         'title'  => 'تسكين السائقين',
                         'permission' => 'orders.create',

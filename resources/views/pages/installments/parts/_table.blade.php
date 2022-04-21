@@ -14,11 +14,11 @@
     </script>
     <script>
         const Table = $('#patients-table');
-        Table.on('preXhr.dt', function(e, settings, data) {
+        Table.on('preXhr.dt', function (e, settings, data) {
             data.children = $('#children_id').val();
             // data.kindergarten= $('#kindergarten_id').val();
         });
-        $('#children_id').change(function() {
+        $('#children_id').change(function () {
             let x = Table.DataTable().ajax.reload();
             let id = this.value;
             $.ajax({
@@ -29,12 +29,12 @@
                     // 'identity': identity,
                 },
                 dataType: "JSON",
-                success: function(data) {
+                success: function (data) {
                     if (data != null) {
                         $('#year').empty();
                         $('#year').append(
                             ` <option value="${data.year.id}" selected> ${data.year.name} </option>  `
-                            );
+                        );
                         $('#division_id').empty();
                         $('#division_id').val(data.division.name)
                         $('#level_id').empty();
@@ -42,16 +42,9 @@
                     }
 
 
-<<<<<<< HEAD
                     if (data.children.installment.length > 0) {
                         $('#sub').prop('disabled', true);
                     } else {
-=======
-                    if(data.children.installment.length > 0){
-                        $('#sub').prop('disabled' , true);
-                    }
-                    else{
->>>>>>> 172b760fa8e81b90d794e4ccf2a3929081098812
                         $('#sub').removeAttr('disabled');
 
                     }
@@ -65,7 +58,7 @@
                     // 'identity': identity,
                 },
                 dataType: "JSON",
-                success: function(data) {
+                success: function (data) {
                     //console.log(data);
                     if (data != null) {
                         $('#required_amount').empty();
@@ -84,48 +77,34 @@
                 }
             });
 
-<<<<<<< HEAD
 
         });
 
 
-=======
-           
-        });
-
-       
->>>>>>> 172b760fa8e81b90d794e4ccf2a3929081098812
         // $('#kindergarten_id').change(function() {
         //     let x =Table.DataTable().ajax.reload();
         // });
     </script>
     <script>
-<<<<<<< HEAD
-       $('#no_of_installment').keyup(function() {
-            if ($(this).val() < 8 && $(this).val() > 0 ) {
-                $('#start_date').removeAttr('disabled');
-            } else {
-                $('#start_date').attr("disabled", true);
-=======
-        $('#no_of_installment').keyup(function() {
+
+        $('#no_of_installment').keyup(function () {
             if ($(this).val() < 8) {
                 $('#start_date').removeAttr('disabled');
 
             } else {
                 $('#start_date').attr("disabled", true);
 
->>>>>>> 172b760fa8e81b90d794e4ccf2a3929081098812
             }
         });
     </script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-            $('#sub').on('click', function(e) {
+            $('#sub').on('click', function (e) {
                 e.preventDefault();
                 const oTable = $('#patients-table').DataTable();
                 $.ajax({
@@ -138,14 +117,10 @@
                         "start_date": $('#start_date').val(),
                         "no_of_installment": $('#no_of_installment').val(),
                         "notices": $('#notices').val(),
-<<<<<<< HEAD
                         "year": $('#year').val(),
-=======
-                        "year":$('#year').val(),
->>>>>>> 172b760fa8e81b90d794e4ccf2a3929081098812
                     },
                     dataType: "JSON",
-                    success: function(data) {
+                    success: function (data) {
                         oTable.draw();
                         toastr.options.positionClass = 'toast-top-left';
                         toastr[data.status](data.message);
@@ -161,14 +136,14 @@
         })
     </script>
     <script type="text/javascript">
-        $(document).ready(function() {
+        $(document).ready(function () {
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
             const oTable = $('#patients-table').DataTable();
-            $(document).on('click', ".del_rec_btn", function(e) {
+            $(document).on('click', ".del_rec_btn", function (e) {
                 e.preventDefault();
                 const id = $(this).data('id');
                 let url = "{{ route('pay-fees.destroy', ':id') }}";
@@ -186,7 +161,7 @@
                         $.ajax({
                             type: "DELETE",
                             url: url,
-                            success: function(data) {
+                            success: function (data) {
                                 oTable.draw();
                                 toastr.options.positionClass = 'toast-top-left';
                                 toastr[data.status](data.message);
@@ -198,7 +173,7 @@
         });
     </script>
     <script>
-        $(document).on('click', '.sts-fld', function(e) {
+        $(document).on('click', '.sts-fld', function (e) {
             //e.preventDefault();
             const id = $(this).data('id');
             const checkedValue = $(this).is(":checked");
@@ -208,7 +183,7 @@
                 data: {
                     'id': id
                 },
-                success: function(data) {
+                success: function (data) {
                     if (data.type === 'yes') {
                         $(this).prop("checked", checkedValue);
                     } else if (data.type === 'no') {
@@ -221,17 +196,17 @@
         });
     </script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             let oTable = $('#patients-table').DataTable();
-            oTable.on('order.dt search.dt', function() {
+            oTable.on('order.dt search.dt', function () {
                 oTable.column(0, {
                     search: 'applied',
                     order: 'applied'
-                }).nodes().each(function(cell, i) {
+                }).nodes().each(function (cell, i) {
                     cell.innerHTML = i + 1;
                 });
             }).draw();
-            $('#myInputSearchField').keyup(function() {
+            $('#myInputSearchField').keyup(function () {
                 oTable.search($(this).val()).draw();
             });
             oTable.draw();
@@ -239,7 +214,7 @@
     </script>
 
     <script>
-        $(document).on('click', ".pay", function(e) {
+        $(document).on('click', ".pay", function (e) {
             const oTable = $('#patients-table').DataTable();
             id = $(this).attr('id');
             Swal.fire({
@@ -261,7 +236,7 @@
                             // 'identity': identity,
                         },
                         dataType: "JSON",
-                        success: function(data) {
+                        success: function (data) {
                             console.log(data);
                             if (data != null) {
                                 oTable.draw();
@@ -277,7 +252,7 @@
                                     // 'identity': identity,
                                 },
                                 dataType: "JSON",
-                                success: function(data) {
+                                success: function (data) {
                                     //console.log(data);
                                     if (data != null) {
                                         $('#required_amount').empty();
@@ -303,7 +278,7 @@
 
     <script>
         ////////////////////////////////////////
-        document.addEventListener('DOMContentLoaded', function(e) {
+        document.addEventListener('DOMContentLoaded', function (e) {
             FormValidation.formValidation(
                 document.getElementById('details_form'), {
                     fields: {
@@ -329,11 +304,8 @@
                                 },
 
                                 regexp: {
-<<<<<<< HEAD
-                                    regexp: /^[1-8]+$/,
-=======
+
                                     regexp: /^[0-8]+$/,
->>>>>>> 172b760fa8e81b90d794e4ccf2a3929081098812
                                     message: ' القسط  فقط أرقام',
                                 },
                                 stringLength: {
@@ -341,19 +313,7 @@
                                     max: 1,
                                 }
                             },
-<<<<<<< HEAD
-                    },
 
-
-                },
-                plugins: {
-                    trigger: new FormValidation.plugins.Trigger(),
-                    submitButton: new FormValidation.plugins.SubmitButton(),
-                    defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
-                    bootstrap: new FormValidation.plugins.Bootstrap5(),
-                },
-            });
-=======
                         },
 
 
@@ -365,7 +325,6 @@
                         bootstrap: new FormValidation.plugins.Bootstrap5(),
                     },
                 });
->>>>>>> 172b760fa8e81b90d794e4ccf2a3929081098812
         });
     </script>
 @endsection

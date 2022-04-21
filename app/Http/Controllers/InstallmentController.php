@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\DataTables\Installments\InstallmentDataTable;
 use App\Models\Children;
 use App\Models\Installment;
+use App\Models\Year;
 use Arr;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -18,9 +19,9 @@ class InstallmentController extends Controller
      */
     public function index(InstallmentDataTable $datatable)
     {
-        $childrens = Children::select('id', 'name')->where('status', 1)->get();
-
-       return $datatable->render('pages.installments.index' , compact('childrens'));
+        $childrens = Children::select('id', 'name')->whereHas('ClassPlacement')->where('status', 1)->get();
+        $years = Year::where('status' , 1)->get();
+       return $datatable->render('pages.installments.index' , compact('childrens' , 'years'));
     }
 
     /**
@@ -84,6 +85,7 @@ class InstallmentController extends Controller
             $ins->payment_amount = $request->get('payment_amount') / $count_of_installment ;
             $ins->children_id = $request->get('children_id');
             $ins->notices = $request->get('notices');
+            $ins->year = $request->get('year');
             $ins->save();
 
 

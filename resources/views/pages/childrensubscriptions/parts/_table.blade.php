@@ -11,6 +11,7 @@
         const Table = $('#patients-table');
         Table.on('preXhr.dt', function(e, settings, data) {
             data.children = $('#children_id').val();
+            data.year = $('#year').val();
             // data.kindergarten= $('#kindergarten_id').val();
         });
 
@@ -34,13 +35,13 @@
                     console.log(data);
                     if (data != null) {
 
-                        
+
 
                         if (data.year != null) {
-                            $('#year').empty();
-                            $('#year').append(
-                                ` <option value="${data.year.id}" selected> ${data.year.name} </option>  
-                            `);
+                            // $('#year').empty();
+                            // $('#year').append(
+                            //     ` <option value="${data.year.id}" selected> ${data.year.name} </option>  
+                        // `);
 
                             $('#division_id').empty();
 
@@ -67,6 +68,7 @@
                         $('#discount_amount').val('');
                         $('#total').val(0);
                         $('#subscription_id').prop('selectedIndex', 0);
+                        $('#year').prop('selectedIndex', 0);
                         let dis = $('#discount_id');
                         dis.prop('selectedIndex', 0);
                         dis.prop("disabled", true);
@@ -80,6 +82,11 @@
         });
 
 
+
+
+        $('#year').change(function() {
+            let x = Table.DataTable().ajax.reload();
+        });
 
 
 
@@ -191,6 +198,10 @@
                 e.preventDefault();
                 const oTable = $('#patients-table').DataTable();
 
+                if(!$('#year').val())
+                {
+                    alert('يرجى اختيار العام الدراسي')
+                }
                 $.ajax({
                     method: "POST",
                     url: "{{ route('children-subscriptions.store') }}",
@@ -223,6 +234,15 @@
                 });
 
             });
+
+
+            
+            $('#kt_reset').on('click', function() {
+                $('#details_form')[0].reset();
+                $('#patients-table').DataTable().rows().remove().draw();
+            });
+
+            
 
         })
     </script>
@@ -302,6 +322,41 @@
                 oTable.search($(this).val()).draw();
             });
             oTable.draw();
+        });
+    </script>
+    
+    <script>
+        ////////////////////////////////////////
+        document.addEventListener('DOMContentLoaded', function(e) {
+            FormValidation.formValidation(
+                document.getElementById('details_form'), {
+                    fields: {
+                        year: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'السنة الدراسية مطلوبة',
+                                },
+                            },
+                        },
+                        children_id: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'اسم الطالب مطلوب',
+                                },
+                            },
+                        },
+
+                       
+
+
+                    },
+                    plugins: {
+                        trigger: new FormValidation.plugins.Trigger(),
+                        submitButton: new FormValidation.plugins.SubmitButton(),
+                        defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
+                        bootstrap: new FormValidation.plugins.Bootstrap5(),
+                    },
+                });
         });
     </script>
 @endsection

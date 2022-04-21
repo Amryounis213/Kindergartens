@@ -16,6 +16,7 @@
         const Table = $('#patients-table');
         Table.on('preXhr.dt', function(e, settings, data) {
             data.children = $('#children_id').val();
+            data.year = $('#year').val();
             // data.kindergarten= $('#kindergarten_id').val();
         });
         $('#children_id').change(function() {
@@ -32,20 +33,21 @@
                 success: function(data) {
                     //console.log(data);
                     if (data != null) {
-                        $('#year').empty();
-                        $('#year').append(
-                            ` <option value="${data.year.id}" selected> ${data.year.name} </option>  `);
-                            $('#payment_amount2').val('');
+                        // $('#year').empty();
+                        // $('#year').append(
+                        //     ` <option value="${data.year.id}" selected> ${data.year.name} </option>  `);
+                        $('#payment_amount2').val('');
                         $('#Receipt_number').val('');
                         $('#notices').val('');
                         $('#payment_date').val('');
+                        $('#year').prop('selectedIndex', 0);
 
                         var today = new Date();
                         var dd = String(today.getDate()).padStart(2, '0');
                         var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
                         var yyyy = today.getFullYear();
 
-                        today = yyyy + '-' + mm + '-' + dd ;
+                        today = yyyy + '-' + mm + '-' + dd;
                         $('#payment_date').val(today);
                     }
                 }
@@ -74,6 +76,14 @@
                 }
             });
         });
+
+
+        $('#year').change(function() {
+            let x = Table.DataTable().ajax.reload();
+      
+        });
+
+
         $('#subscription_id').change(function() {
             let id = this.value;
             $.ajax({

@@ -29,6 +29,109 @@
     <div id="kt_content" class="content d-flex flex-column flex-column-fluid">
         <div class="row g-5 g-xl-8">
             <!--begin::Col-->
+
+            <div class="col-xl-4">
+                <div class="col-md-12 row">
+                    <div class="col-xl-6">
+                        <!--begin::Statistics Widget 1-->
+                        <div class="card  bgi-no-repeat bg-dark card-xl-stretch mb-5 mb-xl-8"
+                            style="background-position: right top; background-size: 20% auto; background-image: url({{ '/demo1/media/svg/shapes/abstract-2.svg' }})">
+                            <!--begin::Body-->
+                            <div class="card-body">
+                                <a href="#"
+                                    class="card-title text-dark fw-bolder text-muted  text-hover-primary fs-7">موظفين
+                                    مسكنين</a>
+                                <div class="fw-bolder text-primary fs-3qx" data-kt-countup="true"
+                                    data-kt-countup-value="{{ $employeeJob }}">0
+                                </div>
+                            </div>
+                            <!--end::Body-->
+                        </div>
+                        <!--end::Statistics Widget 1-->
+                    </div>
+                    <div class="col-xl-6">
+                        <!--begin::Statistics Widget 1-->
+                        <div class="card  bgi-no-repeat bg-dark card-xl-stretch mb-5 mb-xl-8"
+                            style="background-position: right top; background-size: 20% auto; background-image: url({{ '/demo1/media/svg/shapes/abstract-2.svg' }})">
+                            <!--begin::Body-->
+                            <div class="card-body">
+                                <a href="#" class="card-title text-dark fw-bolder text-muted  text-hover-primary fs-7">
+                                    غير مسكنين
+                                </a>
+                                <div class="fw-bolder text-primary fs-3qx" data-kt-countup="true"
+                                    data-kt-countup-value="{{ $employeewithoutJob }}">0
+                                </div>
+                            </div>
+                            <!--end::Body-->
+                        </div>
+                        <!--end::Statistics Widget 1-->
+                    </div>
+                </div>
+                <div class="col-md-12 row">
+                    <div class="col-xl-6">
+                        <div class="card boxing bgi-no-repeat card-xl-stretch mb-5 mb-xl-8"
+                            style="background-position: right top; background-size: 20% auto; background-image: url({{ '/demo1/media/svg/shapes/abstract-2.svg' }})">
+                            <!--begin::Body-->
+                            <div class="card-body">
+                                <a href="#" class="card-title text-dark fw-bolder  text-hover-primary fs-7">
+                                    سائقين مسكنين
+                                </a>
+                                <div class="fw-bolder text-dark fs-3qx" data-kt-countup="true"
+                                    data-kt-countup-value="{{ $driversCount }}">0
+                                </div>
+                            </div>
+                            <!--end::Body-->
+                        </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="card boxing bgi-no-repeat card-xl-stretch mb-5 mb-xl-8"
+                            style="background-position: right top; background-size: 20% auto; background-image: url({{ '/demo1/media/svg/shapes/abstract-2.svg' }})">
+                            <!--begin::Body-->
+                            <div class="card-body">
+                                <a href="#" class="card-title text-dark fw-bolder  text-hover-primary fs-7">
+                                    غير مسكنين
+                                </a>
+                                <div class="fw-bolder text-dark fs-3qx" data-kt-countup="true"
+                                    data-kt-countup-value="{{ $kinderCount }}">0
+                                </div>
+                            </div>
+                            <!--end::Body-->
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 row">
+                    <div class="col-xl-6">
+                        <div class="card bgi-no-repeat card-xl-stretch mb-5 mb-xl-8"
+                            style="background-position: right top; background-size: 20% auto; background-image: url({{ '/demo1/media/svg/shapes/abstract-2.svg' }})">
+                            <!--begin::Body-->
+                            <div class="card-body">
+                                <a href="#" class="card-title fw-bolder text-muted text-hover-primary fs-7">
+                                    طلاب مسكنين
+                                </a>
+                                <div class="fw-bolder text-primary fs-3qx" data-kt-countup="true"
+                                    data-kt-countup-value="{{ $classplacementstudent }}">0
+                                </div>
+                            </div>
+                            <!--end::Body-->
+                        </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="card bgi-no-repeat card-xl-stretch mb-5 mb-xl-8"
+                            style="background-position: right top; background-size: 20% auto; background-image: url({{ '/demo1/media/svg/shapes/abstract-2.svg' }})">
+                            <!--begin::Body-->
+                            <div class="card-body">
+                                <a href="#" class="card-title fw-bolder text-muted text-hover-primary fs-7">
+                                    غير مسكنين
+                                </a>
+                                <div class="fw-bolder text-primary fs-3qx" data-kt-countup="true"
+                                    data-kt-countup-value="{{ $studentsCount - $classplacementstudent }}">0
+                                </div>
+                            </div>
+                            <!--end::Body-->
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="col-xl-4">
                 <div class="col-md-12">
                     <div class="card bgi-no-repeat card-xl-stretch mb-xl-5">
@@ -218,108 +321,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xl-4">
-                <div class="col-md-12 row">
-                    <div class="col-xl-6">
-                        <!--begin::Statistics Widget 1-->
-                        <div class="card  bgi-no-repeat bg-dark card-xl-stretch mb-5 mb-xl-8"
-                            style="background-position: right top; background-size: 20% auto; background-image: url({{ '/demo1/media/svg/shapes/abstract-2.svg' }})">
-                            <!--begin::Body-->
-                            <div class="card-body">
-                                <a href="#"
-                                    class="card-title text-dark fw-bolder text-muted  text-hover-primary fs-7">موظفين
-                                    مسكنين</a>
-                                <div class="fw-bolder text-primary fs-3qx" data-kt-countup="true"
-                                    data-kt-countup-value="{{ $employeeCount }}">0
-                                </div>
-                            </div>
-                            <!--end::Body-->
-                        </div>
-                        <!--end::Statistics Widget 1-->
-                    </div>
-                    <div class="col-xl-6">
-                        <!--begin::Statistics Widget 1-->
-                        <div class="card  bgi-no-repeat bg-dark card-xl-stretch mb-5 mb-xl-8"
-                            style="background-position: right top; background-size: 20% auto; background-image: url({{ '/demo1/media/svg/shapes/abstract-2.svg' }})">
-                            <!--begin::Body-->
-                            <div class="card-body">
-                                <a href="#" class="card-title text-dark fw-bolder text-muted  text-hover-primary fs-7">
-                                    غير مسكنين
-                                </a>
-                                <div class="fw-bolder text-primary fs-3qx" data-kt-countup="true"
-                                    data-kt-countup-value="{{ $employeeCount }}">0
-                                </div>
-                            </div>
-                            <!--end::Body-->
-                        </div>
-                        <!--end::Statistics Widget 1-->
-                    </div>
-                </div>
-                <div class="col-md-12 row">
-                    <div class="col-xl-6">
-                        <div class="card boxing bgi-no-repeat card-xl-stretch mb-5 mb-xl-8"
-                            style="background-position: right top; background-size: 20% auto; background-image: url({{ '/demo1/media/svg/shapes/abstract-2.svg' }})">
-                            <!--begin::Body-->
-                            <div class="card-body">
-                                <a href="#" class="card-title text-dark fw-bolder  text-hover-primary fs-7">
-                                    سائقين مسكنين
-                                </a>
-                                <div class="fw-bolder text-dark fs-3qx" data-kt-countup="true"
-                                    data-kt-countup-value="{{ $driversCount }}">0
-                                </div>
-                            </div>
-                            <!--end::Body-->
-                        </div>
-                    </div>
-                    <div class="col-xl-6">
-                        <div class="card boxing bgi-no-repeat card-xl-stretch mb-5 mb-xl-8"
-                            style="background-position: right top; background-size: 20% auto; background-image: url({{ '/demo1/media/svg/shapes/abstract-2.svg' }})">
-                            <!--begin::Body-->
-                            <div class="card-body">
-                                <a href="#" class="card-title text-dark fw-bolder  text-hover-primary fs-7">
-                                    غير مسكنين
-                                </a>
-                                <div class="fw-bolder text-dark fs-3qx" data-kt-countup="true"
-                                    data-kt-countup-value="{{ $kinderCount }}">0
-                                </div>
-                            </div>
-                            <!--end::Body-->
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-12 row">
-                    <div class="col-xl-6">
-                        <div class="card bgi-no-repeat card-xl-stretch mb-5 mb-xl-8"
-                            style="background-position: right top; background-size: 20% auto; background-image: url({{ '/demo1/media/svg/shapes/abstract-2.svg' }})">
-                            <!--begin::Body-->
-                            <div class="card-body">
-                                <a href="#" class="card-title fw-bolder text-muted text-hover-primary fs-7">
-                                    طلاب مسكنين
-                                </a>
-                                <div class="fw-bolder text-primary fs-3qx" data-kt-countup="true"
-                                    data-kt-countup-value="{{ $classplacementstudent }}">0
-                                </div>
-                            </div>
-                            <!--end::Body-->
-                        </div>
-                    </div>
-                    <div class="col-xl-6">
-                        <div class="card bgi-no-repeat card-xl-stretch mb-5 mb-xl-8"
-                            style="background-position: right top; background-size: 20% auto; background-image: url({{ '/demo1/media/svg/shapes/abstract-2.svg' }})">
-                            <!--begin::Body-->
-                            <div class="card-body">
-                                <a href="#" class="card-title fw-bolder text-muted text-hover-primary fs-7">
-                                    غير مسكنين
-                                </a>
-                                <div class="fw-bolder text-primary fs-3qx" data-kt-countup="true"
-                                    data-kt-countup-value="{{ $studentsCount - $classplacementstudent }}">0
-                                </div>
-                            </div>
-                            <!--end::Body-->
-                        </div>
-                    </div>
-                </div>
-            </div>
+          
             <!--end::Col-->
         </div>
         <div class="col-xl-12">

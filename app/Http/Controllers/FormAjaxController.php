@@ -53,7 +53,6 @@ class FormAjaxController extends Controller
     public function GetChildrenData($id)
     {
         $emp = ClassPlacment::with(['Period' , 'Division' , 'Level' , 'Year' , 'Children.Installment'])->where('children_id' , $id)->latest()->first();
-       
         return response()->json($emp);
     }
 

@@ -33,6 +33,9 @@ class InstallmentDataTable extends DataTable
             ->editColumn('pay_fee', function (Installment $model) {
                 return view('pages.installments.parts.pay_fee', compact('model'));
             })
+            ->editColumn('year', function (Installment $model) {
+                return $model->Year;
+            })
             ->addColumn('status', function (Installment $model) {
                 return view('pages.installments.parts._status', compact('model'));
             });
@@ -51,14 +54,21 @@ class InstallmentDataTable extends DataTable
     public function query(Installment $model)
     {
         $children = $this->request()->get('children');
-
+        $year = $this->request()->get('year');
         if(!empty($children))
         {
+
+            if(!empty($year))
+            {
+                return $model->where('children_id' , $children)->where('year' , $year)->newQuery();
+
+            }
+
             return $model->where('children_id' , $children)->newQuery();
+
         }
        
         return $model->where('created_at' , null)->newQuery();
- 
     }
 
     /**
@@ -95,8 +105,10 @@ class InstallmentDataTable extends DataTable
     {
         return [
             Column::make('table_index')->title(__('#'))->addClass('text-center'),
+
             Column::make('payment_date')->title('تاريخ طلب الدفعة')->addClass('text-center'),
             Column::make('payment_amount')->title('المبلغ المطلوب')->addClass('text-center'),
+            Column::computed('year')->title('العام الدراسي')->addClass('text-center'),
 
            // Column::make('year')->title('العام الدراسي')->addClass('text-center'),
 

@@ -28,6 +28,9 @@ class ChildrenSubscriptionsDataTable extends DataTable
             ->editColumn('subscription_id', function (ChildrenSubscriptions $model) {
                 return $model->Subscription ? $model->Subscription->name : 'غير معرف';
             })
+            ->editColumn('year', function (ChildrenSubscriptions $model) {
+                return $model->Year ? $model->Year->name : 'غير معرف';
+            })
             ->editColumn('notices', function (ChildrenSubscriptions $model) {
                 return $model->notices ? $model->notices : '---';
             })
@@ -49,9 +52,18 @@ class ChildrenSubscriptionsDataTable extends DataTable
     public function query(ChildrenSubscriptions $model)
     {
         $children = $this->request()->get('children');
+        $year = $this->request()->get('year');
         if(!empty($children))
         {
+
+            if(!empty($year))
+            {
+                return $model->where('children_id' , $children)->where('year' , $year)->newQuery();
+
+            }
+
             return $model->where('children_id' , $children)->newQuery();
+
         }
        
         return $model->where('created_at' , null)->newQuery();
@@ -93,6 +105,7 @@ class ChildrenSubscriptionsDataTable extends DataTable
         return [
             Column::make('table_index')->title(__('#'))->addClass('text-center'),
             Column::computed('subscription_id')->title('نوع الاشتراك')->addClass('text-center'),
+            Column::computed('year')->title('السنة الدراسية')->addClass('text-center'),
 
             Column::make('required_amount')->title('المبلغ الافتراضي')->addClass('text-center'),
             Column::make('discount')->title('نسبة الخصم')->addClass('text-center'),

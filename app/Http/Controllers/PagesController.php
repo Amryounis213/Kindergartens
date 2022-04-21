@@ -66,7 +66,14 @@ class PagesController extends Controller
                     $q->where('period_id' , 2) ;
                 })->count();
                
-                
+
+                /**
+                 * Employee with jobplacment
+                 */
+
+                 $employeeJob =Employee::whereHas('JobPlacement')->count();
+                 $employeewithoutJob = Employee::wheredoesnthave('JobPlacement')->count();   
+
                 return view('pages.' . $view, compact(
                     'employeeCount',
                     'studentsCount',
@@ -82,7 +89,9 @@ class PagesController extends Controller
                     'EmployeeMorning',
                     'EmployeeNight',
                     'AllEmployeeMorning' ,
-                    'AllEmployeeNight'
+                    'AllEmployeeNight',
+                    'employeeJob' ,
+                    'employeewithoutJob',
                 ));
             } else {
                 return view('pages.' . $view);

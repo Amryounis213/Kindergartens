@@ -22,4 +22,9 @@ class ChildrenSubscriptions extends Model
     {
         return $this->belongsTo(Children::class , 'children_id' ,'id');
     }
+
+    public function Year()
+    {
+        return $this->belongsTo(Year::class , 'year' ,'id');
+    }
 }

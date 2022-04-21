@@ -45,10 +45,18 @@ class ChildrenPayFeesDataTable extends DataTable
     public function query(PayFees $model)
     {
         $children = $this->request()->get('children');
-
+        $year = $this->request()->get('year');
         if(!empty($children))
         {
+
+            if(!empty($year))
+            {
+                return $model->where('children_id' , $children)->where('year' , $year)->newQuery();
+
+            }
+
             return $model->where('children_id' , $children)->newQuery();
+
         }
        
         return $model->where('created_at' , null)->newQuery();

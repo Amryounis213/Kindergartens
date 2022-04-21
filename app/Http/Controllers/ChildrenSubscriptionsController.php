@@ -49,7 +49,10 @@ class ChildrenSubscriptionsController extends Controller
     public function store(Request $request)
     {
 
-        $exists = ChildrenSubscriptions::where('children_id', $request->children_id)->where('subscription_id', $request->subscription_id)->exists();
+        $exists = ChildrenSubscriptions::where('children_id', $request->children_id)
+        ->where('subscription_id', $request->subscription_id)
+        ->where('year' , $request->year)
+        ->exists();
         if (!$exists) {
             $requiredAmount = Subscriptions::find($request->subscription_id)->YearSubscription->price;
             $disountAmount = $requiredAmount * $request->discount / 100;

@@ -9,7 +9,7 @@
 
             <div class="card-body">
                 <!--begin: Search Form-->
-                <form class="mb-5">
+                <form class="mb-5" id="details_form">
                     <div class="row mb-6">
                         <div class="col-lg-3 mb-lg-0 mb-6">
                             <label>اسم الطالب:</label>
@@ -94,10 +94,12 @@
                                     <span>تسجيل بالاشتراك </span>
                                 </span>
                             </button>&nbsp;&nbsp;
-                            <button class="btn btn-secondary btn-secondary--icon" type="reset" id="kt_reset">
+                           
+
+                            <button class="btn btn-secondary btn-secondary--icon" type="button"  id="kt_reset">
                                 <span>
                                     <i class="la la-close"></i>
-                                    <span>افراغ</span>
+                                    <span>افراغ الجدول</span>
                                 </span>
                             </button>
                         </div>

@@ -7,6 +7,7 @@ use App\DataTables\ChildrensPayment\TrashedDataTable;
 use App\Models\Children;
 use App\Models\Father;
 use App\Models\PayFees;
+use App\Models\Year;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -26,11 +27,11 @@ class PayFeesController extends Controller
         //     });
         //     //  $query->latest('number')->first()->where('status' ,'paid');
         // }])->where('status', 1)->get();
-
+            $years = Year::where('status' , 1)->get();
             $childrens = Children::whereDoesntHave('Installment' , function($query){
                 $query->where('status' , 'unpaid');
             })->get();
-            return $datatable->render('pages.childrenpayment.index' , compact('childrens'));
+            return $datatable->render('pages.childrenpayment.index' , compact('childrens' , 'years'));
     }
 
     /**

@@ -34,7 +34,7 @@
                         <div class="col-lg-3 mb-lg-0 mb-6">
                             <label>اسم الطالب:</label>
                             <select id="children_id" name="children_id" class="form-control datatable-input"
-                                data-col-index="2">
+                                required>
                                 <option value="">اختر طالب</option>
                                 @foreach ($childrens as $children)
                                     <option value="{{ $children->id }}">{{ $children->name }}</option>
@@ -44,8 +44,11 @@
 
                         <div class="col-lg-3 mb-lg-0 mb-6">
                             <label>العام الدراسي:</label>
-                            <select id="year" name="year" class="form-control datatable-input" data-col-index="2">
-                                <option value="">Select</option>
+                            <select required id="year" name="year" class="form-control datatable-input" >
+                                <option value="">اختار العام الدراسي</option>
+                                @foreach ($years as $year)
+                                <option value="{{$year->id}}">{{$year->name}}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
@@ -74,13 +77,13 @@
                         <div class="col-lg-2 mb-lg-0 mb-6">
                             <label>المبلغ المراد تقسيطه :</label>
                             <input disabled id="payment_amount2" name="payment_amount" type="text"
-                                class="form-control datatable-input" placeholder="  المبلغ المراد تقسيطه"
+                                class="form-control datatable-input" placeholder="المبلغ المراد تقسيطه"
                                 data-col-index="4">
                         </div>
                         <div class="col-lg-2 mb-lg-0 mb-6">
                             <label>عدد الأقساط :</label>
-                            <input min="1" max="8" name="no_of_installment" id="no_of_installment" type="number"
-                                class="form-control datatable-input" placeholder="" data-col-index="4" >
+                            <input required min="1" max="8" name="no_of_installment" id="no_of_installment" type="number"
+                                class="form-control datatable-input" placeholder=""  >
                         </div>
                         <div class="col-lg-2 mb-lg-0 mb-6">
                             <label>تاريخ أول قسط</label>

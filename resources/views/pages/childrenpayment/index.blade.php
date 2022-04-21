@@ -23,7 +23,10 @@
                         <div class="col-lg-3 mb-lg-0 mb-6">
                             <label>العام الدراسي:</label>
                             <select id="year" name="year" class="form-control datatable-input" data-col-index="2">
-                                <option value="">Select</option>
+                                <option value="">اختيار السنة الدراسية</option>
+                                @foreach ($years as $year)
+                                <option value="{{$year->id}}">{{$year->name}}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>

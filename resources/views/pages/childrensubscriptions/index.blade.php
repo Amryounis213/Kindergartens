@@ -1,5 +1,7 @@
 <x-base-layout>
     @include('layout.error')
+
+ 
     <!--begin::Container-->
     <div id="kt_content" class="content d-flex flex-column flex-column-fluid">
 
@@ -38,7 +40,6 @@
 
                                 @foreach ($years as $year)
                                 <option value="{{$year->id}}">{{$year->name}}</option>
-
                                 @endforeach
                             </select>
                         </div>

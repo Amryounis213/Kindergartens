@@ -445,12 +445,19 @@ return array(
                         'permission' => 'orders.create',
                         'bullet' => '<span class="bullet bullet-dot"></span>',
                     ),
-                    // array(
-                    //     'title'  => 'سجل الطلاب',
-                    //     'permission' => 'orders.create',
-                    //     'path'   => 'children/cattendance',
-                    //     'bullet' => '<span class="bullet bullet-dot"></span>',
-                    // ),
+                    array(
+                        'title'  => 'تسكين السائقين',
+                        'permission' => 'orders.create',
+                        'path'   => 'driverplacment',
+                        'bullet' => '<span class="bullet bullet-dot"></span>',
+                    ),
+
+                    array(
+                        'title'  => ' السائقين المحذوفين',
+                        'permission' => 'orders.create',
+                        'path'   => 'trashed-driver',
+                        'bullet' => '<span class="bullet bullet-dot"></span>',
+                    ),
 
                 ),
             ),

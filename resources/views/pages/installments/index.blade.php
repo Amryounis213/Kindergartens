@@ -8,6 +8,18 @@
                 background: #f3f3f3;
             }
 
+            /* Chrome, Safari, Edge, Opera */
+            input::-webkit-outer-spin-button,
+            input::-webkit-inner-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+            }
+
+            /* Firefox */
+            input[type=number] {
+                -moz-appearance: textfield;
+            }
+
         </style>
     @endsection
 
@@ -67,8 +79,8 @@
                         </div>
                         <div class="col-lg-2 mb-lg-0 mb-6">
                             <label>عدد الأقساط :</label>
-                            <input name="no_of_installment" id="no_of_installment" type="number"
-                                class="form-control datatable-input" placeholder="" data-col-index="4">
+                            <input min="1" max="8" name="no_of_installment" id="no_of_installment" type="number"
+                                class="form-control datatable-input" placeholder="" data-col-index="4" >
                         </div>
                         <div class="col-lg-2 mb-lg-0 mb-6">
                             <label>تاريخ أول قسط</label>
@@ -79,7 +91,6 @@
                             {{-- <label>تاريخ الدفع</label>
                             <input id="payment_date" name="payment_date"  type="text" class="form-control datatable-input flatpickr-input" placeholder="" data-col-index="4"> --}}
                         </div>
-                        
                         <div class="col-lg-3 mb-lg-0 mb-6">
                             <label>ملاحظات :</label>
                             <input name="notices" id="notices" type="text" class="form-control datatable-input"

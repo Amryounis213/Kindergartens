@@ -16,7 +16,7 @@ class ChildrenAttendanceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(AttendanceDataTable $datatable ,Children $children)
+    public function index(Children $children)
     {
         
         
@@ -29,10 +29,11 @@ class ChildrenAttendanceController extends Controller
             $childrens = $children->whereHas('ClassPlacement')->get();
             $division = Division::get();
         }
+        // return $childrens;
         return view('pages.Attendance.childrens.index' , [
-            'dataTable'=>$datatable ,
+            
              'model'=>$children,
-             'employees'=>$childrens,
+             'childrens'=>$childrens,
              'division'=>$division,
             ]);
 
@@ -67,6 +68,7 @@ class ChildrenAttendanceController extends Controller
                     'division_id'=> $child->ClassPlacement->division_id , 
                     'attendence_date'=> date('Y-m-d'),
                     'attendence_status'=> $attendence_status,
+                    'period_id'=> $child->ClassPlacement->Period->id,
                 ]);
                 
 
@@ -144,7 +146,7 @@ class ChildrenAttendanceController extends Controller
         return view('pages.Attendance.childrens.index' , [
             'dataTable'=>$datatable ,
              'model'=>$children,
-             'employees'=>$childrens,
+             'childrens'=>$childrens,
              'division'=>$division,
              'selected'=> $request->division_id ,
             ]);

@@ -7,6 +7,7 @@ use App\DataTables\ChildrensPayment\TrashedDataTable;
 use App\Models\Children;
 use App\Models\Father;
 use App\Models\PayFees;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class PayFeesController extends Controller
@@ -75,7 +76,6 @@ class PayFeesController extends Controller
     {
         
         $pay = PayFees::find($id);
-
         $childrens = Children::find($pay->children_id);
         return view('pages.childrenpayment.edit' , compact('childrens' , 'pay'));
     }
@@ -121,5 +121,14 @@ class PayFeesController extends Controller
         $children->deleted_at = null ;
         $children->save();
         return redirect()->back()->with('success' , 'تم استرجاع الطالب بنجاح');
+    }
+
+
+
+    public function print($id) {
+         $order = PayFees::find($id);
+        $nowDate = Carbon::now();
+        $date = $nowDate->format('d-m-Y');
+        return view('pages.childrenpayment.collections.print', compact(['order', 'date']));
     }
 }

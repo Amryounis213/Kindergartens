@@ -33,7 +33,8 @@
                     if (data != null) {
                         $('#year').empty();
                         $('#year').append(
-                            ` <option value="${data.year.id}" selected> ${data.year.name} </option>  `);
+                            ` <option value="${data.year.id}" selected> ${data.year.name} </option>  `
+                            );
                         $('#division_id').empty();
                         $('#division_id').val(data.division.name)
                         $('#level_id').empty();
@@ -41,10 +42,16 @@
                     }
 
 
+<<<<<<< HEAD
+                    if (data.children.installment.length > 0) {
+                        $('#sub').prop('disabled', true);
+                    } else {
+=======
                     if(data.children.installment.length > 0){
                         $('#sub').prop('disabled' , true);
                     }
                     else{
+>>>>>>> 172b760fa8e81b90d794e4ccf2a3929081098812
                         $('#sub').removeAttr('disabled');
 
                     }
@@ -77,15 +84,29 @@
                 }
             });
 
+<<<<<<< HEAD
+
+        });
+
+
+=======
            
         });
 
        
+>>>>>>> 172b760fa8e81b90d794e4ccf2a3929081098812
         // $('#kindergarten_id').change(function() {
         //     let x =Table.DataTable().ajax.reload();
         // });
     </script>
     <script>
+<<<<<<< HEAD
+       $('#no_of_installment').keyup(function() {
+            if ($(this).val() < 8 && $(this).val() > 0 ) {
+                $('#start_date').removeAttr('disabled');
+            } else {
+                $('#start_date').attr("disabled", true);
+=======
         $('#no_of_installment').keyup(function() {
             if ($(this).val() < 8) {
                 $('#start_date').removeAttr('disabled');
@@ -93,6 +114,7 @@
             } else {
                 $('#start_date').attr("disabled", true);
 
+>>>>>>> 172b760fa8e81b90d794e4ccf2a3929081098812
             }
         });
     </script>
@@ -116,7 +138,11 @@
                         "start_date": $('#start_date').val(),
                         "no_of_installment": $('#no_of_installment').val(),
                         "notices": $('#notices').val(),
+<<<<<<< HEAD
+                        "year": $('#year').val(),
+=======
                         "year":$('#year').val(),
+>>>>>>> 172b760fa8e81b90d794e4ccf2a3929081098812
                     },
                     dataType: "JSON",
                     success: function(data) {
@@ -303,7 +329,11 @@
                                 },
 
                                 regexp: {
+<<<<<<< HEAD
+                                    regexp: /^[1-8]+$/,
+=======
                                     regexp: /^[0-8]+$/,
+>>>>>>> 172b760fa8e81b90d794e4ccf2a3929081098812
                                     message: ' القسط  فقط أرقام',
                                 },
                                 stringLength: {
@@ -311,6 +341,19 @@
                                     max: 1,
                                 }
                             },
+<<<<<<< HEAD
+                    },
+
+
+                },
+                plugins: {
+                    trigger: new FormValidation.plugins.Trigger(),
+                    submitButton: new FormValidation.plugins.SubmitButton(),
+                    defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
+                    bootstrap: new FormValidation.plugins.Bootstrap5(),
+                },
+            });
+=======
                         },
 
 
@@ -322,6 +365,7 @@
                         bootstrap: new FormValidation.plugins.Bootstrap5(),
                     },
                 });
+>>>>>>> 172b760fa8e81b90d794e4ccf2a3929081098812
         });
     </script>
 @endsection

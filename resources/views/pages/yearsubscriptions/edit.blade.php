@@ -44,7 +44,7 @@
                                     </option>
                                     @foreach($subs as $item)
                                         <option
-                                            value="{{$item->id}}" {{ $item->id == $sub->id ? 'selected' :'' }}> {{$item->name}}  </option>
+                                            value="{{$item->id}}" {{ $item->id == $sub->subsraction_id   ? 'selected' :'' }}> {{$item->name}}  </option>
                                     @endforeach
                                 </select>
                             </div>

@@ -86,23 +86,12 @@
         // });
     </script>
     <script>
-<<<<<<< HEAD
        $('#no_of_installment').keyup(function() {
             if ($(this).val() < 8 && $(this).val() > 0 ) {
                 $('#start_date').removeAttr('disabled');
             } else {
                 $('#start_date').attr("disabled", true);
                 $('#start_date').val('');
-=======
-
-        $('#no_of_installment').keyup(function () {
-            if ($(this).val() < 8) {
-                $('#start_date').removeAttr('disabled');
-
-            } else {
-                $('#start_date').attr("disabled", true);
-
->>>>>>> 94ec8fe4c237b07f7b7d24026c8b4578681d63ea
             }
         });
     </script>
@@ -313,12 +302,7 @@
                                 },
 
                                 regexp: {
-<<<<<<< HEAD
                                     regexp: /^[1-8]+$/,
-=======
-
-                                    regexp: /^[0-8]+$/,
->>>>>>> 94ec8fe4c237b07f7b7d24026c8b4578681d63ea
                                     message: ' القسط  فقط أرقام',
                                 },
                                 stringLength: {
@@ -326,7 +310,6 @@
                                     max: 1,
                                 }
                             },
-<<<<<<< HEAD
                     },
 
 
@@ -338,20 +321,6 @@
                     bootstrap: new FormValidation.plugins.Bootstrap5(),
                 },
             });
-=======
-
-                        },
-
-
-                    },
-                    plugins: {
-                        trigger: new FormValidation.plugins.Trigger(),
-                        submitButton: new FormValidation.plugins.SubmitButton(),
-                        defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
-                        bootstrap: new FormValidation.plugins.Bootstrap5(),
-                    },
-                });
->>>>>>> 94ec8fe4c237b07f7b7d24026c8b4578681d63ea
         });
     </script>
 @endsection

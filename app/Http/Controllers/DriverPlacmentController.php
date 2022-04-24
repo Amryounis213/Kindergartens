@@ -109,7 +109,8 @@ class DriverPlacmentController extends Controller
     {
         
         $info = DriverPlacment::find($id);
-        return updateModelStatus($info);
+        $info->delete();
+        return response()->json(['status' => 'success', 'message' => 'تم الحذف بنجاح']);
     }
 
 

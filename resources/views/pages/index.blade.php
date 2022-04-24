@@ -92,7 +92,7 @@
                                     غير مسكنين
                                 </a>
                                 <div class="fw-bolder text-dark fs-3qx" data-kt-countup="true"
-                                    data-kt-countup-value="{{ $kinderCount }}">0
+                                    data-kt-countup-value="{{ $driverwithoutPlacment }}">0
                                 </div>
                             </div>
                             <!--end::Body-->

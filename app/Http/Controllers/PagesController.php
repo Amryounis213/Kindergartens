@@ -29,7 +29,9 @@ class PagesController extends Controller
             if ($view == 'index') {
                 $employeeCount = Employee::count(); //sizeof(Patient::all());
                 $studentsCount = Children::count(); //sizeof(Order::whereDate('created_at', Carbon::today())->get());
-                $driversCount = Driver::count(); //sizeof(Clinic::all());
+                $driversCount = Driver::whereHas('DriverPlacment')->count(); //sizeof(Clinic::all());
+                $driverwithoutPlacment = Driver::whereDoesntHave('DriverPlacment')->count();
+                
                 $kinderCount = Kindergarten::count(); //sizeof(Checkup::all());
                 $employeeAtt =  EmployeesAttendance::whereDate('attendence_date', date('y-m-d'))->where('attendence_status', 1)->count();
                 $studentsAtt =  ChildrenAttendances::whereDate('attendence_date', date('y-m-d'))->where('attendence_status', 1)->count();
@@ -92,6 +94,7 @@ class PagesController extends Controller
                     'AllEmployeeNight',
                     'employeeJob' ,
                     'employeewithoutJob',
+                    'driverwithoutPlacment'
                 ));
             } else {
                 return view('pages.' . $view);

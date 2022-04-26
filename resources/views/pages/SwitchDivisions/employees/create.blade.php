@@ -90,7 +90,7 @@
                                                     id="level1" data-control="select2"
                                                     data-placeholder="{{ __('Select') }} المرحلة .."
                                                     class="form-select form-select-solid form-select-lg fw-bold"
-                                                    disabled>
+                                                    >
                                                     <option value="">{{ __('Select') }} المرحلة...
                                                     </option>
                                                     @foreach ($levels as $item)
@@ -206,7 +206,7 @@
                                                                 data-control="select2"
                                                                 data-placeholder="{{ __('Select') }} المرحلة .."
                                                                 class="form-select form-select-solid form-select-lg fw-bold"
-                                                                disabled>
+                                                                >
                                                                 <option value="">{{ __('Select') }} المرحلة...
                                                                 </option>
                                                                 @foreach ($levels as $item)

@@ -11,6 +11,7 @@
         const Table = $('#patients-table');
         Table.on('preXhr.dt', function(e, settings, data) {
             data.children = $('#children_id').val();
+            data.year = $('#year').val();
             // data.kindergarten= $('#kindergarten_id').val();
         });
 
@@ -31,20 +32,47 @@
                 dataType: "JSON",
                 success: function(data) {
 
-                    //console.log(data);
+                    console.log(data);
                     if (data != null) {
 
-                        $('#year').empty();
-                        $('#year').append(
-                            ` <option value="${data.year}" selected> ${data.year} </option>  `);
+
+
+                        if (data.year != null) {
+                            // $('#year').empty();
+                            // $('#year').append(
+                            //     ` <option value="${data.year.id}" selected> ${data.year.name} </option>  
+                        // `);
+
+                            $('#division_id').empty();
+
+                            $('#division_id').val(data.division.name)
+
+                            $('#level_id').empty();
+                            $('#level_id').val(data.level.name)
+
+
+                        } else {
+                            $('#division_id').empty();
+
+                            $('#division_id').val('غير مسكن')
+
+                            $('#level_id').empty();
+                            $('#level_id').val('غير مسكن')
+                        }
 
 
 
-                        $('#division_id').empty();
-                        $('#division_id').val(data.division.name)
 
-                        $('#level_id').empty();
-                        $('#level_id').val(data.level.name)
+                        $('#required_amount').val('');
+                        $('#discount').val(0);
+                        $('#discount_amount').val('');
+                        $('#total').val(0);
+                        $('#subscription_id').prop('selectedIndex', 0);
+                        $('#year').prop('selectedIndex', 0);
+                        let dis = $('#discount_id');
+                        dis.prop('selectedIndex', 0);
+                        dis.prop("disabled", true);
+
 
                     }
                 }
@@ -54,6 +82,11 @@
         });
 
 
+
+
+        $('#year').change(function() {
+            let x = Table.DataTable().ajax.reload();
+        });
 
 
 
@@ -127,7 +160,6 @@
                         $('#discount_amount').val(sub.val() * data.per / 100);
                         let d = $('#discount_amount').val();
 
-                        
                         $('#total').val(r - d + ' شيكل');
 
                     }
@@ -166,6 +198,10 @@
                 e.preventDefault();
                 const oTable = $('#patients-table').DataTable();
 
+                if(!$('#year').val())
+                {
+                    alert('يرجى اختيار العام الدراسي')
+                }
                 $.ajax({
                     method: "POST",
                     url: "{{ route('children-subscriptions.store') }}",
@@ -173,6 +209,9 @@
                         "discount": $('#discount').val(),
                         "children_id": $('#children_id').val(),
                         "subscription_id": $('#subscription_id').val(),
+                        "discount_id": $('#discount_id').val(),
+                        "year": $('#year').val(),
+
                     },
                     dataType: "JSON",
                     success: function(data) {
@@ -180,11 +219,30 @@
                         oTable.draw();
                         toastr.options.positionClass = 'toast-top-left';
                         toastr[data.status](data.message);
+                        $('#division_id').empty();
+                        $('#level_id').empty();
+                        $('#required_amount').val('');
+                        $('#discount').val(0);
+                        $('#discount_amount').val('');
+                        $('#total').val(0);
+                        $('#subscription_id').prop('selectedIndex', 0);
+                        let dis = $('#discount_id');
+                        dis.prop('selectedIndex', 0);
+                        dis.prop("disabled", true);
                     }
 
                 });
 
             });
+
+
+            
+            $('#kt_reset').on('click', function() {
+                $('#details_form')[0].reset();
+                $('#patients-table').DataTable().rows().remove().draw();
+            });
+
+            
 
         })
     </script>
@@ -264,6 +322,41 @@
                 oTable.search($(this).val()).draw();
             });
             oTable.draw();
+        });
+    </script>
+    
+    <script>
+        ////////////////////////////////////////
+        document.addEventListener('DOMContentLoaded', function(e) {
+            FormValidation.formValidation(
+                document.getElementById('details_form'), {
+                    fields: {
+                        year: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'السنة الدراسية مطلوبة',
+                                },
+                            },
+                        },
+                        children_id: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'اسم الطالب مطلوب',
+                                },
+                            },
+                        },
+
+                       
+
+
+                    },
+                    plugins: {
+                        trigger: new FormValidation.plugins.Trigger(),
+                        submitButton: new FormValidation.plugins.SubmitButton(),
+                        defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
+                        bootstrap: new FormValidation.plugins.Bootstrap5(),
+                    },
+                });
         });
     </script>
 @endsection

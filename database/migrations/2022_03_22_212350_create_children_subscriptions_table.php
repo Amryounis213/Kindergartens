@@ -21,7 +21,7 @@ class CreateChildrenSubscriptionsTable extends Migration
             $table->unsignedInteger('total');
             $table->text('notices')->nullable();
 
-
+            $table->foreignId('year')->constrained('years')->cascadeOnDelete();
             $table->foreignId('subscription_id')->constrained('subscriptions')->cascadeOnDelete();
             $table->foreignId('children_id')->constrained('childrens')->cascadeOnDelete();
 

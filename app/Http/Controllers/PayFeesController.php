@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\ChildrensPayment\ChildrenPayFeesDataTable;
+use App\DataTables\ChildrensPayment\TrashedDataTable;
 use App\Models\Children;
+use App\Models\Father;
 use App\Models\PayFees;
+use App\Models\Year;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class PayFeesController extends Controller
@@ -16,8 +20,18 @@ class PayFeesController extends Controller
      */
     public function index(ChildrenPayFeesDataTable $datatable)
     {
-        $childrens = Children::select('id', 'name')->where('status', 1)->get();
-        return $datatable->render('pages.childrenpayment.index' , compact('childrens'));
+        // $childrens = Children::with(['Installment' => function($query){
+
+        //     $query->whereHas('Installment' , function($query){
+        //          $query->latest('number')->first()->where('status' ,'paid');
+        //     });
+        //     //  $query->latest('number')->first()->where('status' ,'paid');
+        // }])->where('status', 1)->get();
+            $years = Year::where('status' , 1)->get();
+            $childrens = Children::whereDoesntHave('Installment' , function($query){
+                $query->where('status' , 'unpaid');
+            })->get();
+            return $datatable->render('pages.childrenpayment.index' , compact('childrens' , 'years'));
     }
 
     /**
@@ -63,7 +77,6 @@ class PayFeesController extends Controller
     {
         
         $pay = PayFees::find($id);
-
         $childrens = Children::find($pay->children_id);
         return view('pages.childrenpayment.edit' , compact('childrens' , 'pay'));
     }
@@ -95,5 +108,28 @@ class PayFeesController extends Controller
         $sub->delete();
         return response()->json(['status' => 'success', 'message' => 'تم الحذف بنجاح']);
 
+    }
+    public function GetTrashed(TrashedDataTable $dataTable)
+    {
+       
+        return $dataTable->render('pages.employees.index.index');
+    }
+
+
+    public function RestoreTrashed($id)
+    {
+        $children = PayFees::withTrashed()->where('id' , $id)->first();
+        $children->deleted_at = null ;
+        $children->save();
+        return redirect()->back()->with('success' , 'تم استرجاع الطالب بنجاح');
+    }
+
+
+
+    public function print($id) {
+         $order = PayFees::find($id);
+        $nowDate = Carbon::now();
+        $date = $nowDate->format('d-m-Y');
+        return view('pages.childrenpayment.collections.print', compact(['order', 'date']));
     }
 }

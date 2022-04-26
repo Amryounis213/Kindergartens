@@ -7,6 +7,8 @@ use App\Models\Children;
 use App\Models\ChildrenSubscriptions;
 use App\Models\Discount;
 use App\Models\Subscriptions;
+use App\Models\Year;
+use App\Models\YearSubscriptions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -19,11 +21,13 @@ class ChildrenSubscriptionsController extends Controller
      */
     public function index(ChildrenSubscriptionsDataTable $datatable)
     {
-       
+
         $childrens = Children::select('id', 'name')->where('status', 1)->get();
         $subs = Subscriptions::whereHas('YearSubscription')->where('status', 1)->get();
         $dicsounts = Discount::get();
-        return $datatable->render('pages.childrensubscriptions.index', compact('childrens', 'subs' , 'dicsounts'));
+        $years = Year::where('status', 1)->get();
+
+        return $datatable->render('pages.childrensubscriptions.index', compact('childrens', 'subs', 'dicsounts', 'years'));
     }
 
     /**
@@ -45,7 +49,10 @@ class ChildrenSubscriptionsController extends Controller
     public function store(Request $request)
     {
 
-        $exists = ChildrenSubscriptions::where('children_id', $request->children_id)->where('subscription_id', $request->subscription_id)->exists();
+        $exists = ChildrenSubscriptions::where('children_id', $request->children_id)
+        ->where('subscription_id', $request->subscription_id)
+        ->where('year' , $request->year)
+        ->exists();
         if (!$exists) {
             $requiredAmount = Subscriptions::find($request->subscription_id)->YearSubscription->price;
             $disountAmount = $requiredAmount * $request->discount / 100;
@@ -80,7 +87,18 @@ class ChildrenSubscriptionsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $sub = ChildrenSubscriptions::find($id);
+        $subs = Subscriptions::whereHas('YearSubscription')->where('id' , $sub->subscription_id)->where('status', 1)->get();
+        $childrens = Children::select('id', 'name')->where('status', 1)->where('id', $sub->children_id)->get();
+        $discounts = Discount::get();
+        $years = Year::where('status', 1)->get();
+        return view('pages.childrensubscriptions.edit', [
+            'sub' => $sub,
+            'subs' => $subs,
+            'childrens' => $childrens,
+            'dicsounts' => $discounts,
+            'years' => $years,
+        ]);
     }
 
     /**
@@ -92,7 +110,18 @@ class ChildrenSubscriptionsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+       // return $request->discount_amount;
+        $CS = ChildrenSubscriptions::find($id);
+        $requiredAmount = Subscriptions::find($request->subscription_id)->YearSubscription->price;
+      //  $disountAmount = $requiredAmount * $request->discount / 100;
+        $total = $requiredAmount - $request->discount_amount;
+       
+        $request->merge([
+            'required_amount' => $requiredAmount,
+            'total' => $total,
+        ]);
+        $CS->update($request->all());
+        return redirect()->route('children-subscriptions.index')->with( 'success' , 'تم تعديل اشتراك الطفل بنجاح');
     }
 
     /**
@@ -103,9 +132,8 @@ class ChildrenSubscriptionsController extends Controller
      */
     public function destroy($id)
     {
-        $sub =ChildrenSubscriptions::find($id);
+        $sub = ChildrenSubscriptions::find($id);
         $sub->delete();
         return response()->json(['status' => 'success', 'message' => 'تم الحذف بنجاح']);
-
     }
 }

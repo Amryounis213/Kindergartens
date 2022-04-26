@@ -274,6 +274,12 @@ return array(
                         'path' => 'divisions/create',
                         'bullet' => '<span class="bullet bullet-dot"></span>',
                     ),
+                    array(
+                        'title' => 'الشعب الدراسية المحذوفة',
+                        'permission' => 'orders.create',
+                        'path' => 'trashed-division',
+                        'bullet' => '<span class="bullet bullet-dot"></span>',
+                    ),
                 ),
             ),
         ),
@@ -319,7 +325,12 @@ return array(
                         'path' => 'switch',
                         'bullet' => '<span class="bullet bullet-dot"></span>',
                     ),
-
+                    array(
+                        'title' => 'الموظفين المحذوفين',
+                        'permission' => 'employees.delete',
+                        'path' => 'trashed-employee',
+                        'bullet' => '<span class="bullet bullet-dot"></span>',
+                    ),
 
                 ),
             ),
@@ -434,12 +445,27 @@ return array(
                         'permission' => 'orders.create',
                         'bullet' => '<span class="bullet bullet-dot"></span>',
                     ),
-                    // array(
-                    //     'title'  => 'سجل الطلاب',
-                    //     'permission' => 'orders.create',
-                    //     'path'   => 'children/cattendance',
-                    //     'bullet' => '<span class="bullet bullet-dot"></span>',
-                    // ),
+
+                    array(
+                        'title' => 'اضافة سائقين',
+                        'path' => 'drivers.create',
+                        'classes' => array('item' => 'show-menu-bdg'),
+                        'permission' => 'drivers.create',
+                        'bullet' => '<span class="bullet bullet-dot"></span>',
+                    ),
+                    array(
+                        'title'  => 'تسكين السائقين',
+                        'permission' => 'orders.create',
+                        'path'   => 'driverplacment',
+                        'bullet' => '<span class="bullet bullet-dot"></span>',
+                    ),
+
+                    array(
+                        'title'  => ' السائقين المحذوفين',
+                        'permission' => 'orders.create',
+                        'path'   => 'trashed-driver',
+                        'bullet' => '<span class="bullet bullet-dot"></span>',
+                    ),
 
                 ),
             ),
@@ -483,6 +509,18 @@ return array(
                         'title' => 'تسديد الرسوم',
                         'permission' => 'childrens.create',
                         'path' => 'pay-fees',
+                        'bullet' => '<span class="bullet bullet-dot"></span>',
+                    ),
+                    array(
+                        'title' => 'دفعات الرسوم المحذوفة',
+                        'permission' => 'childrens.create',
+                        'path' => 'trashed-pay-fees',
+                        'bullet' => '<span class="bullet bullet-dot"></span>',
+                    ),
+                    array(
+                        'title' => 'الأقساط  الدراسية',
+                        'permission' => 'childrens.create',
+                        'path' => 'installments',
                         'bullet' => '<span class="bullet bullet-dot"></span>',
                     ),
                    

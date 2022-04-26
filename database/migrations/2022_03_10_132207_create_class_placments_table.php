@@ -16,7 +16,7 @@ class CreateClassPlacmentsTable extends Migration
         Schema::create('class_placments', function (Blueprint $table) {
             $table->id();
 
-            $table->date('year');
+            $table->foreignId('year')->constrained('years')->cascadeOnDelete();
             $table->foreignId('children_id')->constrained('childrens')->cascadeOnDelete();
             $table->foreignId('employee_id')->constrained('employees')->cascadeOnDelete();
             $table->foreignId('period_id')->constrained('periods')->cascadeOnDelete();

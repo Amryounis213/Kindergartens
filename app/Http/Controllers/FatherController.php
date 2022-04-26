@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\Fathers\FathersDataTable;
+use App\DataTables\Fathers\TrashedDataTable;
 use App\Models\Father;
 use Illuminate\Http\Request;
 
@@ -95,5 +96,20 @@ class FatherController extends Controller
         $father->delete();
         return response()->json(['status' => 'success', 'message' => 'تم الحذف بنجاح']);
 
+    }
+
+    public function GetTrashed(TrashedDataTable $dataTable)
+    {
+       
+        return $dataTable->render('pages.employees.index.index');
+    }
+
+
+    public function RestoreTrashed($id)
+    {
+        $children = Father::withTrashed()->where('id' , $id)->first();
+        $children->deleted_at = null ;
+        $children->save();
+        return redirect()->back()->with('success' , 'تم استرجاع الطالب بنجاح');
     }
 }

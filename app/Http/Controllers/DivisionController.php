@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\Divisions\DivisionsDataTable;
+use App\DataTables\Divisions\TrashedDataTable;
 use App\Models\Division;
 use App\Models\Kindergarten;
 use App\Models\Level;
@@ -113,5 +114,20 @@ class DivisionController extends Controller
         $id = $request->get('id');
         $info = Division::find($id);
         return updateModelStatus($info);
+    }
+
+
+    public function GetTrashed(TrashedDataTable $dataTable)
+    {
+        return $dataTable->render('pages.divisions.index');
+    }
+
+
+    public function RestoreTrashed($id)
+    {
+        $children = Division::withTrashed()->where('id' , $id)->first();
+        $children->deleted_at = null ;
+        $children->save();
+        return redirect()->back()->with('success' , 'تم استرجاع الشعبة بنجاح');
     }
 }

@@ -13,6 +13,8 @@ class Children extends Model
     protected $fillable = [
        'identity', 'name' , 'bth_date', 'add_date','father_id', 'father_rel', 'want_transport', 'kindergarten_id','gender' , 'added_by' , 'status' , 'address' , 'mother_name' , 'mother_mob'
    ];
+
+   
    public function Father()
    {
         return $this->belongsTo(Father::class , 'father_id' , 'id');
@@ -44,8 +46,13 @@ class Children extends Model
    
    public function PayFee()
    {
-        return $this->hasMany(PayFees::class , 'children_id' , 'id');
+        return $this->hasMany(PayFees::class , 'children_id' , 'id')->whereNull('deleted_at');
    }
 
+   public function Installment()
+   {
+        return $this->hasMany(Installment::class , 'children_id' , 'id');
+   }
+   
    
 }

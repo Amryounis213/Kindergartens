@@ -15,7 +15,7 @@ class CreateJobPlacementsTable extends Migration
     {
         Schema::create('job_placements', function (Blueprint $table) {
             $table->id();
-            $table->string('year');
+            $table->foreignId('year')->constrained('years')->cascadeOnDelete();
             $table->foreignId('kindergarten_id')->constrained('kindergartens')->cascadeOnDelete();
             $table->foreignId('employee_id')->constrained('employees')->cascadeOnDelete();
             $table->foreignId('job_id')->constrained('jobs')->cascadeOnDelete();

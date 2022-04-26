@@ -68,18 +68,29 @@
                                         </select>
                                     </div>
                                 </div>
-                                <!--end::Input group-->
-                                <div class="row mb-6 fv-plugins-icon-container">
-                                    <label class="col-lg-4 col-form-label required fw-bold fs-6">العام الدراسي</label>
-                                    <div class="col-lg-8">
-                                        <input type="text" name="year" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 address" placeholder="مثال : 2020-2021" value="{{ ($children->ClassPlacement ?? null ? $children->ClassPlacement->year : old('year')) }}">
-                                    <div class="fv-plugins-message-container invalid-feedback"></div></div>
+                                 <!--begin::Input group-->
+                                 <div class="row mb-6">
+                                    <label class="col-lg-4 col-form-label required fw-bold fs-6">  العام الدراسي</label>
+                                    <div class="col-lg-8 fv-row">
+                                        <select name="year" aria-label="اختر العام الدراسي" data-control="select2"
+                                            data-placeholder="اختر العام الدراسي.."
+                                            class="form-select form-select-solid form-select-lg employee_id">
+                                            <option value="">اختر العام الدراسي...</option>
+                                            @foreach ($years as $item)
+                                                <option value="{{ $item->id }}"
+                                                    {{ $item->id == ($children->ClassPlacement ?? null ? $children->ClassPlacement->year : old('year'))? 'selected' : '' }}>
+                                                    {{ $item->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
+                                <!--end::Input group-->
+
                                 <!--begin::Input group-->
                                 <div class="row mb-6">
                                     <label class="col-lg-4 col-form-label required fw-bold fs-6"> اسم المربية</label>
                                     <div class="col-lg-8 fv-row">
-                                        <select name="employee_id" aria-label="اختر اسم المربية" data-control="select2"
+                                        <select name="employee_id" id="employee_id" aria-label="اختر اسم المربية" data-control="select2"
                                             data-placeholder="اختر اسم المربية.."
                                             class="form-select form-select-solid form-select-lg employee_id">
                                             <option value="">اختر اسم المربية...</option>
@@ -352,6 +363,42 @@
                             $('#division').empty();
                             data.forEach(element => {
                                 $('#division').append(
+                                    `<option value="${element['id']}">${element['name']}</option>`
+                                );
+                            });
+
+
+
+
+
+
+                        }
+                    }
+                });
+
+
+
+
+
+
+                $.ajax({
+                    url: "/GetEmployeeByKindergarten/" + id,
+                    method: 'GET',
+                    data: {
+
+
+                    },
+                    dataType: "JSON",
+                    success: function(data) {
+
+                        console.log(data);
+                        if (data != null) {
+
+                            
+
+                            $('#employee_id').empty();
+                            data.forEach(element => {
+                                $('#employee_id').append(
                                     `<option value="${element['id']}">${element['name']}</option>`
                                 );
                             });

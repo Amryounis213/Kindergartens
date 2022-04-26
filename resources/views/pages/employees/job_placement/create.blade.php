@@ -222,16 +222,24 @@
                                                                         </div>
                                                                     </div>
                                                                     <!--end::Input group-->
+                                                                    
+                                                                    <!--begin::Input group-->
                                                                     <div class="row mb-6">
-                                                                        <label class="col-lg-4 col-form-label required fw-bold fs-6">العام الدراسي</label>
-                                                                        <div class="col-lg-8">
-                                                                            <input type="text" name="year"
-                                                                                   class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 address"
-                                                                                   placeholder="مثال : 2020-2021"
-                                                                                   value="{{ $employee->JobPlacement ?? null ? $employee->JobPlacement->year : old('year') }}">
+                                                                        <label class="col-lg-4 col-form-label required fw-bold fs-6"> العام الدراسي</label>
+                                                                        <div class="col-lg-8 fv-row">
+                                                                            <select name="year" id="year" aria-label="اختر العام الدراسي" data-control="select2"
+                                                                                    data-placeholder="اختر العام الدراسي.."
+                                                                                    class="form-select form-select-solid form-select-lg job_id">
+                                                                                <option value="">اختر العام الدراسي...</option>
+                                                                                @foreach ($years as $item)
+                                                                                    <option value="{{ $item->id }}"
+                                                                                        {{ $item->id == ($employee->JobPlacement ?? null ? $employee->JobPlacement->year : old('year'))? 'selected': '' }}>
+                                                                                        {{ $item->name }}</option>
+                                                                                @endforeach
+                                                                            </select>
                                                                         </div>
                                                                     </div>
-
+                                                                    <!--end::Input group-->
                                                                     <!--begin::Input group-->
                                                                     <div class="row mb-6">
                                                                         <label class="col-lg-4 col-form-label required fw-bold fs-6">المسمى الوظيفي</label>
@@ -438,11 +446,11 @@
                                                                         notEmpty: {
                                                                             message: 'السنة الدراسية مطلوبة',
                                                                         },
-                                                                        stringLength: {
-                                                                            min: 9,
-                                                                            max: 9,
-                                                                            message: 'اكتب التسلسل بشكل صحيح',
-                                                                        },
+                                                                        // stringLength: {
+                                                                        //     min: 9,
+                                                                        //     max: 9,
+                                                                        //     message: 'اكتب التسلسل بشكل صحيح',
+                                                                        // },
                                                                         // regexp: {
                                                                         //     regexp: /^[0-9]+$/,
                                                                         //     message: 'رقم الهوية فقط أرقام',
@@ -463,10 +471,10 @@
                                                                         },
                                                                     },
                                                                 },
-                                                                states_id: {
+                                                                kindergarten_id: {
                                                                     validators: {
                                                                         notEmpty: {
-                                                                            message: 'المحافظة مطلوب',
+                                                                            message: 'الروضة مطلوبة',
                                                                         },
                                                                     },
                                                                 },
@@ -646,7 +654,7 @@
         </script>
 
 
-        <script>
+        {{-- <script>
             document.addEventListener('DOMContentLoaded', function (e) {
                 FormValidation.formValidation(
                     document.getElementById('details_form'), {
@@ -695,10 +703,10 @@
                                     },
                                 },
                             },
-                            cities_id: {
+                            kindergarten_id: {
                                 validators: {
                                     notEmpty: {
-                                        message: 'المدينة مطلوب',
+                                        message: 'الروضة مطلوبة',
                                     },
                                 },
                             },
@@ -732,7 +740,7 @@
                         },
                     });
             });
-        </script>
+        </script> --}}
         <script>
             if (!$('#level').val() != '') {
                 period = $('#division_id').hide();

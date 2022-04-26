@@ -19,6 +19,7 @@ use App\Http\Controllers\FatherController;
 use App\Http\Controllers\FatherJobsController;
 use App\Http\Controllers\FatherRelationController;
 use App\Http\Controllers\FormAjaxController;
+use App\Http\Controllers\InstallmentController;
 use App\Http\Controllers\JobTitlesLevelController;
 use App\Http\Controllers\KindergardenController;
 use App\Http\Controllers\LevelsController;
@@ -42,6 +43,7 @@ use App\Http\Controllers\UsersController;
 use App\Http\Controllers\XraysController;
 use App\Http\Controllers\YearSubController;
 use App\Models\EducationalLevels;
+use App\Models\Installment;
 use App\Models\Subscriptions;
 use Illuminate\Support\Facades\Route;
 use Maatwebsite\Excel\Row;
@@ -89,7 +91,8 @@ Route::resource('employees', EmployeesController::class);
 Route::get('jobplacement/employees/{id?}', [EmployeesController::class , 'jobPlacementView'])->name('jobplacement.create');
 Route::post('jobplacement/employees', [EmployeesController::class , 'jobPlacementStore'])->name('jobplacement.store');
 Route::post('employee/status', [EmployeesController::class, 'status'])->name('employee.status');
-
+Route::get('trashed-employee' , [EmployeesController::class ,'getTrashed'])->name('employee.trashed'); // صفحة الطلاب المحذوفين
+Route::get('restore-employee/{id}' , [EmployeesController::class , 'RestoreTrashed'])->name('employee.restore');
 
 //المستويات
 Route::resource('levels' , LevelsController::class);
@@ -98,7 +101,8 @@ Route::post('level/status', [LevelsController::class, 'status'])->name('levels.s
 //الشعب الدراسية
 Route::resource('divisions' , DivisionController::class);
 Route::post('divisions/status', [DivisionController::class, 'status'])->name('divisions.status');
-
+Route::get('trashed-division' , [DivisionController::class ,'getTrashed'])->name('division.trashed'); // صفحة الطلاب المحذوفين
+Route::get('restore-division/{id}' , [DivisionController::class , 'RestoreTrashed'])->name('division.restore');
 //اولياء الامور
 Route::resource('fathers' , FatherController::class);
 //الاطفال
@@ -123,7 +127,10 @@ Route::post('/switch',[ChangeDivisionController::class, 'switchDivision'])->name
 // السائقين
 Route::resource('drivers' , DriverController::class);
 Route::post('drivers/status', [DriverController::class, 'status'])->name('drivers.status');
+Route::get('trashed-driver' , [DriverController::class ,'getTrashed'])->name('driver.trashed'); // صفحة الطلاب المحذوفين
+Route::get('restore-driver/{id}' , [DriverController::class , 'RestoreTrashed'])->name('driver.restore');
 Route::resource('driverplacment' , DriverPlacmentController::class);
+
 //ajax filter 
 Route::get('GetDivisionByLevel/{id}/{kinder}', [FormAjaxController::class, 'GetDivisionByLevel'])->name('GetDivisionByLevel');
 Route::get('GetDivisionByKindergarten/{id}', [FormAjaxController::class, 'GetDivisionByKindergarten'])->name('GetDivisionByKindergarten');
@@ -132,6 +139,7 @@ Route::get('GetEmployeeData/{id}', [FormAjaxController::class, 'GetEmployeeData'
 Route::get('GetSubscriptionData/{id}', [FormAjaxController::class, 'GetSubscriptionData'])->name('GetSubscriptionData');
 Route::get('GetDiscountData/{id}', [FormAjaxController::class, 'GetDiscountData'])->name('GetDiscountData');
 Route::get('GetFeeData/{id}', [FormAjaxController::class, 'GetFeeData'])->name('GetFeeData');
+Route::get('GetEmployeeByKindergarten/{id}', [FormAjaxController::class, 'GetEmployeeByKindergarten'])->name('GetEmployeeByKindergarten');
 
 
 //Auto complete search for student attendance -- بحث تلقائي للحضور والغياب الطلابي
@@ -152,11 +160,19 @@ Route::resource('subscriptions' , SubscriptionsController::class);
 Route::post('subscription/status', [SubscriptionsController::class, 'status'])->name('subscriptions.status');
 // -------الاشتراكات السنوية
 Route::resource('year-sub' , YearSubController::class);
+Route::post('year-subs/status', [YearSubController::class, 'updateStaticFee'])->name('year-sub.status');
 //------- اشتركات الأطفال
  Route::resource('children-subscriptions' , ChildrenSubscriptionsController::class );
 //------- تسديد الرسوم
 Route::resource('pay-fees' , PayFeesController::class);
+Route::get('print/pay-fee/{id}', [PayFeesController::class, 'print'])->name('pay-fee.print');
 
+Route::get('trashed-pay-fees' , [PayFeesController::class ,'getTrashed'])->name('pay-fees.trashed'); // صفحة الطلاب المحذوفين
+Route::get('restore-pay-fees/{id}' , [PayFeesController::class , 'RestoreTrashed'])->name('pay-fees.restore');
+//------ تسديد عن طريق الاقساط
+Route::resource('installments' , InstallmentController::class);
+Route::get('pay-installment/{id}' , [InstallmentController::class ,'PayInstallment']);
+//------
 
 
 

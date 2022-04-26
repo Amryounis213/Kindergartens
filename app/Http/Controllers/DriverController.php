@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\Drivers\DriversDataTable;
+use App\DataTables\Drivers\TrashedDataTable;
 use App\Models\Driver;
 use App\Models\Kindergarten;
 use Illuminate\Http\Request;
@@ -16,7 +17,8 @@ class DriverController extends Controller
      */
     public function index(DriversDataTable $datatable)
     {
-        return $datatable->render('pages.drivers.index');
+        $visable = 'no';
+        return $datatable->render('pages.drivers.index' , compact('visable'));
     }
 
     /**
@@ -106,6 +108,25 @@ class DriverController extends Controller
         return updateModelStatus($info);
     }
 
+
+    public function GetTrashed(TrashedDataTable $dataTable)
+    {
+        $visable = 'no';
+        return $dataTable->render('pages.drivers.index' , compact('visable'));
+    }
+
+
+    public function RestoreTrashed($id)
+    {
+        $children = Driver::withTrashed()->where('id' , $id)->first();
+        $children->deleted_at = null ;
+        $children->save();
+        return redirect()->back()->with('success' , 'تم استرجاع الطالب بنجاح');
+    }
+
+   
+
+    
     
 
     

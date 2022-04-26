@@ -7,7 +7,7 @@
 
 <td class="text-end">
     @can('kindergarten.edit')
-        <a href="{{ route('year-sub.edit', $model) }}"
+        <a href="{{ route('children-subscriptions.edit', $model) }}"
            title="تعديل"
            class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm mb-1">
             {!! theme()->getSvgIcon("icons/duotune/art/art005.svg", "svg-icon-3") !!}

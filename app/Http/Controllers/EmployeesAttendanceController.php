@@ -66,10 +66,13 @@ class EmployeesAttendanceController extends Controller
                     $attendence_status = false;
                 }
 
+
+                $employee = Employee::find($employeeid);
                 EmployeesAttendance::create([
                     'employee_id'=> $employeeid,
                     'attendence_date'=> date('Y-m-d'),
-                    'attendence_status'=> $attendence_status
+                    'attendence_status'=> $attendence_status ,
+                    'period_id' => $employee->JobPlacement->period_id ?? null ,
                 ]);
 
             }

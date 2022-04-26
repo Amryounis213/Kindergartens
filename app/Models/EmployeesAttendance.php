@@ -13,6 +13,7 @@ class EmployeesAttendance extends Model
         'employee_id',
         'attendence_date',
         'attendence_status',
+        'period_id',
     ];
 
 }

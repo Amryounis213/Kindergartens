@@ -23,19 +23,14 @@ class ChildrenPayFeesDataTable extends DataTable
         return datatables()
             ->eloquent($query)
             ->addColumn('table_index', '')
-            // ->editColumn('created_by', function (Subscriptions $model) {
-            //     return $model->creator ? $model->creator->first_name : __('System');
-            // })
-            // ->editColumn('subscription_id', function (PayFees $model) {
-            //     return $model->Subscription ? $model->Subscription->name : 'غير معرف';
-            // })
-            // ->editColumn('notices', function (PayFees $model) {
-            //     return $model->notices ? $model->notices : '---';
-            // })
+           
             ->addColumn('status', function (PayFees $model) {
-                return view('pages.childrensubscriptions.parts._status', compact('model'));
+                return view('pages.childrenpayment.parts._status', compact('model'));
             })
-            ->addColumn('action', function (PayFees $model) {
+            ->editColumn('year', function (PayFees $model) {
+                return $model->Year->name;
+            })
+            ->editColumn('action', function (PayFees $model) {
                 return view('pages.childrenpayment.parts._action-menu', compact('model'));
             });
     }
@@ -50,10 +45,18 @@ class ChildrenPayFeesDataTable extends DataTable
     public function query(PayFees $model)
     {
         $children = $this->request()->get('children');
-
+        $year = $this->request()->get('year');
         if(!empty($children))
         {
+
+            if(!empty($year))
+            {
+                return $model->where('children_id' , $children)->where('year' , $year)->newQuery();
+
+            }
+
             return $model->where('children_id' , $children)->newQuery();
+
         }
        
         return $model->where('created_at' , null)->newQuery();
@@ -97,7 +100,7 @@ class ChildrenPayFeesDataTable extends DataTable
             Column::make('payment_date')->title('تاريخ الدفعة')->addClass('text-center'),
             Column::make('payment_amount')->title('المبلغ المدفوع')->addClass('text-center'),
             Column::make('Receipt_number')->title('رقم الوصل')->addClass('text-center'),
-            Column::make('year')->title('العام الدراسي')->addClass('text-center'),
+            Column::computed('year')->title('العام الدراسي')->addClass('text-center'),
             Column::make('notices')->title('سبب الخصم / ملاحظات')->addClass('text-center'),
  
             Column::computed('action')

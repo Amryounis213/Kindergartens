@@ -12,6 +12,10 @@ class ClassPlacment extends Model
         'period_id' ,'employee_id' , 'level_id','division_id' , 'children_id' , 'year' , 'kindergarten_id'
    ];
 
+   public function Kindergarten()
+   {
+        return $this->belongsTo(Kindergarten::class , 'kindergarten_id' , 'id');
+   }
    public function Children()
    {
        return $this->belongsTo(Children::class , 'children_id' , 'id');
@@ -35,5 +39,11 @@ class ClassPlacment extends Model
    public function Division()
    {
        return $this->belongsTo(Division::class , 'division_id' , 'id');
+   }
+
+   public function Year()
+   {
+    return $this->belongsTo(Year::class , 'year' , 'id');
+
    }
 }

@@ -44,11 +44,11 @@
                                     </option>
                                     @foreach($subs as $item)
                                         <option
-                                            value="{{$item->id}}" {{ $item->id == $sub->id ? 'selected' :'' }}> {{$item->name}}  </option>
+                                            value="{{$item->id}}" {{ $item->id == $sub->subsraction_id   ? 'selected' :'' }}> {{$item->name}}  </option>
                                     @endforeach
                                 </select>
                             </div>
-                            <label class="col-lg-2 col-form-label required  fw-bold fs-6">  سعر الاشتراك  (شيكل)</label>
+                            <label class="col-lg-2 col-form-label required  fw-bold fs-6">  رسم الاشتراك المراد تعديله  (شيكل)</label>
                             <div class="col-lg-4">
                                 <input type="text" name="price"
                                        class="form-control form-control-lg form-control-solid mobile"

@@ -2,6 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\Drivers\DriverPlacmentDataTable;
+use App\Models\Driver;
+use App\Models\DriverPlacment;
+use App\Models\Kindergarten;
+use App\Models\Period;
+use App\Models\Trips;
 use Illuminate\Http\Request;
 
 class DriverPlacmentController extends Controller
@@ -11,9 +17,10 @@ class DriverPlacmentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(DriverPlacmentDataTable $datatable)
     {
-        //
+        return $datatable->render('pages.drivers.driver_placement.index');
+
     }
 
     /**
@@ -23,7 +30,14 @@ class DriverPlacmentController extends Controller
      */
     public function create()
     {
-        //
+        $trips  = Trips::where('status', 1)->get();
+        $periods = Period::select('id', 'name')->get();
+        $drivers = Driver::select('id', 'name')->get();
+        return view('pages.drivers.driver_placement.create', [
+            'trips' => $trips,
+            'periods' => $periods,
+            'drivers' => $drivers,
+        ]);
     }
 
     /**
@@ -34,7 +48,9 @@ class DriverPlacmentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $driver_placment = DriverPlacment::create($request->all());
+        return redirect()->route('driverplacment.index')->with('success', 'تم  التسكين بنجاح');
     }
 
     /**
@@ -56,7 +72,17 @@ class DriverPlacmentController extends Controller
      */
     public function edit($id)
     {
-        //
+
+        $driver_placment = DriverPlacment::find($id);
+        $trips = Trips::where('status', 1)->get();
+        $periods = Period::select('id', 'name')->get();
+        $drivers = Driver::select('id', 'name')->get();
+        return view('pages.drivers.driver_placement.edit', [
+            'trips' => $trips,
+            'periods' => $periods,
+            'drivers' => $drivers,
+            'driver_placment'=>$driver_placment ,
+        ]);
     }
 
     /**
@@ -68,7 +94,9 @@ class DriverPlacmentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $driver_placment = DriverPlacment::find($id);
+        $driver_placment->update($request->all());
+        return redirect()->route('driverplacment.index')->with('success', 'تم تعديل التسكين بنجاح');
     }
 
     /**
@@ -79,6 +107,12 @@ class DriverPlacmentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        
+        $info = DriverPlacment::find($id);
+        $info->delete();
+        return response()->json(['status' => 'success', 'message' => 'تم الحذف بنجاح']);
     }
+
+
+    
 }

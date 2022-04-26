@@ -2,7 +2,7 @@
 {{ $dataTable->table() }}
 <!--end::Table-->
 @section('styles')
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 @endsection
 {{-- Inject Scripts --}}
 @section('scripts')
@@ -16,16 +16,12 @@
         const Table = $('#patients-table');
         Table.on('preXhr.dt', function(e, settings, data) {
             data.children = $('#children_id').val();
+            data.year = $('#year').val();
             // data.kindergarten= $('#kindergarten_id').val();
         });
-
-
         $('#children_id').change(function() {
-
             let x = Table.DataTable().ajax.reload();
-
             let id = this.value;
-
             $.ajax({
                 url: "GetChildrenData/" + id,
                 method: 'GET',
@@ -35,26 +31,27 @@
                 },
                 dataType: "JSON",
                 success: function(data) {
-
                     //console.log(data);
                     if (data != null) {
+                        // $('#year').empty();
+                        // $('#year').append(
+                        //     ` <option value="${data.year.id}" selected> ${data.year.name} </option>  `);
+                        $('#payment_amount2').val('');
+                        $('#Receipt_number').val('');
+                        $('#notices').val('');
+                        $('#payment_date').val('');
+                        $('#year').prop('selectedIndex', 0);
 
-                        $('#year').empty();
-                        $('#year').append(
-                            ` <option value="${data.year}" selected> ${data.year} </option>  `);
+                        var today = new Date();
+                        var dd = String(today.getDate()).padStart(2, '0');
+                        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+                        var yyyy = today.getFullYear();
 
-
-
-                        $('#division_id').empty();
-                        $('#division_id').val(data.division.name)
-
-                        $('#level_id').empty();
-                        $('#level_id').val(data.level.name)
-
+                        today = yyyy + '-' + mm + '-' + dd;
+                        $('#payment_date').val(today);
                     }
                 }
             });
-
             $.ajax({
                 url: "GetFeeData/" + id,
                 method: 'GET',
@@ -64,49 +61,31 @@
                 },
                 dataType: "JSON",
                 success: function(data) {
-
                     //console.log(data);
                     if (data != null) {
-
-
-
-
                         $('#required_amount').empty();
                         let x = Number(data.sub_amount).toFixed(1);
                         $('#required_amount').append(`${x}`);
-
-
                         $('#payment_amount').empty();
                         let y = Number(data.payment_amount).toFixed(1);
                         $('#payment_amount').append(`${y}`);
-
-
                         $('#total_amount').empty();
                         let z = Number(x - y).toFixed(1);
                         $('#total_amount').append(`${z}`);
-
-
-
-
-
-
-
                     }
                 }
             });
-
-
         });
 
 
-
+        $('#year').change(function() {
+            let x = Table.DataTable().ajax.reload();
+      
+        });
 
 
         $('#subscription_id').change(function() {
-
-
             let id = this.value;
-
             $.ajax({
                 url: "GetSubscriptionData/" + id,
                 method: 'GET',
@@ -116,39 +95,25 @@
                 },
                 dataType: "JSON",
                 success: function(data) {
-
                     console.log(data);
                     if (data != null) {
-
-
                         $('#required_amount').empty();
                         $('#required_amount').val(data.year_subscription.price)
-
                         $('#discount_amount').val(0);
                         $('#discount').val(0);
-
                         $('#total').val(data.year_subscription.price);
                         // $('#discount_id').find('option:first').attr('selected', 'selected');
                         $("#discount_id")[0].selectedIndex = '';
-
                         if ($('#subscription_id').val() != '') {
                             $('#discount_id').removeAttr('disabled');
                         } else {
                             $('#discount_id').attr('disabled');
-
                         }
-
                     }
                 }
             });
-
-
         });
-
-
         $('#discount_id').change(function() {
-
-
             let id = this.value;
             let sub = $('#required_amount');
             $.ajax({
@@ -160,41 +125,25 @@
                 },
                 dataType: "JSON",
                 success: function(data) {
-
                     console.log(data);
                     if (data != null) {
-
                         $('#discount').empty();
                         $('#discount').val(data.per);
-
                         let r = $('#required_amount').val();
-
                         $('#discount_amount').val(sub.val() * data.per / 100);
                         let d = $('#discount_amount').val();
-
-
                         $('#total').val(r - d + ' شيكل');
-
                     }
                 }
             });
-
-
         });
-
-
-
         $("#discount").keyup(function() {
             let discount = $(this).val();
             let x = $("#required_amount").val();
             $('#total').empty();
             let discounttotal = x * discount / 100;
-
             $('#total').val(x - discounttotal + ' شيكل');
-
-
         });
-
         // $('#kindergarten_id').change(function() {
         //     let x =Table.DataTable().ajax.reload();
         // });
@@ -210,7 +159,6 @@
             $('#sub').on('click', function(e) {
                 e.preventDefault();
                 const oTable = $('#patients-table').DataTable();
-
                 $.ajax({
                     method: "POST",
                     url: "{{ route('pay-fees.store') }}",
@@ -219,14 +167,20 @@
                         "payment_date": $('#payment_date').val(),
                         "payment_amount": $('#payment_amount2').val(),
                         "Receipt_number": $('#Receipt_number').val(),
+                        "notices": $('#notices').val(),
                         "year": $('#year').val(),
                     },
                     dataType: "JSON",
                     success: function(data) {
-
                         oTable.draw();
                         toastr.options.positionClass = 'toast-top-left';
                         toastr[data.status](data.message);
+
+
+                        $('#payment_amount2').val('');
+                        $('#Receipt_number').val('');
+                        $('#notices').val('');
+                        $('#payment_date').val('');
 
 
                         $.ajax({
@@ -238,34 +192,23 @@
                             },
                             dataType: "JSON",
                             success: function(data) {
-
                                 console.log(data);
                                 if (data != null) {
-
                                     $('#required_amount').empty();
                                     let x = Number(data.sub_amount).toFixed(1);
                                     $('#required_amount').append(`${x}`);
-
-
                                     $('#payment_amount').empty();
                                     let y = Number(data.payment_amount).toFixed(1);
                                     $('#payment_amount').append(`${y}`);
-
-
                                     $('#total_amount').empty();
                                     let z = Number(x - y).toFixed(1);
                                     $('#total_amount').append(`${z}`);
-
                                 }
                             }
                         });
-
                     }
-
                 });
-
             });
-
         })
     </script>
     <script type="text/javascript">
@@ -279,9 +222,8 @@
             $(document).on('click', ".del_rec_btn", function(e) {
                 e.preventDefault();
                 const id = $(this).data('id');
-                let url = "{{ route('pay-fees.destroy', ":id") }}";
+                let url = "{{ route('pay-fees.destroy', ':id') }}";
                 url = url.replace(':id', id);
-
                 Swal.fire({
                     title: 'تحذبر!',
                     text: 'هل أنت متأكد من حذف البيانات؟',

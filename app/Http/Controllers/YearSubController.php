@@ -92,4 +92,16 @@ class YearSubController extends Controller
         $sub->delete();
         return response()->json(['status' => 'success', 'message' => 'تم الحذف بنجاح']);
     }
+
+
+    public function updateStaticFee(Request $request)
+    {
+       
+        $sub = YearSubscriptions::find($request->id);
+        $sub->update([
+            'static_fee'=> $sub->static_fee ? 0 : 1 , 
+        ]);
+        return response()->json(['status' => 'success', 'message' => trans('تم تعديل الحالة بنجاح.'), 'type' => 'no']);
+
+    }
 }

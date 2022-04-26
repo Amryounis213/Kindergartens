@@ -6,6 +6,7 @@ use App\Models\Children;
 use App\Models\ClassPlacment;
 use App\Models\Discount;
 use App\Models\Division;
+use App\Models\Employee;
 use App\Models\JobPlacement;
 use App\Models\Subscriptions;
 use Auth;
@@ -34,7 +35,7 @@ class FormAjaxController extends Controller
 
         }
         else{
-            $divisions = Division::where('level_id',1)->where('kindergarten_id' , $id)->get();
+            $divisions = Division::where('kindergarten_id' , $id)->get();
         }
         return response()->json($divisions);
     }
@@ -51,8 +52,7 @@ class FormAjaxController extends Controller
 
     public function GetChildrenData($id)
     {
-        $emp = ClassPlacment::with(['Period' , 'Division' , 'Level'])->where('children_id' , $id)->first();
-       
+        $emp = ClassPlacment::with(['Period' , 'Division' , 'Level' , 'Year' , 'Children.Installment'])->where('children_id' , $id)->latest()->first();
         return response()->json($emp);
     }
 
@@ -74,11 +74,21 @@ class FormAjaxController extends Controller
     public function GetFeeData($id)
     {
         $sub_amount = Children::find($id)->ChildrenSubscriptions()->sum('total');
-        $payment_amount = Children::find($id)->PayFee()->sum('payment_amount');
+        $payment_amount = Children::find($id)->PayFee()->whereNull('deleted_at')->sum('payment_amount');
+        $installment = Children::find($id)->Installment()->sum('paid_amount');
         return response()->json([
             'sub_amount'=>$sub_amount ,
-            'payment_amount'=>$payment_amount ,
+            'payment_amount'=>$payment_amount + $installment ,
         ]);
 
+    }
+
+    public function GetEmployeeByKindergarten($id)
+    {
+        $emp =Employee::whereHas('JobPlacement' ,function($query) use($id){
+            $query->where('kindergarten_id' , $id);
+        })->get();
+
+        return response()->json($emp);
     }
 }

@@ -19,7 +19,6 @@ class ChildrenAttendanceController extends Controller
     public function index(Children $children)
     {
         
-        
         if(Auth::user()->kindergarten_id != null)
         {
             $childrens = $children->whereHas('ClassPlacement')->where('kindergarten_id' , Auth::user()->kindergarten_id)->get();

@@ -35,13 +35,14 @@
                         @method('POST')
                         <!--begin::Input group-->
                             <div class="card-body border-top p-9">
-
+                                @if (Auth::user()->kindergarten_id == null)
                                 <div class="row mb-6">
                                     <label class="col-lg-4 col-form-label required fw-bold fs-6"> اسم الروضة</label>
                                     <div class="col-lg-8 fv-row">
                                         <select id="kindergarten_id" name="kindergarten_id" aria-label="اختر اسم الروضة"
                                                 {{-- data-control="select2" --}} data-placeholder="اختر اسم الروضة.."
-                                                class="form-select form-select-solid form-select-lg kindergarten_id">
+                                                class="form-select form-select-solid form-select-lg kindergarten_id"
+                                                >
                                             <option value="">اختر اسم الروضة...</option>
                                             @foreach ($kinder as $item)
                                                 <option value="{{ $item->id }}"
@@ -51,6 +52,29 @@
                                         </select>
                                     </div>
                                 </div>
+
+                                @else
+
+                                <div class="row mb-6">
+                                    <label class="col-lg-4 col-form-label required fw-bold fs-6"> اسم الروضة</label>
+                                    <div class="col-lg-8 fv-row">
+                                        <select id="kindergarten_id" name="kindergarten_id" aria-label="اختر اسم الروضة"
+                                                {{-- data-control="select2" --}} data-placeholder="اختر اسم الروضة.."
+                                                class="form-select form-select-solid form-select-lg kindergarten_id"
+                                                {{ Auth::user()->kindergarten_id != null ? 'disabled' : '' }}
+                                                >
+                                            <option value="">اختر اسم الروضة...</option>
+                                            @foreach ($kinder as $item)
+                                                <option value="{{ $item->id }}"
+                                                    {{ $item->id == Auth::user()->kindergarten_id ? 'selected' : '' }}>
+                                                    {{ $item->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
+                                @endif
+                            
 
                                 <!--begin::Input group-->
                                 <div class="row mb-6">

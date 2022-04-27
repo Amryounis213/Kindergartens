@@ -42,10 +42,12 @@ class EmployeesController extends Controller
 
     public function store(Request $request): \Illuminate\Http\RedirectResponse
     {
+       
         $request->merge([
             'bth_date' => Carbon::createFromFormat('d/m/Y', $request->bth_date)->format('Y-m-d'),
             'added_by' => Auth::guard('web')->id(),
             'add_date' => Carbon::createFromFormat('d/m/Y', $request->add_date)->format('Y-m-d'),
+            'kindergartens'=> Auth::user()->kindergarten_id ?? $request->kindergartens ,
         ]);
         Employee::create($request->all());
 
@@ -73,8 +75,9 @@ class EmployeesController extends Controller
         ]);
     }
 
-    public function update(Request $request, $id): \Illuminate\Http\RedirectResponse
+    public function update(Request $request, $id)
     {
+
         $employee = Employee::find($id);
 
         if ($request->bth_date) {
@@ -82,6 +85,7 @@ class EmployeesController extends Controller
                 'bth_date' => $request->bth_date,
                 'added_by' => Auth::guard('web')->id(),
                 'add_date' => $request->add_date,
+                'kindergartens'=> Auth::user()->kindergarten_id ?? $request->kindergartens ,
             ]);
         }
 
@@ -100,17 +104,38 @@ class EmployeesController extends Controller
 
     public function jobPlacementView($id = null)
     {
+
+        /**
+         * ========================================
+         * Variable If the The SuperAdmin Authintaction
+         * ========================================
+         */
         $jobs = Job::get();
         $kinder = Kindergarten::all();
         $employee = Employee::find($id);
+        $employees = Employee::select('id', 'name')->get();
         $levels = Level::get();
         $divisions = Division::get();
         $years = Year::get();
+
+
+        /**
+         * ========================================
+         * Variable If the The Manger Authintaction
+         * ========================================
+         */
+        
+        if(Auth::user()->kindergarten_id != null)
+        {
+            $kinder = Kindergarten::where('id' , Auth::user()->kindergarten_id)->get();
+            $employees = Employee::where('kindergartens' , Auth::user()->kindergarten_id)->select('id', 'name')->get();
+            $divisions = Division::where('kindergarten_id' , Auth::user()->kindergarten_id)->where('status' , 1)->get();
+        }
         return view('pages.employees.job_placement.create', [
             'jobs' => $jobs,
             'kinder' => $kinder,
             'periods' => Period::select('id', 'name')->get(),
-            'employees' => Employee::select('id', 'name')->get(),
+            'employees' =>$employees,
             'emp' => $employee,
             'levels' => $levels,
             'divisions' => $divisions,
@@ -122,10 +147,18 @@ class EmployeesController extends Controller
     {
         $exists = JobPlacement::where('employee_id', $request->employee_id)->exists();
         if ($exists) {
+            $request->merge([
+                'kindergarten_id'=>Auth::user()->kindergarten_id ?? $request->kindergartens ,
+            ]);
             $job_placement = JobPlacement::where('employee_id', $request->employee_id)->first();
             $job_placement->update($request->all());
             return redirect()->route('employees.index')->with('success', 'تم تعديل التسكين بنجاح');
         } else {
+
+            $request->merge([
+                'kindergarten_id'=>Auth::user()->kindergarten_id ?? $request->kindergartens ,
+            ]);
+            
             JobPlacement::create($request->all());
             return redirect()->route('employees.index')->with('success', 'تم التسكين بنجاح');
         }

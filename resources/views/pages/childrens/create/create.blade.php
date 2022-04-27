@@ -38,14 +38,14 @@
                                                 value="{{ old('identity') }}" />
                                             <input type="hidden" value="" name="patient_id" class="search-val">
                                         </div>
-{{--                                        <div class="col-lg-1">--}}
-{{--                                            <a class="btn btn-secondary" id="kt_gov_data_submit"--}}
-{{--                                                style="min-width: 66px">--}}
-{{--                                                <i class="fa fa-spinner fa-spin loader-pub"--}}
-{{--                                                    style="display:none; margin-bottom: 5px"></i>--}}
-{{--                                                <span class="search-title">{{ __('Search') }}</span>--}}
-{{--                                            </a>--}}
-{{--                                        </div>--}}
+                                        {{-- <div class="col-lg-1"> --}}
+                                        {{-- <a class="btn btn-secondary" id="kt_gov_data_submit" --}}
+                                        {{-- style="min-width: 66px"> --}}
+                                        {{-- <i class="fa fa-spinner fa-spin loader-pub" --}}
+                                        {{-- style="display:none; margin-bottom: 5px"></i> --}}
+                                        {{-- <span class="search-title">{{ __('Search') }}</span> --}}
+                                        {{-- </a> --}}
+                                        {{-- </div> --}}
                                         <label
                                             class="col-lg-2 col-form-label required fw-bold fs-6">{{ __('Full Name') }}</label>
                                         <div class="col-lg-4">
@@ -194,6 +194,7 @@
                                         <div class="row mb-6">
                                             <!--begin::Col-->
                                             <div class="col-lg-12">
+
                                                 <!--begin::Row-->
                                                 <div class="row mb-2">
                                                     <label class="col-lg-2 col-form-label required fw-bold fs-6">ولي امر
@@ -208,8 +209,9 @@
                                                             <option value="">{{ __('Select') }}ولي أمر الطالب...
                                                             </option>
                                                             @foreach ($fathers as $item)
-                                                            <option
-                                                                value="{{$item->id}}" {{ $item->id == old('father_id') ? 'selected' :'' }}> {{$item->name}}  </option>
+                                                                <option value="{{ $item->id }}"
+                                                                    {{ $item->id == old('father_id') ? 'selected' : '' }}>
+                                                                    {{ $item->name }} </option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -221,26 +223,28 @@
                                                             id="father_rel" data-control="select2"
                                                             data-placeholder="{{ __('Select') }}  صلة ولي  أمر  .."
                                                             class="form-select form-select-solid form-select-lg fw-bold">
-                                                            <option value="">{{ __('Select') }}  صلة ولي أمر ...
+                                                            <option value="">{{ __('Select') }} صلة ولي أمر ...
                                                             </option>
                                                             @foreach ($relations as $item)
-                                                    <option
-                                                        value="{{$item->id}}" {{ $item->id == old('father_rel') ? 'selected' :'' }}> {{$item->name}}  </option>
-                                                    @endforeach
+                                                                <option value="{{ $item->id }}"
+                                                                    {{ $item->id == old('father_rel') ? 'selected' : '' }}>
+                                                                    {{ $item->name }} </option>
+                                                            @endforeach
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <!--end::Row-->
                                                 <!--begin::Row-->
                                                 <div class="row mb-3">
-                                                    <label
-                                                        class="col-lg-2 col-form-label  fw-bold fs-6"> اسم والدة الطفل</label>
+                                                    <label class="col-lg-2 col-form-label  fw-bold fs-6"> اسم والدة
+                                                        الطفل</label>
                                                     <div class="col-lg-4">
                                                         <input type="text" name="mother_name"
-                                                        class="form-control form-control-lg form-control-solid mobile"
-                                                        placeholder="اسم والدة الطفل" value="">
+                                                            class="form-control form-control-lg form-control-solid mobile"
+                                                            placeholder="اسم والدة الطفل" value="">
                                                     </div>
-                                                    <label class="col-lg-2 col-form-label  fw-bold fs-6">رقم المحمول لوالدة الطفل  </label>
+                                                    <label class="col-lg-2 col-form-label  fw-bold fs-6">رقم المحمول
+                                                        لوالدة الطفل </label>
 
                                                     <div class="col-lg-4">
                                                         <input type="text" name="mother_mob"
@@ -250,32 +254,55 @@
                                                         </div>
                                                     </div>
                                                 </div>
+
+                                                <div class="row mb-2">
+                                                    <label class="col-lg-2 col-form-label required fw-bold fs-6">الروضة</label>
+                                                    <div class="col-lg-4">
+                                                        <select name="kindergarten_id" aria-label="{{ __('Select') }} الروضة"
+                                                            id="clinic_id" data-control="select2"
+                                                            data-placeholder="{{ __('Select') }} الروضة .."
+                                                            class="form-select form-select-solid form-select-lg fw-bold"
+                                                            >
+                                                            <option value="">{{ __('Select') }} الروضة...
+                                                            </option>
+                                                            @foreach ($kindergartens as $item)
+                                                                <option value="{{ $item->id }}"
+                                                                    {{ $item->id == Auth::user()->kindergarten_id ? 'selected' : '' }}>
+                                                                    {{ $item->name }} </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+        
+                                                </div>
                                                 <!--end::Row-->
                                                 <!--begin::Row-->
                                                 <div class="row mb-3">
 
                                                     <!--begin::Col-->
-                                                    <label class="col-lg-2 col-form-label required fw-bold fs-6">الحالة</label>
+                                                    <label
+                                                        class="col-lg-2 col-form-label required fw-bold fs-6">الحالة</label>
 
-                                                        <div class="col-lg-4 d-flex align-items-center">
-                                                            <div class="form-check form-check-solid form-switch fv-row">
-                                                                <input type="hidden" name="status" value="0">
-                                                                <input class="form-check-input w-45px h-30px"
-                                                                    type="checkbox" id="status" name="status" value="1">
-                                                                <label class="form-check-label" for="status"></label>
-                                                            </div>
+                                                    <div class="col-lg-4 d-flex align-items-center">
+                                                        <div class="form-check form-check-solid form-switch fv-row">
+                                                            <input type="hidden" name="status" value="0">
+                                                            <input class="form-check-input w-45px h-30px"
+                                                                type="checkbox" id="status" name="status" value="1">
+                                                            <label class="form-check-label" for="status"></label>
                                                         </div>
+                                                    </div>
 
-                                                    <label class="col-lg-2 col-form-label required fw-bold fs-6">بحاجة مواصلات</label>
+                                                    <label class="col-lg-2 col-form-label required fw-bold fs-6">بحاجة
+                                                        مواصلات</label>
 
-                                                        <div class="col-lg-4 d-flex align-items-center">
-                                                            <div class="form-check form-check-solid form-switch fv-row">
-                                                                <input type="hidden" name="want_transport" value="0">
-                                                                <input class="form-check-input w-45px h-30px"
-                                                                    type="checkbox" id="status" name="want_transport" value="1">
-                                                                <label class="form-check-label" for="status"></label>
-                                                            </div>
+                                                    <div class="col-lg-4 d-flex align-items-center">
+                                                        <div class="form-check form-check-solid form-switch fv-row">
+                                                            <input type="hidden" name="want_transport" value="0">
+                                                            <input class="form-check-input w-45px h-30px"
+                                                                type="checkbox" id="status" name="want_transport"
+                                                                value="1">
+                                                            <label class="form-check-label" for="status"></label>
                                                         </div>
+                                                    </div>
                                                     <!--begin::Row-->
                                                     {{-- <div class="row fv-plugins-icon-container">
                                                         <label
@@ -289,49 +316,51 @@
                                                             </div>
                                                         </div> --}}
 
-                                                    </div>
-
-
-                                                    </div>
-                                                    <!--end::Row-->
-
-
-
-
-
                                                 </div>
-                                                <!--end::Row-->
+
+
+
                                             </div>
-                                            <!--end::Col-->
+                                            <!--end::Row-->
+
+
+
+
+
                                         </div>
-                                        <!--end::Input group-->
+
+                                        
+                                        <!--end::Row-->
                                     </div>
-                                    <!--end::Card body-->
+                                    <!--end::Col-->
                                 </div>
-                                <!--end::Content-->
+                                <!--end::Input group-->
                             </div>
-                            <!--end::Order info-->
-                            <!--begin::Actions-->
-                            <div class="card-footer d-flex justify-content-end py-6 px-9">
-                                <button type="reset" id="btn-dscrd"
-                                    class="btn btn-white btn-active-light-primary me-2">{{ __('Discard') }}</button>
-                                <button type="submit" class="btn btn-primary" id="kt_account_profile_details_submit">
-                                    @include(
-                                        'partials.general._button-indicator',
-                                        ['label' => __('Save')]
-                                    )
-                                </button>
-                            </div>
-                            <!--end::Actions-->
-                        </form>
-                        <!--end::Form-->
+                            <!--end::Card body-->
                     </div>
-                    <!--end::Card body-->
+                    <!--end::Content-->
                 </div>
-                <!--end::Content-->
+                <!--end::Order info-->
+                <!--begin::Actions-->
+                <div class="card-footer d-flex justify-content-end py-6 px-9">
+                    <button type="reset" id="btn-dscrd"
+                        class="btn btn-white btn-active-light-primary me-2">{{ __('Discard') }}</button>
+                    <button type="submit" class="btn btn-primary" id="kt_account_profile_details_submit">
+                        @include('partials.general._button-indicator', [
+                            'label' => __('Save'),
+                        ])
+                    </button>
+                </div>
+                <!--end::Actions-->
+                </form>
+                <!--end::Form-->
             </div>
-            <!--end::Patient info-->
+            <!--end::Card body-->
         </div>
+        <!--end::Content-->
+    </div>
+    <!--end::Patient info-->
+    </div>
     </div>
     @section('styles')
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css"

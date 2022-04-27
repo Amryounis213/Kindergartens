@@ -7,6 +7,7 @@ use App\Models\Children;
 use App\Models\Installment;
 use App\Models\Year;
 use Arr;
+use Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -19,7 +20,17 @@ class InstallmentController extends Controller
      */
     public function index(InstallmentDataTable $datatable)
     {
-        $childrens = Children::select('id', 'name')->whereHas('ClassPlacement')->where('status', 1)->get();
+         
+        if(Auth::user()->kindergarten_id != null)
+        {
+            $childrens = Children::select('id', 'name')->whereHas('ClassPlacement' , function($query){
+                $query->where('kindergarten_id' , Auth::user()->kindergarten_id);
+            })->where('status', 1)->get();
+            
+        }else{
+            $childrens = Children::select('id', 'name')->whereHas('ClassPlacement')->where('status', 1)->get();
+        }
+
         $years = Year::where('status' , 1)->get();
        return $datatable->render('pages.installments.index' , compact('childrens' , 'years'));
     }

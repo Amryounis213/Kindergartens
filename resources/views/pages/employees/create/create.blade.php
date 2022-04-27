@@ -229,13 +229,15 @@
                                                     </div>
                                                 </div>
                                                 <!--end::Row-->
+
                                                 <!--begin::Row-->
-                                                <div class="row mb-3">
-                                                    {{-- <label
+                                                <div class="row">
+
+                                                    <label
                                                         class="col-lg-2 col-form-label required fw-bold fs-6">الروضة</label>
                                                     <div class="col-lg-4">
                                                         <select name="kindergartens"
-                                                            aria-label="{{ __('Select') }} الروضة" id="clinic_id"
+                                                            aria-label="{{ __('Select') }} الروضة" id="kindergartens"
                                                             data-control="select2"
                                                             data-placeholder="{{ __('Select') }} الروضة .."
                                                             class="form-select form-select-solid form-select-lg fw-bold"
@@ -248,21 +250,7 @@
                                                                     {{ $item->name }} </option>
                                                             @endforeach
                                                         </select>
-                                                    </div> --}}
-                                                    <label
-                                                                class="col-lg-2 col-form-label  fw-bold fs-6">الحالة</label>
-                                                            <div class="col-lg-4 d-flex align-items-center">
-                                                                <div
-                                                                    class="form-check form-check-solid form-switch fv-row">
-                                                                    <input type="hidden" name="status" value="0">
-                                                                    <input class="form-check-input w-45px h-30px"
-                                                                        type="checkbox" id="status" name="status"
-                                                                        value="1">
-                                                                    <label class="form-check-label"
-                                                                        for="status"></label>
-                                                                </div>
-                                                            </div>
-
+                                                    </div>
 
                                                     <label class="col-lg-2 col-form-label  fw-bold fs-6">البريد
                                                         الالكتروني (اختياري)</label>
@@ -273,35 +261,21 @@
                                                         <div class="fv-plugins-message-container invalid-feedback">
                                                         </div>
                                                     </div>
+
                                                 </div>
                                                 <!--end::Row-->
+
                                                 <!--begin::Row-->
-                                                <div class="row">
-
-                                                    {{-- <!--begin::Col-->
-                                                    <div class="col-lg-12">
-                                                        <!--begin::Row-->
-                                                        <div class="row fv-plugins-icon-container">
-                                                            <label
-                                                                class="col-lg-2 col-form-label  fw-bold fs-6">الحالة</label>
-                                                            <div class="col-lg-4 d-flex align-items-center">
-                                                                <div
-                                                                    class="form-check form-check-solid form-switch fv-row">
-                                                                    <input type="hidden" name="status" value="0">
-                                                                    <input class="form-check-input w-45px h-30px"
-                                                                        type="checkbox" id="status" name="status"
-                                                                        value="1">
-                                                                    <label class="form-check-label"
-                                                                        for="status"></label>
-                                                                </div>
-                                                            </div>
-
-
+                                                <div class="row mb-3">
+                                                    <label class="col-lg-2 col-form-label  fw-bold fs-6">الحالة</label>
+                                                    <div class="col-lg-4 d-flex align-items-center">
+                                                        <div class="form-check form-check-solid form-switch fv-row">
+                                                            <input type="hidden" name="status" value="0">
+                                                            <input class="form-check-input w-45px h-30px"
+                                                                type="checkbox" id="status" name="status" value="1">
+                                                            <label class="form-check-label" for="status"></label>
                                                         </div>
-                                                        <!--end::Row-->
                                                     </div>
-                                                    <!--end::Col--> --}}
-
                                                 </div>
                                                 <!--end::Row-->
                                             </div>

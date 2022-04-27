@@ -42,7 +42,6 @@ class ChildrensDataTable extends DataTable
             ->addColumn('action', function (Children $model) {
                 return view('pages.childrens.index._action-menu', compact('model'));
             });
-            
     }
 
     /**
@@ -57,26 +56,32 @@ class ChildrensDataTable extends DataTable
         /** REQUEST ALL ATTRIBUTE */
         $division = $this->request()->get('division');
         $kindergarten = $this->request()->get('kindergarten');
-        if( !empty($division))
-        {
-           return $model->whereHas('ClassPlacement' , function($query) use ($division){
-                $query->where('division_id' , $division);
+        if (!empty($division)) {
+            return $model->whereHas('ClassPlacement', function ($query) use ($division) {
+                $query->where('division_id', $division);
             });
-           // return $model->ClassPlacement->where('division_id' , $division)->get();
+            // return $model->ClassPlacement->where('division_id' , $division)->get();
         }
 
-        if( !empty($kindergarten))
-        {
-           return $model->whereHas('ClassPlacement' , function($query) use ($kindergarten){
-                $query->where('kindergarten_id' , $kindergarten);
+        if (!empty($kindergarten)) {
+            $result = $model->where('kindergarten_id' , $kindergarten)->orwhereHas('ClassPlacement', function ($query) use ($kindergarten) {
+                $query->where('kindergarten_id', $kindergarten);
             });
-           // return $model->ClassPlacement->where('division_id' , $division)->get();
+
+            return $result->newQuery();
+
+            // return $model->ClassPlacement->where('division_id' , $division)->get();
         }
 
+        if (Auth::user()->kindergarten_id != null) {
+            $model1 = $model->where('kindergarten_id', Auth::user()->kindergarten_id);
 
-        if(Auth::user()->kindergarten_id != null)
-        {
-            return $model->where('kindergarten_id' , Auth::user()->kindergarten_id)->newQuery();
+            $model2 = $model->whereHas('ClassPlacement', function ($query) {
+                $query->where('kindergarten_id', Auth::user()->kindergarten_id);
+            });
+
+            $merged = $model1->merge($model2);
+            $model2->newQuery();
         }
         return $model->newQuery();
     }
@@ -117,8 +122,8 @@ class ChildrensDataTable extends DataTable
             Column::make('table_index')->title(__('#'))->addClass('text-center'),
             Column::make('name')->title(__('name'))->addClass('text-center'),
             Column::make('bth_date')->title(__('dob'))->addClass('text-center'),
-           // Column::make('added_by')->title(__('created by'))->addClass('text-center'),
-           
+            // Column::make('added_by')->title(__('created by'))->addClass('text-center'),
+
             Column::computed('period')->title('الفترة')->addClass('text-center'),
             Column::computed('division')->title('الشعبة')->addClass('text-center'),
             Column::computed('level')->title('المستوى')->addClass('text-center'),

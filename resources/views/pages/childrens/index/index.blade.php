@@ -30,15 +30,16 @@
                     <div class="d-flex align-items-center position-relative my-1 ml-2">
                         <select name="kindergarten_id" aria-label="{{ __('Select') }} الروضة" id="kindergarten_id"
                             {{-- data-control="select2" --}} data-placeholder="{{ __('Select') }} الروضة .."
-                            class="form-select form-select-solid form-select-md fw-bold w-250px ps-15 ml-5">
+                            class="form-select form-select-solid form-select-md fw-bold w-250px ps-15 ml-5"
+                            {{ Auth::user()->kindergarten_id != null ? 'disabled' : '' }}    
+                            >
                             <option value="">{{ __('Select') }}الروضة...
                             </option>
 
                             @foreach ($kindergartens as $item)
-                                <option value="{{ $item->id }}"
-                                    {{ $item->id == ($selected ?? old('kindergarten_id')) ? 'selected' : '' }}>
-                                    {{ $item->name }}
-                                </option>
+                            <option value="{{ $item->id }}"
+                                {{ $item->id == Auth::user()->kindergarten_id ? 'selected' : '' }}>
+                                {{ $item->name }} </option>
                             @endforeach
                         </select>
 

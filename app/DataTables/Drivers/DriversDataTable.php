@@ -5,6 +5,7 @@ namespace App\DataTables\Drivers;
 use App\Models\Driver;
 use App\Models\Kindergarten;
 use App\Models\Level;
+use Auth;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Services\DataTable;
 
@@ -42,6 +43,11 @@ class DriversDataTable extends DataTable
      */
     public function query(Driver $model)
     {
+
+        if(Auth::user()->kindergarten_id != null)
+        {
+            return $model->where('kindergarten_id' , Auth::user()->kindergarten_id)->newQuery();    
+        }
         return $model->newQuery();
     }
 

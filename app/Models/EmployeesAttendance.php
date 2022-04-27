@@ -16,4 +16,9 @@ class EmployeesAttendance extends Model
         'period_id',
     ];
 
+    public function Employee()
+    {
+        return $this->belongsTo(Employee::class , 'employee_id' , 'id');
+    }
+
 }

@@ -9,6 +9,7 @@ use App\Models\Discount;
 use App\Models\Subscriptions;
 use App\Models\Year;
 use App\Models\YearSubscriptions;
+use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -21,8 +22,18 @@ class ChildrenSubscriptionsController extends Controller
      */
     public function index(ChildrenSubscriptionsDataTable $datatable)
     {
+        
+        if(Auth::user()->kindergarten_id != null)
+        {
+            $childrens = Children::whereHas('ClassPlacement' , function($query){
+                $query->where('kindergarten_id' , Auth::user()->kindergarten_id);
+            })->select('id', 'name')->where('status', 1)->get();
 
-        $childrens = Children::select('id', 'name')->where('status', 1)->get();
+        }else{
+            $childrens = Children::select('id', 'name')->where('status', 1)->get();
+
+        }
+
         $subs = Subscriptions::whereHas('YearSubscription')->where('status', 1)->get();
         $dicsounts = Discount::get();
         $years = Year::where('status', 1)->get();

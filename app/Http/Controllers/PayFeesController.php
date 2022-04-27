@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\DataTables\ChildrensPayment\ChildrenPayFeesDataTable;
 use App\DataTables\ChildrensPayment\TrashedDataTable;
 use App\Models\Children;
+use App\Models\ClassPlacment;
 use App\Models\Father;
 use App\Models\PayFees;
 use App\Models\Year;
+use Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -20,17 +22,27 @@ class PayFeesController extends Controller
      */
     public function index(ChildrenPayFeesDataTable $datatable)
     {
-        // $childrens = Children::with(['Installment' => function($query){
-
-        //     $query->whereHas('Installment' , function($query){
-        //          $query->latest('number')->first()->where('status' ,'paid');
-        //     });
-        //     //  $query->latest('number')->first()->where('status' ,'paid');
-        // }])->where('status', 1)->get();
             $years = Year::where('status' , 1)->get();
+            /**
+             * =========================================
+             * For Children Doesnt Have Any Installments 
+             * =========================================
+             */
             $childrens = Children::whereDoesntHave('Installment' , function($query){
                 $query->where('status' , 'unpaid');
-            })->get();
+            });
+            /**
+             * =========================================
+             * For Children Doesnt Have Any Installments
+             * And Children In Kindergarten same Manger 
+             * =========================================
+             */
+            if(Auth::user()->kindergarten_id != null)
+            {   
+                $childrens = $childrens->whereHas('ClassPlacement' , function($query){
+                    $query->where('kindergarten_id' , Auth::user()->kindergarten_id);
+                })->get();
+            }
             return $datatable->render('pages.childrenpayment.index' , compact('childrens' , 'years'));
     }
 

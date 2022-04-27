@@ -6,6 +6,7 @@ use App\Models\Driver;
 use App\Models\DriverPlacment;
 use App\Models\Kindergarten;
 use App\Models\Level;
+use Auth;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Services\DataTable;
 
@@ -47,6 +48,12 @@ class DriverPlacmentDataTable extends DataTable
      */
     public function query(DriverPlacment $model)
     {
+        if(Auth::user()->kindergarten_id != null)
+        {
+            return $model->whereHas('driver' , function($query){
+                $query->where('kindergarten_id' , Auth::user()->kindergarten_id);
+            })->newQuery();    
+        }
         return $model->newQuery();
     }
 

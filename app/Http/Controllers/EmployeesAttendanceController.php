@@ -19,15 +19,11 @@ class EmployeesAttendanceController extends Controller
     public function index(AttendanceDataTable $datatable ,Employee $employee)
     {
         
-
         if(Auth::user()->kindergarten_id != null)
         {
-            $employees = $employee->where('kindergartens' , Auth::user()->kindergarten_id)->get();
-           
-        }
-        else{
-            $employees = $employee->all();
-           
+            $employees = $employee->whereHas('JobPlacement')->where('kindergartens' , Auth::user()->kindergarten_id)->get();
+        }else{
+            $employees = $employee->whereHas('JobPlacement')->get(); 
         }
         return view('pages.Attendance.employees.index' , [
             'dataTable'=>$datatable ,

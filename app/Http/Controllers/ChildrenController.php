@@ -27,9 +27,15 @@ class ChildrenController extends Controller
      */
     public function index(ChildrensDataTable $dataTable)
     {
+      
         $division = Division::where('status' , 1)->get();
         $kindergartens= Kindergarten::where('status' , 1)->get();
         $visable = 'yes';
+
+        if(Auth::user()->kindergarten_id != null)
+        {
+            $division = Division::where('kindergarten_id' , Auth::user()->kindergarten_id)->where('status' , 1)->get();
+        }
         return $dataTable->render('pages.childrens.index.index' ,compact('division' , 'kindergartens' , 'visable'));
     }
 
@@ -41,9 +47,14 @@ class ChildrenController extends Controller
     public function create()
     {
         $fathers = Father::select('id' , 'name')->get();
+       
         $kinder = Kindergarten::select('id' , 'name')->get();
-        $relations = FatherRelation::where('status' , 1)->get();
 
+        if(Auth::user()->kindergarten_id != null)
+        {
+            $kinder = Kindergarten::select('id' , 'name')->where('id' , Auth::user()->kindergarten_id)->get();
+        }
+        $relations = FatherRelation::where('status' , 1)->get();
         return view('pages.childrens.create.create' , [
             'fathers'=>$fathers ,
              'kindergartens'=>$kinder ,
@@ -94,7 +105,7 @@ class ChildrenController extends Controller
         $kinder = Kindergarten::select('id' , 'name')->get();
         $relations = FatherRelation::where('status' , 1)->get();
         return view('pages.childrens.edit.edit' , [
-
+            'kinder'=> $kinder,
             'children'=>$children ,
             'fathers'=>$fathers , 
             'relations'=>$relations
@@ -148,17 +159,25 @@ class ChildrenController extends Controller
     
     public function classPlacementView($id=null)
     {
-     
+        
         $kinder =Kindergarten::all();
         $employee = Children::find($id);
         $years = Year::where('status' , 1)->get();
+        $employees = Employee::select('id' , 'name')->get();
+        $divisions = Division::select('id' ,'name')->get();    
+
+        if(Auth::user()->kindergarten_id != null)
+        {
+           $employees = Employee::where('kindergartens' , Auth::user()->kindergarten_id )->select('id' , 'name')->get();
+           $divisions = Division::where('kindergarten_id' , Auth::user()->kindergarten_id )->select('id' ,'name')->get();
+        }
         return view('pages.childrens.class_placement.create' ,[
             'childrens'=>Children::all(),
             'kinder'=>$kinder ,
             'periods'=>Period::select('id' , 'name')->get(),
-            'employees'=> Employee::select('id' , 'name')->get(),
+            'employees'=>$employees,
             'levels'=>Level::select('id' , 'name')->get(),
-            'divisions'=>Division::select('id' ,'name')->get(),
+            'divisions'=>$divisions,
             'emp'=>$employee,
             'years'=>$years,
         
@@ -170,6 +189,7 @@ class ChildrenController extends Controller
 
         $request->merge([
             'year'=> $request->year,
+            'kindergarten_id' => Auth::user()->kindergarten_id ?? $request->kindergarten_id ,
         ]);
         if($exists)
         {

@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
             //UsersSeeder::class,
             // PermissionsSeeder::class,
             // RolesSeeder::class,
-           ChildrenTableSeeder::class ,
+           //ChildrenTableSeeder::class ,
           // ClassPlacementTableSeeder::class ,
         ]);
     }

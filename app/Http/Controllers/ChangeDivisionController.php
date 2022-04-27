@@ -7,6 +7,7 @@ use App\Models\Employee;
 use App\Models\JobPlacement;
 use App\Models\Level;
 use App\Models\Period;
+use Auth;
 use Illuminate\Http\Request;
 
 class ChangeDivisionController extends Controller
@@ -58,17 +59,40 @@ class ChangeDivisionController extends Controller
 
     public function index()
     {
+         /**
+         * ========================================
+         * Variable If the The SuperAdmin Authintaction
+         * ========================================
+         */
         //#1
         $employees = Employee::whereHas('JobPlacement' , function($query){
             $query->whereNotNull('division_id') ;
         })->get();
         //#2
         $divisions = Division::where('status' , 1)->get();
-
         $periods = Period::where('status' , 1)->get();
-
         //#3
         $levels = Level::where('status' , 1)->get();
+
+        /**
+         * ========================================
+         * Variable If the The Manger Authintaction
+         * ========================================
+         */
+        if(Auth::user()->kindergarten_id != null)
+        {
+            $employees = Employee::whereHas('JobPlacement' , function($query){
+                $query->whereNotNull('division_id')
+                ->where('kindergarten_id' , Auth::user()->kindergarten_id);
+            })->get();
+            //#2
+            $divisions = Division::where('kindergarten_id' , Auth::user()->kindergarten_id)->where('status' , 1)->get();
+        }
+
+        /**
+         * End
+         */
+
         return view('pages.SwitchDivisions.employees.create' , [
             'employees'=> $employees ,
             'divisions'=> $divisions ,

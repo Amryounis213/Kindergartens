@@ -23,41 +23,61 @@
                     @method('POST')
                     <!--begin::Card body-->
                     <div class="card-body border-top p-9">
+                        @if (Auth::user()->kindergarten_id == null)
                         <div class="row mb-6">
-                        <label class="col-lg-4 col-form-label required fw-bold fs-6"> الروضة </label>
-                        <div class="col-lg-8">
-                            <select name="kindergarten_id" aria-label="{{ __('Select') }} الروضة" id="kindergarten_id"
-                                data-control="select2" data-placeholder="{{ __('Select') }} الروضة .."
-                                class="form-select form-select-solid form-select-lg fw-bold"
-                                {{ Auth::user()->kindergarten_id !=null ? 'disabled' : '' }}
-                                >
-                                <option value="">{{ __('Select') }} الروضة...
-                                </option>
-                                @foreach ($kindergartens as $kindergartens)
-                                    <option value="{{ $kindergartens->id }}"
-                                        {{ $kindergartens->id == old('kindergarten_id') || Auth::user()->kindergarten_id ? 'selected' : '' }}>
-                                        {{ $kindergartens->name }} </option>
-                                @endforeach
-                            </select>
+                            <label class="col-lg-4 col-form-label required fw-bold fs-6">الروضة</label>
+                            <div class="col-lg-8 fv-row">
+                                <select id="kindergarten_id" name="kindergarten_id"
+                                    aria-label="اختر الروضة ." {{-- data-control="select2" --}}
+                                    data-placeholder="اختر الروضة..."
+                                    class="form-select form-select-solid form-select-lg period_id">
+                                    <option value="">اختر الروضة....</option>
+                                    @foreach ($kindergartens as $item)
+                                        <option value="{{ $item->id }}"
+                                            {{ $item->id ==($children->ClassPlacement ?? null ? $children->ClassPlacement->kindergarten_id : old('kindergarten_id'))? 'selected': '' }}
+                                            }}>
+                                            {{ $item->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
-                    </div>
+                    @else
+                        <div class="row mb-6">
+                            <label class="col-lg-4 col-form-label required fw-bold fs-6">الروضة</label>
+                            <div class="col-lg-8 fv-row">
+                                <select id="kindergarten_id" name="kindergarten_id"
+                                    aria-label="اختر الروضة ." {{-- data-control="select2" --}}
+                                    data-placeholder="اختر الروضة..."
+                                    class="form-select form-select-solid form-select-lg period_id"
+                                    {{ Auth::user()->kindergarten_id != null ? 'disabled' : '' }}
+                                    >
+                                    <option value="">اختر الروضة....</option>
+                                    @foreach ($kindergartens as $item)
+                                        <option value="{{ $item->id }}"
+                                            {{ $item->id == Auth::user()->kindergarten_id ? 'selected' : '' }}>
+                                            {{ $item->name }} </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    @endif
 
-                    
+
                         <div class="row mb-6">
-                        <label class="col-lg-4 col-form-label required fw-bold fs-6"> المرحلة </label>
-                        <div class="col-lg-8">
-                            <select name="level_id" aria-label="{{ __('Select') }} المرحلة" id="level_id"
-                                data-control="select2" data-placeholder="{{ __('Select') }} المرحلة .."
-                                class="form-select form-select-solid form-select-lg fw-bold">
-                                <option value="">{{ __('Select') }} المرحلة...
-                                </option>
-                                @foreach ($levels as $levels)
-                                    <option value="{{ $levels->id }}"
-                                        {{ $levels->id == old('level_id') ? 'selected' : '' }}>
-                                        {{ $levels->name }} </option>
-                                @endforeach
-                            </select>
-                        </div>
+                            <label class="col-lg-4 col-form-label required fw-bold fs-6"> المرحلة </label>
+                            <div class="col-lg-8">
+                                <select name="level_id" aria-label="{{ __('Select') }} المرحلة" id="level_id"
+                                    data-control="select2" data-placeholder="{{ __('Select') }} المرحلة .."
+                                    class="form-select form-select-solid form-select-lg fw-bold">
+                                    <option value="">{{ __('Select') }} المرحلة...
+                                    </option>
+                                    @foreach ($levels as $levels)
+                                        <option value="{{ $levels->id }}"
+                                            {{ $levels->id == old('level_id') ? 'selected' : '' }}>
+                                            {{ $levels->name }} </option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
 
 
@@ -182,7 +202,7 @@
                                     notEmpty: {
                                         message: 'الروضة مطلوبة',
                                     },
-                                  
+
                                 },
                             },
                             name: {
@@ -197,11 +217,11 @@
                                     notEmpty: {
                                         message: 'المرحلة الدراسية مطلوبة',
                                     },
-                                    
+
                                 },
                             },
-                           
-                       
+
+
                             max_children: {
                                 validators: {
                                     notEmpty: {

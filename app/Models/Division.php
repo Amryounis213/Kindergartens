@@ -27,4 +27,6 @@ class Division extends Model
     {
         return $this->hasMany(ClassPlacment::class , 'division_id' , 'id');
     }
+
+   
 }

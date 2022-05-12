@@ -20,8 +20,8 @@ class CreateChildrensTable extends Migration
             $table->date('bth_date');
             $table->date('add_date');
 
-            $table->foreignId('father_id')->constrained('fathers')->cascadeOnDelete();
-            $table->foreignId('father_rel')->constrained('father_relations')->cascadeOnDelete();
+            $table->foreignId('father_id')->nullable()->constrained('fathers')->cascadeOnDelete();
+            $table->foreignId('father_rel')->nullable()->constrained('father_relations')->cascadeOnDelete();
 
             $table->foreignId('kindergarten_id')->nullable()->constrained('kindergartens')->cascadeOnDelete();
             $table->enum('gender' , [1 ,2]);

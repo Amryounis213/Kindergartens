@@ -15,10 +15,15 @@ use App\Http\Controllers\DriverPlacmentController;
 use App\Http\Controllers\EducationalLevelController;
 use App\Http\Controllers\EmployeesAttendanceController;
 use App\Http\Controllers\EmployeesController;
+use App\Http\Controllers\ExpensesController;
+use App\Http\Controllers\ExpensesPayController;
 use App\Http\Controllers\FatherController;
 use App\Http\Controllers\FatherJobsController;
 use App\Http\Controllers\FatherRelationController;
 use App\Http\Controllers\FormAjaxController;
+use App\Http\Controllers\InComeController;
+use App\Http\Controllers\IncomesRevenueController;
+use App\Http\Controllers\InComeWithChildController;
 use App\Http\Controllers\InstallmentController;
 use App\Http\Controllers\JobTitlesLevelController;
 use App\Http\Controllers\KindergardenController;
@@ -140,7 +145,10 @@ Route::get('GetSubscriptionData/{id}', [FormAjaxController::class, 'GetSubscript
 Route::get('GetDiscountData/{id}', [FormAjaxController::class, 'GetDiscountData'])->name('GetDiscountData');
 Route::get('GetFeeData/{id}', [FormAjaxController::class, 'GetFeeData'])->name('GetFeeData');
 Route::get('GetEmployeeByKindergarten/{id}', [FormAjaxController::class, 'GetEmployeeByKindergarten'])->name('GetEmployeeByKindergarten');
+Route::get('GetFatherData/{id}' , [FormAjaxController::class , 'GetFatherData'])->name('GetFatherData');
 
+
+Route::get('GetIcomeRevData/{id}', [FormAjaxController::class, 'GetIcomeRevData'])->name('GetIcomeRevData');
 
 //Auto complete search for student attendance -- بحث تلقائي للحضور والغياب الطلابي
 Route::get('autocomplete' , [ChildrenAttendanceController::class , 'autocomplete'])->name('autocomplete');
@@ -173,6 +181,33 @@ Route::get('restore-pay-fees/{id}' , [PayFeesController::class , 'RestoreTrashed
 Route::resource('installments' , InstallmentController::class);
 Route::get('pay-installment/{id}' , [InstallmentController::class ,'PayInstallment']);
 //------
+
+/**************************الايرادات والمصروفات */
+//----------الايرادات  
+
+Route::resource('incomes' , InComeController::class);
+Route::post('incomes/status', [InComeController::class, 'status'])->name('incomes.status');
+Route::post('incomes/withchild/status', [InComeController::class, 'withChildstatus'])->name('incomes.withchildstatus');
+//----------الايرادات المرتبطة بطفل
+Route::resource('incomesiwithchild' , InComeWithChildController::class);
+
+//----------تحصيل الايرادات  
+Route::resource('incomes-revenue' , IncomesRevenueController::class);
+//-------- أنواع المصروفات
+Route::resource('expenses' , ExpensesController::class);
+Route::post('expense/status', [ExpensesController::class, 'status'])->name('expense.status');
+//--------تسديد المصروفات
+Route::resource('expenses-pay' , ExpensesPayController::class);
+Route::get('print/expenses-pay/{id}', [ExpensesPayController::class, 'print'])->name('expense-pay.print');
+
+
+
+
+
+
+
+
+
 
 
 

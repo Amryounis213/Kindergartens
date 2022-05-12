@@ -1,14 +1,14 @@
 <!--begin::Status--->
 @php
-if($model->status && $model->JobPlacement){
+if($model->status && $model->JobPlacement->job_id != null){
     $result = 'قيد العمل & مسكن';
     $class = 'badge-light-success';
 }
-else if($model->status && (!$model->JobPlacement)){
+else if($model->status && (!$model->JobPlacement->job_id != null)){
     $result ='غير مسكن';
     $class = 'badge-light-info';
 }
-else if(!$model->status && (!$model->JobPlacement)){
+else if(!$model->status && (!$model->JobPlacement->job_id != null)){
     $result ='متوقف & غير مسكن';
     $class = 'badge-light-danger';
 }

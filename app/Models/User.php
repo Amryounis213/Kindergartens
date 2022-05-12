@@ -31,7 +31,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'checkout_time',
         'password',
         'role_id',
-        'status'
+        'status',
+        'kindergarten_id',
     ];
 
     /**

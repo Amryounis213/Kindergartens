@@ -32,7 +32,9 @@ class PagesController extends Controller
                 {
                 $kinderValue =  Auth::user()->kindergarten_id;
 
-                $employeeCount = Employee::where('kindergartens' , $kinderValue)->count(); //sizeof(Patient::all());
+                $employeeCount = Employee::whereHas('JobPlacement' , function($query){
+                    $query->where('kindergarten_id'  , Auth::user()->kindergarten_id);
+                })->count(); //sizeof(Patient::all());
                 $studentsCount = Children::where('kindergarten_id' , $kinderValue)->orWhereHas('ClassPlacement' , function($query) use($kinderValue){
                     $query->where('kindergarten_id' , $kinderValue);
                 })->count(); 
@@ -40,10 +42,10 @@ class PagesController extends Controller
                 $driverwithoutPlacment = Driver::whereDoesntHave('DriverPlacment')->where('kindergarten_id' , $kinderValue)->count();
                 
                
-                $employeeAtt =  EmployeesAttendance::whereHas('Employee' , function($query) use($kinderValue){
-                    $query->where('kindergartens' , $kinderValue);
+                $employeeAtt =  EmployeesAttendance::whereHas('Employee.JobPlacement' , function($query) use($kinderValue){
+                    $query->where('kindergarten_id' , $kinderValue);
                 })->whereDate('attendence_date', date('y-m-d'))->where('attendence_status', 1)->count();
-
+               
 
                 $studentsAtt =  ChildrenAttendances::where('kindergarten_id' , $kinderValue)->whereDate('attendence_date', date('y-m-d'))->where('attendence_status', 1)->count();
                 $classplacementstudent = Children::whereHas('ClassPlacement' ,function($query) use($kinderValue){
@@ -70,12 +72,12 @@ class PagesController extends Controller
                  * 
                  */
 
-                $EmployeeMorning = EmployeesAttendance::whereHas('Employee' , function($query) use($kinderValue){
-                    $query->where('kindergartens' ,$kinderValue);
+                $EmployeeMorning = EmployeesAttendance::whereHas('Employee.JobPlacement' , function($query) use($kinderValue){
+                    $query->where('kindergarten_id' , $kinderValue)->where('job_id' , '!=' , null);
                 })->whereDate('attendence_date', date('y-m-d'))->where('attendence_status', 1)->where('period_id' , 1)->count();
 
-                $EmployeeNight = EmployeesAttendance::whereHas('Employee' , function($query) use($kinderValue){
-                    $query->where('kindergartens' ,$kinderValue);
+                $EmployeeNight = EmployeesAttendance::whereHas('Employee.JobPlacement' , function($query) use($kinderValue){
+                    $query->where('kindergarten_id' , $kinderValue)->where('job_id' , '!=' , null);
                 })->whereDate('attendence_date', date('y-m-d'))->where('attendence_status', 1)->where('period_id' , 2)->count();
 
                 $AllEmployeeMorning = Employee::whereHas('JobPlacement' , function($q) use($kinderValue){
@@ -92,12 +94,15 @@ class PagesController extends Controller
                  */
 
                  $employeeJob =Employee::whereHas('JobPlacement' ,function($q) use($kinderValue){
-                    $q->where('kindergarten_id' , $kinderValue) ;
+                    $q->where('kindergarten_id' , $kinderValue)->where('job_id' , '!=' , null) ;
                     })->count();
-                 $employeewithoutJob = Employee::wheredoesnthave('JobPlacement')->where('kindergartens' , $kinderValue)->count();   
+                  
+                 $employeewithoutJob = Employee::whereHas('JobPlacement' , function($query) use($kinderValue){
+                     $query->where('job_id',null)->where('kindergarten_id' , $kinderValue);
+                 })->count();   
                  
                 }else{
-                    $employeeCount = Employee::count(); //sizeof(Patient::all());
+                $employeeCount = Employee::count(); //sizeof(Patient::all());
                 $studentsCount = Children::count(); //sizeof(Order::whereDate('created_at', Carbon::today())->get());
                 $driversCount = Driver::whereHas('DriverPlacment')->count(); //sizeof(Clinic::all());
                 $driverwithoutPlacment = Driver::whereDoesntHave('DriverPlacment')->count();
@@ -143,9 +148,13 @@ class PagesController extends Controller
                  * Employee with jobplacment
                  */
 
-                 $employeeJob =Employee::whereHas('JobPlacement')->count();
-                 $employeewithoutJob = Employee::wheredoesnthave('JobPlacement')->count();   
-                 
+                 $employeeJob =Employee::whereHas('JobPlacement' , function($query){
+                    $query->where('job_id' , '!=' , null);
+                 })->count();
+                 $employeewithoutJob = Employee::whereHas('JobPlacement' , function($query){
+                    $query->whereNull('job_id');
+                 })->count();
+                
                 }
 
 

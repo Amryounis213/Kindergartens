@@ -28,7 +28,7 @@ class JobPlacement extends Model
 
     public function Job()
     {
-        return $this->belongsTo(Job::class , 'job_id' , 'id');
+        return $this->belongsTo(JobTitles::class , 'job_id' , 'id');
     }
 
     public function Division()

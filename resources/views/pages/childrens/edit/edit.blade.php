@@ -152,29 +152,7 @@
                             </div>
                             <!--end::Input group-->
 
-                            {{-- <!--begin::Input group-->
-                        <div class="row mb-2">
-                            <!--begin::Col-->
-                            <div class="col-lg-12">
-                                <!--begin::Row-->
-                                <div class="row">
-                                    <label class="col-lg-2 col-form-label required fw-bold fs-6">تاريخ
-                                        التعيين</label>
-                                    <div class="col-lg-4">
-                                        <div class="position-relative d-flex align-items-center">
-                                            {!! theme()->getSvgIcon('icons/duotune/general/gen014.svg', 'svg-icon svg-icon-2 position-absolute mx-4') !!}
-                                            <input class="form-control form-control-solid ps-12 flatpickr-input dob"
-                                                placeholder="{{ __('Select a date') }}" name="add_date"
-                                                type="text" value="{{ old('dob') }}" readonly="readonly">
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <!--end::Row-->
-                            </div>
-                            <!--end::Col-->
-                        </div>
-                        <!--end::Input group--> --}}
+    
 
                             <!--begin::Order info-->
                             <div class="card mb-5 mb-xl-10">
@@ -189,7 +167,6 @@
                                     <!--end::Card title-->
                                 </div>
                                 <!--begin::Card header-->
-                                <!--begin::Content-->
                                 <div id="kt_order_profile_details" class="collapse show">
                                     <!--begin::Card body-->
                                     <div class=" border-top pt-9">
@@ -197,6 +174,8 @@
                                         <div class="row mb-6">
                                             <!--begin::Col-->
                                             <div class="col-lg-12">
+
+                                
                                                 <!--begin::Row-->
                                                 <div class="row mb-2">
                                                     <label class="col-lg-2 col-form-label required fw-bold fs-6">ولي امر
@@ -205,27 +184,87 @@
                                                     <div class="col-lg-4">
                                                         <select name="father_id"
                                                             aria-label="{{ __('Select') }}ولي أمر الطالب"
-                                                            id="father_id" data-control="select2"
+                                                            id="father_id"
                                                             data-placeholder="{{ __('Select') }}ولي أمر الطالب .."
                                                             class="form-select form-select-solid form-select-lg fw-bold">
                                                             <option value="">{{ __('Select') }}ولي أمر الطالب...
                                                             </option>
                                                             @foreach ($fathers as $item)
                                                                 <option value="{{ $item->id }}"
-                                                                    {{ $item->id == $children->father_id ? 'selected' : '' }}>
+                                                                    {{ $item->id == $father->id ? 'selected' : '' }}>
                                                                     {{ $item->name }} </option>
                                                             @endforeach
                                                         </select>
+
+
+                                                        <input type="text" name="father_name" hidden
+                                                            class="form-control form-control-lg form-control-solid mobile"
+                                                            placeholder="اسم ولي الأمر " value="{{$father->name}}">
+
+                                                        <div
+                                                            class="fv-plugins-message-container text-primary hint-father add_father">
+                                                            <a id="add_father" href="#father_id">غير موجود ؟ اضافة اسم
+                                                                جديد</a>
+                                                        </div>
+
+
+                                                        <div hidden
+                                                            class="fv-plugins-message-container text-primary hint-father2 add_father ">
+                                                            <a id="add_father2" href="#father_id">الرجوع الى قائمة</a>
+                                                        </div>
                                                     </div>
-                                                    <label class="col-lg-2 col-form-label required fw-bold fs-6">صلة
-                                                        قرابة ولي الأمر</label>
+
+                                                    <label class="col-lg-2 col-form-label  fw-bold fs-6">رقم المحمول
+                                                        لولي أمر الطفل </label>
+
+                                                    <div class="col-lg-4">
+                                                        <input type="text" name="father_mob"
+                                                            class="form-control form-control-lg form-control-solid mobile"
+                                                            placeholder="  رقم المحمول لولي أمر الطفل" value="{{$father->mobile}}">
+                                                        <div class="fv-plugins-message-container invalid-feedback">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--begin::Row-->
+                                                <div class="row mb-3">
+                                                    <label class="col-lg-2 col-form-label  fw-bold fs-6">مهنة ولي
+                                                        الأمر</label>
+                                                    <div class="col-lg-4">
+                                                        <input type="text" name="occupation"
+                                                            class="form-control form-control-lg form-control-solid mobile"
+                                                            placeholder="مهنة ولي أمر الطفل" value="{{$father->occupation}}">
+                                                    </div>
+                                                    <label class="col-lg-2 col-form-label  fw-bold fs-6">رقم هوية
+                                                        لولي أمر </label>
+
+                                                    <div class="col-lg-4">
+                                                        <input type="text" name="father_identity"
+                                                            class="form-control form-control-lg form-control-solid mobile"
+                                                            placeholder="رقم هوية لولي أمر الطفل" value="{{$father->identity}}">
+                                                        <div class="fv-plugins-message-container invalid-feedback">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="row mb-3">
+                                                    <label class="col-lg-2 col-form-label  fw-bold fs-6">البلدة
+                                                        الأصلية</label>
+                                                    <div class="col-lg-4">
+                                                        <input type="text" name="town"
+                                                            class="form-control form-control-lg form-control-solid mobile"
+                                                            placeholder="اسم البلدة " value="{{$father->town}}">
+                                                    </div>
+                                                    <label class="col-lg-2 col-form-label  fw-bold fs-6"> صلة قرابة ولي
+                                                        الأمر
+                                                    </label>
+
                                                     <div class="col-lg-4">
                                                         <select name="father_rel"
-                                                            aria-label="{{ __('Select') }}  صلة ولي  أمر "
-                                                            id="father_rel" data-control="select2"
-                                                            data-placeholder="{{ __('Select') }}  صلة ولي  أمر  .."
+                                                            aria-label="{{ __('Select') }}صلة قرابة" id="father_rel"
+                                                            data-placeholder="{{ __('Select') }}صلة قرابة .."
                                                             class="form-select form-select-solid form-select-lg fw-bold">
-                                                            <option value="">{{ __('Select') }} صلة ولي أمر ...
+                                                            <option value="">{{ __('Select') }}صلة قرابة...
                                                             </option>
                                                             @foreach ($relations as $item)
                                                                 <option value="{{ $item->id }}"
@@ -233,9 +272,10 @@
                                                                     {{ $item->name }} </option>
                                                             @endforeach
                                                         </select>
+                                                        <div class="fv-plugins-message-container invalid-feedback">
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <!--end::Row-->
                                                 <!--begin::Row-->
                                                 <div class="row mb-3">
                                                     <label class="col-lg-2 col-form-label  fw-bold fs-6"> اسم والدة
@@ -243,8 +283,7 @@
                                                     <div class="col-lg-4">
                                                         <input type="text" name="mother_name"
                                                             class="form-control form-control-lg form-control-solid mobile"
-                                                            placeholder="اسم والدة الطفل"
-                                                            value="{{ $children->mother_name }}">
+                                                            placeholder="اسم والدة الطفل" value="{{$children->mother_name}}">
                                                     </div>
                                                     <label class="col-lg-2 col-form-label  fw-bold fs-6">رقم المحمول
                                                         لوالدة الطفل </label>
@@ -252,50 +291,17 @@
                                                     <div class="col-lg-4">
                                                         <input type="text" name="mother_mob"
                                                             class="form-control form-control-lg form-control-solid mobile"
-                                                            placeholder="  رقم المحمول لوالدة الطفل"
-                                                            value="{{ $children->mother_mob }}">
+                                                            placeholder="  رقم المحمول لوالدة الطفل" value="{{$children->mother_mob}}">
                                                         <div class="fv-plugins-message-container invalid-feedback">
                                                         </div>
                                                     </div>
                                                 </div>
+
+
                                                 <!--end::Row-->
                                                 <!--begin::Row-->
-                                                <div class="row mb-3">
-
-                                                    <!--begin::Col-->
-                                                    <label
-                                                        class="col-lg-2 col-form-label required fw-bold fs-6">الحالة</label>
-
-                                                    <div class="col-lg-4 d-flex align-items-center">
-                                                        <div class="form-check form-check-solid form-switch fv-row">
-                                                            <input type="hidden" name="status" value="0"
-                                                                {{ !$children->status ? 'checked' : '' }}>
-                                                            <input class="form-check-input w-45px h-30px"
-                                                                type="checkbox" id="status" name="status"
-                                                                {{ $children->status ? 'checked' : '' }} value="1">
-                                                            <label class="form-check-label" for="status"></label>
-                                                        </div>
-                                                    </div>
-
-                                                    <label class="col-lg-2 col-form-label required fw-bold fs-6">بحاجة
-                                                        مواصلات</label>
-
-                                                    <div class="col-lg-4 d-flex align-items-center">
-                                                        <div class="form-check form-check-solid form-switch fv-row">
-                                                            <input type="hidden" name="want_transport" value="0"
-                                                                {{ !$children->want_transport ? 'checked' : '' }}>
-                                                            <input class="form-check-input w-45px h-30px"
-                                                                type="checkbox" id="want_transport"
-                                                                name="want_transport"
-                                                                {{ $children->want_transport ? 'checked' : '' }}
-                                                                value="1">
-                                                            <label class="form-check-label"
-                                                                for="want_transport"></label>
-                                                        </div>
-                                                    </div>
 
 
-                                                </div>
 
 
                                             </div>
@@ -306,11 +312,12 @@
 
 
                                         </div>
+
+
                                         <!--end::Row-->
                                     </div>
                                     <!--end::Col-->
                                 </div>
-                                <!--end::Input group-->
                             </div>
                             <!--end::Card body-->
                     </div>
@@ -392,7 +399,64 @@
                     }
                 });
             });
+            ////////////////////////////////////////////
+            $('#add_father').on('click', function() {
+                $('#father_id').attr('hidden', true);
+                $('input[name=father_name]').removeAttr('hidden');
+                $('.hint-father').hide();
+                $('.hint-father2').removeAttr('hidden');
+                // $('#add_father')
 
+
+                $('#father_id').val(null);
+                $('input[name=father_mob]').val(null);
+                $('input[name=occupation]').val(null);
+                $('input[name=father_identity]').val(null);
+                $('input[name=town]').val(null);
+
+            });
+
+
+            $('#add_father2').on('click', function() {
+                $('#father_id').attr('hidden', false);
+                $('input[name=father_name]').attr('hidden', true);
+                $('.hint-father2').attr('hidden', true);
+                $('.hint-father').show();
+
+                $('#father_id').val(null);
+                $('input[name=father_mob]').val(null);
+                $('input[name=occupation]').val(null);
+                $('input[name=father_identity]').val(null);
+                $('input[name=town]').val(null);
+                // $('#add_father')
+
+            });
+
+
+
+            $('#father_id').change(function() {
+                let id = this.value;
+
+                $.ajax({
+                    url: "/GetFatherData/" + id,
+                    method: 'GET',
+                    data: {
+                        // 'doctor_id': id,
+                        // 'identity': identity,
+                    },
+                    dataType: "JSON",
+                    success: function(data) {
+
+                        console.log(data);
+                        if (data != null) {
+                            $('input[name=father_mob]').val(data.mobile);
+                            $('input[name=occupation]').val(data.occupation);
+                            $('input[name=father_identity]').val(data.identity);
+                            $('input[name=town]').val(data.town);
+                        }
+                    }
+                });
+            });
             ///////////////////////////////////////////
             function setSelectValue(value) {
                 $("#s_doctor_id").val("");

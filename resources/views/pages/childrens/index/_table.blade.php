@@ -50,6 +50,9 @@
             data.division = $('#division_id').val();
             data.kindergarten = $('#kindergarten_id').val();
         });
+
+
+      
         $('#division_id').change(function() {
             let x = Table.DataTable().ajax.reload();
 
@@ -124,4 +127,7 @@
 
         });
     </script>
+
+
+
 @endsection

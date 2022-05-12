@@ -24,13 +24,13 @@ class EmployeesDataTable extends DataTable
             ->eloquent($query)
             ->addColumn('table_index', '')
             ->editColumn('job', function(Employee $model){
-                return $model->JobPlacement ? $model->JobPlacement->Job->name : '---' ;
+                return $model->JobPlacement ? ($model->JobPlacement->Job->name) ?? '---' : '---';
             })
             ->editColumn('active', function (Employee $model) {
                 return view('pages.employees.index._status2', compact('model'));
             })
             ->editColumn('period', function (Employee $model) {
-                return $model->JobPlacement ? ($model->JobPlacement->Period->name) ?? '---' : '---';
+                return $model->JobPlacement ? $model->JobPlacement->Period->name ?? '---' : '---';
             })
             ->editColumn('division', function (Employee $model) {
                 return $model->JobPlacement ? ($model->JobPlacement->Division->name) ?? '---' : '---';
@@ -58,7 +58,10 @@ class EmployeesDataTable extends DataTable
     {
         if(Auth::user()->kindergarten_id != null)
         {
-            return $model->where('kindergartens' , Auth::user()->kindergarten_id)->newQuery();
+            return $model->whereHas('JobPlacement' , function($query){
+                $query->where('kindergarten_id'  , Auth::user()->kindergarten_id);
+            })->newQuery();
+
         }
         return $model->newQuery();
     }

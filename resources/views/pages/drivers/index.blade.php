@@ -81,7 +81,3 @@
     </div>
     <!--end::Container-->
 </x-base-layout>
-<<<<<<< HEAD
-=======
-
->>>>>>> 172b760fa8e81b90d794e4ccf2a3929081098812

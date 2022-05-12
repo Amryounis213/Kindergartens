@@ -18,7 +18,7 @@ class CreateJobPlacementsTable extends Migration
             $table->foreignId('year')->constrained('years')->cascadeOnDelete();
             $table->foreignId('kindergarten_id')->constrained('kindergartens')->cascadeOnDelete();
             $table->foreignId('employee_id')->constrained('employees')->cascadeOnDelete();
-            $table->foreignId('job_id')->constrained('jobs')->cascadeOnDelete();
+            $table->foreignId('job_id')->nullable()->constrained('job_titles')->cascadeOnDelete();
             $table->foreignId('division_id')->nullable()->constrained('divisions')->cascadeOnDelete();
             $table->foreignId('level_id')->nullable()->constrained('levels')->cascadeOnDelete();
             $table->foreignId('period_id')->nullable()->constrained('periods')->cascadeOnDelete();

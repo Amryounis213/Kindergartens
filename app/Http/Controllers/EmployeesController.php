@@ -9,6 +9,7 @@ use App\Models\EducationalLevels;
 use App\Models\Employee;
 use App\Models\Job;
 use App\Models\JobPlacement;
+use App\Models\JobTitles;
 use App\Models\Kindergarten;
 use App\Models\Level;
 use App\Models\Major;
@@ -42,14 +43,29 @@ class EmployeesController extends Controller
 
     public function store(Request $request): \Illuminate\Http\RedirectResponse
     {
-       
         $request->merge([
             'bth_date' => Carbon::createFromFormat('d/m/Y', $request->bth_date)->format('Y-m-d'),
             'added_by' => Auth::guard('web')->id(),
             'add_date' => Carbon::createFromFormat('d/m/Y', $request->add_date)->format('Y-m-d'),
-            'kindergartens'=> Auth::user()->kindergarten_id ?? $request->kindergartens ,
         ]);
-        Employee::create($request->all());
+
+        $employee = Employee::create($request->all());
+
+        if($request->kindergartens)
+        {
+            $job_placement = new JobPlacement();
+            $job_placement->kindergarten_id = $request->kindergartens;
+            $job_placement->employee_id = $employee->id;
+            $job_placement->year = Year::latest()->first()->id ;
+            $job_placement->save();
+        }
+        else{
+            $job_placement = new JobPlacement();
+            $job_placement->kindergarten_id = Auth::user()->kindergarten_id;
+            $job_placement->employee_id = $employee->id;
+            $job_placement->year = Year::latest()->first()->id ;
+            $job_placement->save();
+        }
 
         return redirect()->route('employees.index');
     }
@@ -98,6 +114,7 @@ class EmployeesController extends Controller
     {
         $info = Employee::find($id);
         $info->delete();
+    
         return response()->json(['status' => 'success', 'message' => 'تم الحذف بنجاح']);
 
     }
@@ -110,7 +127,7 @@ class EmployeesController extends Controller
          * Variable If the The SuperAdmin Authintaction
          * ========================================
          */
-        $jobs = Job::get();
+        $jobs = JobTitles::get();
         $kinder = Kindergarten::all();
         $employee = Employee::find($id);
         $employees = Employee::select('id', 'name')->get();
@@ -128,7 +145,10 @@ class EmployeesController extends Controller
         if(Auth::user()->kindergarten_id != null)
         {
             $kinder = Kindergarten::where('id' , Auth::user()->kindergarten_id)->get();
-            $employees = Employee::where('kindergartens' , Auth::user()->kindergarten_id)->select('id', 'name')->get();
+            $employees = Employee::whereHas('JobPlacement' , function($query){
+                $query->where('kindergarten_id'  , Auth::user()->kindergarten_id);
+            })->select('id', 'name')->get();
+
             $divisions = Division::where('kindergarten_id' , Auth::user()->kindergarten_id)->where('status' , 1)->get();
         }
         return view('pages.employees.job_placement.create', [
@@ -148,7 +168,7 @@ class EmployeesController extends Controller
         $exists = JobPlacement::where('employee_id', $request->employee_id)->exists();
         if ($exists) {
             $request->merge([
-                'kindergarten_id'=>Auth::user()->kindergarten_id ?? $request->kindergartens ,
+                'kindergarten_id'=>Auth::user()->kindergarten_id ?? $request->kindergarten_id ,
             ]);
             $job_placement = JobPlacement::where('employee_id', $request->employee_id)->first();
             $job_placement->update($request->all());

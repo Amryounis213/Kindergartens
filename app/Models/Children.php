@@ -47,6 +47,11 @@ class Children extends Model
         return $this->hasMany(PayFees::class , 'children_id' , 'id')->whereNull('deleted_at');
    }
 
+   public function InComeRevenue()
+   {
+        return $this->hasMany(IncomesRevenue::class , 'children_id' , 'id')->whereNull('deleted_at');
+   }
+
    public function Installment()
    {
         return $this->hasMany(Installment::class , 'children_id' , 'id');

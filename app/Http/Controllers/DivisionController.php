@@ -8,6 +8,7 @@ use App\Models\Division;
 use App\Models\Kindergarten;
 use App\Models\Level;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DivisionController extends Controller
 {
@@ -44,6 +45,13 @@ class DivisionController extends Controller
      */
     public function store(Request $request)
     {
+        if(!$request->kindergarten_id)
+        {
+            $request->merge([
+                'kindergarten_id'=>Auth::user()->kindergarten_id,
+            ]);
+        }
+        
         Division::create($request->all());
         return redirect()->route('divisions.index')->with('success' , 'تمت اضافة الشعبة بنجاح');
     }

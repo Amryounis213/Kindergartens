@@ -235,43 +235,6 @@
                                                 <!--begin::Row-->
                                                 <div class="row mb-3">
                                                     <label
-                                                        class="col-lg-2 col-form-label required fw-bold fs-6">الروضة</label>
-                                                    <div class="col-lg-4">
-                                                        <select name="kindergartens"
-                                                                aria-label="{{ __('Select') }} الروضة"
-                                                                id="clinic_id"
-                                                                data-control="select2"
-                                                                data-placeholder="{{ __('Select') }} الروضة .."
-                                                                class="form-select form-select-solid form-select-lg fw-bold"
-                                                            {{ Auth::user()->kindergarten_id !=null ? 'disabled' :'' }}
-                                                        >
-                                                            <option value="-1">{{ __('Select') }} الروضة...
-                                                            </option>
-                                                            @foreach($kinder as $item)
-                                                                <option
-                                                                    value="{{$item->id}}" {{ $item->id == $employee->kindergartens ? 'selected' :'' }}> {{$item->name}}  </option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                    <label class="col-lg-2 col-form-label  fw-bold fs-6">البريد
-                                                        الالكتروني (اختياري)</label>
-                                                    <div class="col-lg-4">
-                                                        <input type="text" name="email"
-                                                               class="form-control form-control-lg form-control-solid mobile"
-                                                               placeholder="البريد" value="{{$employee->email}}">
-                                                        <div
-                                                            class="fv-plugins-message-container invalid-feedback"></div>
-                                                    </div>
-                                                </div>
-                                                <!--end::Row-->
-                                                <!--begin::Row-->
-                                                <div class="row">
-
-                                                    <!--begin::Col-->
-                                                    <div class="col-lg-12">
-                                                        <!--begin::Row-->
-                                                        <div class="row fv-plugins-icon-container">
-                                                            <label
                                                                 class="col-lg-2 col-form-label  fw-bold fs-6">الحالة</label>
                                                             <div class="col-lg-4 d-flex align-items-center">
                                                                 <div
@@ -290,6 +253,44 @@
                                                                            for="status"></label>
                                                                 </div>
                                                             </div>
+                                                    {{-- <label
+                                                        class="col-lg-2 col-form-label required fw-bold fs-6">الروضة</label>
+                                                    <div class="col-lg-4">
+                                                        <select name="kindergartens"
+                                                                aria-label="{{ __('Select') }} الروضة"
+                                                                id="clinic_id"
+                                                                data-control="select2"
+                                                                data-placeholder="{{ __('Select') }} الروضة .."
+                                                                class="form-select form-select-solid form-select-lg fw-bold"
+                                                            {{ Auth::user()->kindergarten_id !=null ? 'disabled' :'' }}
+                                                        >
+                                                            <option value="-1">{{ __('Select') }} الروضة...
+                                                            </option>
+                                                            @foreach($kinder as $item)
+                                                                <option
+                                                                    value="{{$item->id}}" {{ $item->id == $employee->JobPlacement->kindergarten_id ? 'selected' :'' }}> {{$item->name}}  </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div> --}}
+                                                    <label class="col-lg-2 col-form-label  fw-bold fs-6">البريد
+                                                        الالكتروني (اختياري)</label>
+                                                    <div class="col-lg-4">
+                                                        <input type="text" name="email"
+                                                               class="form-control form-control-lg form-control-solid mobile"
+                                                               placeholder="البريد" value="{{$employee->email}}">
+                                                        <div
+                                                            class="fv-plugins-message-container invalid-feedback"></div>
+                                                    </div>
+                                                </div>
+                                                <!--end::Row-->
+                                                <!--begin::Row-->
+                                                <div class="row">
+
+                                                    <!--begin::Col-->
+                                                    <div class="col-lg-12">
+                                                        <!--begin::Row-->
+                                                        <div class="row fv-plugins-icon-container">
+                                                            
 
 
                                                         </div>

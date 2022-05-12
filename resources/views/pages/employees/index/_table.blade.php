@@ -58,8 +58,10 @@
     });
 </script>
 <script>
+  
     $(document).on('click', '.sts-fld', function (e) {
         //e.preventDefault();
+        const Table = $('#orders-table');
         const id = $(this).data('id');
         const checkedValue = $(this).is(":checked");
         $.ajax({
@@ -67,6 +69,7 @@
             url: "{{ route('employee.status') }}",
             data: {'id': id},
             success: function (data) {
+                Table.DataTable().ajax.reload();
                 if (data.type === 'yes') {
                     $(this).prop("checked", checkedValue);
                 } else if (data.type === 'no') {
@@ -74,6 +77,9 @@
                 }
                 toastr.options.positionClass = 'toast-top-left';
                 toastr[data.status](data.message);
+               
+
+               
             }
         });
     });

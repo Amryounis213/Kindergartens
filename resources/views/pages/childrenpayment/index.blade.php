@@ -76,6 +76,7 @@
                             <input name="notices" id="notices" type="text" class="form-control datatable-input"
                                 placeholder="" data-col-index="4">
                         </div>
+                        @can('payfee.create')
                         <div class="col-lg-3 mb-lg-0 mb-6">
                             <button class="btn btn-primary btn-primary--icon mt-5" id="sub">
                                 <span>
@@ -84,6 +85,8 @@
                                 </span>
                             </button>&nbsp;&nbsp;
                         </div>
+                        @endcan
+                        
                     </div>
 
                 </form>

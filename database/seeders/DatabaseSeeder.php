@@ -15,15 +15,13 @@ class DatabaseSeeder extends Seeder
      * @return void
      */
     public function run()
-    {
-
-       
-        $this->call([
-            //UsersSeeder::class,
-            // PermissionsSeeder::class,
-            // RolesSeeder::class,
-           //ChildrenTableSeeder::class ,
-          // ClassPlacementTableSeeder::class ,
-        ]);
+    {     
+        // $this->call([
+        //     UsersSeeder::class,
+        //     PermissionsSeeder::class,
+        //     RolesSeeder::class,
+        //     ChildrenTableSeeder::class ,
+        //     ClassPlacementTableSeeder::class ,
+        // ]);
     }
 }

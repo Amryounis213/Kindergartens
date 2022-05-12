@@ -240,7 +240,7 @@ return array(
         // المستويات
         array(
             'title' => 'المستويات والشعب',
-            'permission' => array('orders.show', 'orders.create', 'orders.edit', 'orders.delete'),
+            'permission' => array('levels.show', 'division.show', 'division.delete'),
             'icon' => array(
                 'svg' => theme()->getSvgIcon("demo1/media/icons/duotune/general/gen055.svg", "svg-icon-2"),
                 'font' => '<i class="bi bi-person fs-2"></i>',
@@ -257,7 +257,7 @@ return array(
                         'title' => 'عرض المستويات الدراسية',
                         'path' => 'levels',
                         'classes' => array('item' => 'show-menu-bdg'),
-                        'permission' => 'orders.create',
+                        'permission' => 'levels.show',
                         'bullet' => '<span class="bullet bullet-dot"></span>',
                     ),
 
@@ -265,18 +265,18 @@ return array(
                         'title' => 'عرض الشعب الدراسية',
                         'path' => 'divisions',
                         'classes' => array('item' => 'show-menu-bdg'),
-                        'permission' => 'orders.show',
+                        'permission' => 'division.show',
                         'bullet' => '<span class="bullet bullet-dot"></span>',
                     ),
                     array(
                         'title' => 'اضافة شعبة جديدة',
-                        'permission' => 'orders.create',
+                        'permission' => 'division.create',
                         'path' => 'divisions/create',
                         'bullet' => '<span class="bullet bullet-dot"></span>',
                     ),
                     array(
                         'title' => 'الشعب الدراسية المحذوفة',
-                        'permission' => 'orders.create',
+                        'permission' => 'division.delete',
                         'path' => 'trashed-division',
                         'bullet' => '<span class="bullet bullet-dot"></span>',
                     ),
@@ -304,7 +304,7 @@ return array(
                         'title' => 'عرض',
                         'path' => 'employees',
                         'classes' => array('item' => 'show-menu-bdg'),
-                        'permission' => 'orders.create',
+                        'permission' => 'employees.show',
                         'bullet' => '<span class="bullet bullet-dot"></span>',
                     ),
                     array(
@@ -339,7 +339,7 @@ return array(
         // الأطفال وأولياء الأمور
         array(
             'title' => 'الأطفال وأولياء الأمور',
-            'permission' => array('orders.show', 'orders.create', 'orders.edit', 'orders.delete'),
+            'permission' => array('childrens.show', 'childrens.create', 'childrens.edit', 'childrens.delete'),
             'icon' => array(
                 'svg' => theme()->getSvgIcon("demo1/media/icons/duotune/general/gen055.svg", "svg-icon-2"),
                 'font' => '<i class="bi bi-person fs-2"></i>',
@@ -361,7 +361,7 @@ return array(
                     ),
                     array(
                         'title' => 'إضافة طفل جديد',
-                        'permission' => 'childrens.show',
+                        'permission' => 'childrens.create',
                         'path' => 'childrens/create',
                         'bullet' => '<span class="bullet bullet-dot"></span>',
                     ),
@@ -373,7 +373,7 @@ return array(
                     ),
                     array(
                         'title' => 'عرض أولياء الأمور',
-                        'permission' => 'childrens.create',
+                        'permission' => 'childrens.show',
                         'path' => 'fathers',
                         'bullet' => '<span class="bullet bullet-dot"></span>',
                     ),
@@ -391,7 +391,7 @@ return array(
         // الحضور والغياب
         array(
             'title' => 'الحضور والغياب',
-            'permission' => array('orders.show', 'orders.create', 'orders.edit', 'orders.delete'),
+            'permission' => array('employees.show','childrens.show'),
             'icon' => array(
                 'svg' => theme()->getSvgIcon("demo1/media/icons/duotune/general/gen055.svg", "svg-icon-2"),
                 'font' => '<i class="bi bi-person fs-2"></i>',
@@ -408,12 +408,12 @@ return array(
                         'title' => 'سجل الموظفين',
                         'path' => 'employee/attendance',
                         'classes' => array('item' => 'show-menu-bdg'),
-                        'permission' => 'orders.create',
+                        'permission' => 'employees.edit',
                         'bullet' => '<span class="bullet bullet-dot"></span>',
                     ),
                     array(
                         'title' => 'سجل الطلاب',
-                        'permission' => 'orders.create',
+                        'permission' => 'childrens.edit',
                         'path' => 'children/cattendance',
                         'bullet' => '<span class="bullet bullet-dot"></span>',
                     ),
@@ -473,7 +473,7 @@ return array(
          // الرسوم والاشتراكات
          array(
             'title' => 'الرسوم الدراسية والاشتراكات',
-            'permission' => array('orders.show', 'orders.create', 'orders.edit', 'orders.delete'),
+            'permission' => array('subscriptions.show', 'subscriptions.create', 'subscriptions.edit', 'subscriptions.delete'),
             'icon' => array(
                 'svg' => theme()->getSvgIcon("demo1/media/icons/duotune/general/gen055.svg", "svg-icon-2"),
                 'font' => '<i class="bi bi-person fs-2"></i>',
@@ -495,32 +495,87 @@ return array(
                     ),
                     array(
                         'title' => 'الاشتراكات السنوية',
-                        'permission' => 'childrens.show',
+                        'permission' => 'subscriptions.show',
                         'path' => 'year-sub',
                         'bullet' => '<span class="bullet bullet-dot"></span>',
                     ),
                     array(
                         'title' => ' اشتراكات الأطفال',
-                        'permission' => 'childrens.create',
+                        'permission' => 'subscriptions.show',
                         'path' => 'children-subscriptions',
                         'bullet' => '<span class="bullet bullet-dot"></span>',
                     ),
                     array(
                         'title' => 'تسديد الرسوم',
-                        'permission' => 'childrens.create',
+                        'permission' => 'subscriptions.create',
                         'path' => 'pay-fees',
                         'bullet' => '<span class="bullet bullet-dot"></span>',
                     ),
                     array(
                         'title' => 'دفعات الرسوم المحذوفة',
-                        'permission' => 'childrens.create',
+                        'permission' => 'subscriptions.delete',
                         'path' => 'trashed-pay-fees',
                         'bullet' => '<span class="bullet bullet-dot"></span>',
                     ),
                     array(
                         'title' => 'الأقساط  الدراسية',
-                        'permission' => 'childrens.create',
+                        'permission' => 'payfee.create',
                         'path' => 'installments',
+                        'bullet' => '<span class="bullet bullet-dot"></span>',
+                    ),
+                   
+
+                ),
+            ),
+        ),
+
+
+
+        //  الايرادات و المصروفات
+        array(
+            'title' => 'الايرادات والمصروفات',
+            'permission' => array('incomes.show', 'incomes.create', 'incomes.edit', 'incomes.delete'),
+            'icon' => array(
+                'svg' => theme()->getSvgIcon("demo1/media/icons/duotune/general/gen055.svg", "svg-icon-2"),
+                'font' => '<i class="bi bi-person fs-2"></i>',
+            ),
+            'classes' => array('item' => 'menu-accordion'),
+            'badge' => '',
+            'attributes' => array(
+                "data-kt-menu-trigger" => "click",
+            ),
+            'sub' => array(
+                'class' => 'menu-sub-accordion menu-active-bg',
+                'items' => array(
+                    array(
+                        'title' => 'أنواع الايرادات',
+                        'path' => 'incomes',
+                        'classes' => array('item' => 'show-menu-bdg'),
+                        'permission' => 'incomes.show',
+                        'bullet' => '<span class="bullet bullet-dot"></span>',
+                    ),
+                    array(
+                        'title' => 'الايرادات المرتبطة بالأطفال',
+                        'permission' => 'incomes.create',
+                        'path' => 'incomesiwithchild',
+                        'bullet' => '<span class="bullet bullet-dot"></span>',
+                    ),
+                    array(
+                        'title' => 'تحصيل الايرادات',
+                        'permission' => 'incomes.create',
+                        'path' => 'incomes-revenue',
+                        'bullet' => '<span class="bullet bullet-dot"></span>',
+                    ),
+                    array(
+                        'title' => 'أنواع المصروفات',
+                        'permission' => 'expense.show',
+                        'path' => 'expenses',
+                        'bullet' => '<span class="bullet bullet-dot"></span>',
+                    ),
+                    array(
+                        'title' => 'تسديد المصروفات',
+                        'permission' => 'expense.create',
+                        'path' => 'expenses-pay',
                         'bullet' => '<span class="bullet bullet-dot"></span>',
                     ),
                    

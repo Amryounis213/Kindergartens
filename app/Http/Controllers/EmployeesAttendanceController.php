@@ -16,21 +16,23 @@ class EmployeesAttendanceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(AttendanceDataTable $datatable ,Employee $employee)
+    public function index(AttendanceDataTable $datatable, Employee $employee)
     {
-        
-        if(Auth::user()->kindergarten_id != null)
-        {
-            $employees = $employee->whereHas('JobPlacement')->where('kindergartens' , Auth::user()->kindergarten_id)->get();
-        }else{
-            $employees = $employee->whereHas('JobPlacement')->get(); 
-        }
-        return view('pages.Attendance.employees.index' , [
-            'dataTable'=>$datatable ,
-             'model'=>$employee,
-             'employees'=>$employees,
-            ]);
 
+        if (Auth::user()->kindergarten_id != null) {
+            $employees = $employee->whereHas('JobPlacement', function ($q) {
+                $q->where('kindergarten_id', Auth::user()->kindergarten_id)->where('job_id' , '!=' , null);
+            })->get();
+        } else {
+            $employees = $employee->whereHas('JobPlacement' , function ($q) {
+                $q->where('job_id' , '!=' , null);
+            })->get();
+        }
+        return view('pages.Attendance.employees.index', [
+            'dataTable' => $datatable,
+            'model' => $employee,
+            'employees' => $employees,
+        ]);
     }
 
     /**
@@ -51,33 +53,29 @@ class EmployeesAttendanceController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         try {
 
             foreach ($request->attendences as $employeeid => $attendence) {
 
-                if( $attendence == 1 ) {
+                if ($attendence == 1) {
                     $attendence_status = true;
-                } else if( $attendence == 2 ){
+                } else if ($attendence == 2) {
                     $attendence_status = false;
                 }
 
 
                 $employee = Employee::find($employeeid);
                 EmployeesAttendance::create([
-                    'employee_id'=> $employeeid,
-                    'attendence_date'=> date('Y-m-d'),
-                    'attendence_status'=> $attendence_status ,
-                    'period_id' => $employee->JobPlacement->period_id ?? null ,
+                    'employee_id' => $employeeid,
+                    'attendence_date' => date('Y-m-d'),
+                    'attendence_status' => $attendence_status,
+                    'period_id' => $employee->JobPlacement->period_id ?? null,
                 ]);
-
             }
 
-            return redirect()->back()->with('success' , 'تم تسجيل الحضور بنجاح');
-
-        }
-
-        catch (\Exception $e){
+            return redirect()->back()->with('success', 'تم تسجيل الحضور بنجاح');
+        } catch (\Exception $e) {
             return redirect()->back()->withErrors(['error' => $e->getMessage()]);
         }
     }
@@ -129,15 +127,13 @@ class EmployeesAttendanceController extends Controller
 
     public function showEmployee(Request $request)
     {
-        
-           
     }
 
 
     public function autocomplete(Request $request)
     {
         $query = $request->get('terms');
-        $data = Employee::where('name', 'LIKE', '%'. $query. '%')->get();
+        $data = Employee::where('name', 'LIKE', '%' . $query . '%')->get();
         return response()->json($data);
     }
 }

@@ -7,6 +7,8 @@ use App\Models\ClassPlacment;
 use App\Models\Discount;
 use App\Models\Division;
 use App\Models\Employee;
+use App\Models\Father;
+use App\Models\IncomesRevenue;
 use App\Models\JobPlacement;
 use App\Models\Subscriptions;
 use Auth;
@@ -91,4 +93,23 @@ class FormAjaxController extends Controller
 
         return response()->json($emp);
     }
+
+    
+
+    public function GetIcomeRevData($id)
+    {
+        $emp =IncomesRevenue::where('income_id' , $id)->get();
+
+        return response()->json($emp);
+    }
+
+    public function GetFatherData($id)
+    {
+        $emp =Father::where('id' , $id)->first();
+
+        return response()->json($emp);
+    }
+
+
+    
 }

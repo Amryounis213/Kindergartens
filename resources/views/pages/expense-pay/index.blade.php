@@ -10,10 +10,10 @@
                 <form class="mb-5">
                     <div class="row mb-6">
                         <div class="col-lg-3 mb-lg-0 mb-6">
-                            <label>نوع الايراد:</label>
+                            <label>نوع المصروف:</label>
                             <select id="expense_id" name="expense_id" class="form-control datatable-input"
                                 data-col-index="2">
-                                <option value="">نوع المصروف  </option>
+                                <option value="">اختر نوع المصروف  </option>
                                 @foreach ($expenses as $incomes)
                                     <option value="{{ $incomes->id }}">{{ $incomes->name }}</option>
                                 @endforeach

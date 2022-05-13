@@ -81,7 +81,18 @@ class IncomesRevenueController extends Controller
      */
     public function edit($id)
     {
-        //
+        $income =IncomesRevenue::find($id);
+        ///////////////////////////////////
+        $years = Year::where('status' , 1)->get();  
+        $childrens = Children::get();
+        $incomes = Income::where('status' , 1)->get();
+        if(Auth::user()->kindergarten_id != null)
+        {   
+            $childrens = $childrens->where('kindergarten_id' , Auth::user()->kindergarten_id)->get();
+        }
+        return view('pages.IncomesRevenue.edit' ,compact('years' , 'childrens' , 'incomes' , 'income'));
+
+
     }
 
     /**
@@ -93,7 +104,10 @@ class IncomesRevenueController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $income =IncomesRevenue::find($id);
+        $income->update($request->all());
+        return redirect()->route('incomes-revenue.index')->with('success' , 'تم تعديل الايراد بنجاح');
+    
     }
 
     /**

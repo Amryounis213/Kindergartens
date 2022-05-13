@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateExpensePaysTable extends Migration
+class CreateExpenseAttatchmentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,10 @@ class CreateExpensePaysTable extends Migration
      */
     public function up()
     {
-        Schema::create('expense_pays', function (Blueprint $table) {
+        Schema::create('expense_attatchments', function (Blueprint $table) {
             $table->id();
-            $table->string('rec_name');
-            $table->date('payment_date');
-            $table->unsignedFloat('payment_amount')->default(0);
-            $table->unsignedBigInteger('Receipt_number')->nullable();
-            $table->text('notices')->nullable();
-            $table->foreignId('year')->constrained('years')->cascadeOnDelete();
+            $table->string('file');
             $table->foreignId('expense_id')->constrained('expenses')->cascadeOnDelete();
-
             $table->timestamps();
         });
     }
@@ -34,6 +28,6 @@ class CreateExpensePaysTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('expense_pays');
+        Schema::dropIfExists('expense_attatchments');
     }
 }

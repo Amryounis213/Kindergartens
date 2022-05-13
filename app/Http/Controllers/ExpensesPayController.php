@@ -63,7 +63,12 @@ class ExpensesPayController extends Controller
      */
     public function edit($id)
     {
-        //
+        $expense = ExpensePay::find($id);
+        $expenses=Expense::select('id','name')->get();
+        $years =Year::select('id','name')->get();
+
+        return view('pages.expense-pay.edit' ,compact('expenses' , 'years' , 'expense'));
+
     }
 
     /**
@@ -77,7 +82,7 @@ class ExpensesPayController extends Controller
     {
         $sub = ExpensePay::find($id);
         $sub->update($request->all());
-        return response()->json(['status' => 'success', 'message' => trans('تم تسديد مصروف جديد ')]);
+        return redirect()->route('expenses.index')->with('success' , 'تم تعديل دفعة المصروف بنجاح');
     }
 
     /**

@@ -37,7 +37,7 @@ class IncomesRevenueController extends Controller
         {   
             $childrens = $childrens->where('kindergarten_id' , Auth::user()->kindergarten_id)->get();
         }
-        return $datatable->render('pages.InComesRevenue.index' , compact('years' , 'childrens' , 'incomes'));
+        return $datatable->render('pages.IncomesRevenue.index' , compact('years' , 'childrens' , 'incomes'));
     }
 
     /**

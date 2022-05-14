@@ -23,7 +23,7 @@
                     @method('POST')
                     <!--begin::Card body-->
                     <div class="card-body border-top p-9">
-                        @if (Auth::user()->kindergarten_id == null)
+                    @if (Auth::user()->kindergarten_id == null)
                         <div class="row mb-6">
                             <label class="col-lg-4 col-form-label required fw-bold fs-6">الروضة</label>
                             <div class="col-lg-8 fv-row">

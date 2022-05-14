@@ -149,6 +149,25 @@
                     <!--end::Input-->
                 </div>
                 <!--end::Input-->
+                <div class="row mb-6">
+                    <label class="col-lg-4 col-form-label fw-bold fs-6">
+                        <span>الروضات</span>
+                        <div class="text-muted">
+                            عند اختيار روضة محددة فأن المستخدم ستنطبق صلاحياته فقط لتلك الروضة
+                            ، يفضل استخدامه عند اضافة مدير/ة لروضة ما
+                        </div>
+                    </label>
+                    <div class="col-lg-8 fv-row">
+                        <select name="kindergarten_id" aria-label="قم باختيار روضة محددة" data-control="select2" data-placeholder="قم باختيار روضة محددة.." class="form-select form-select-solid form-select-lg fw-bold">
+                            <option value="">قم باختيار روضة ...</option>
+                            @foreach(\App\Models\Kindergarten::select('id' , 'name')->get() as $item)
+                            <option value="{{$item->id}}" {{ $item->id == $user->kindergarten_id ? 'selected' :'' }}>{{ $item->name }}</option>
+                            @endforeach
+                        </select>
+
+                        
+                    </div>
+                </div>
                 <!--begin::Input group-->
                 <div class="row mb-6">
                     <label class="col-lg-4 col-form-label fw-bold fs-6">

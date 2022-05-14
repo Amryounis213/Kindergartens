@@ -35,7 +35,7 @@
                         {{--                @include('modals.filter_popup_menu')--}}
                         {{--                @include('modals.add_modal')--}}
                         {{--                @include('modals.export_modal')--}}
-                        @can('kindergarten.create')
+                        @can('constant.create')
                         <!--begin::Add-->
                         <a href="{{ route('educational-level.create') }}" type="button" class="btn btn-primary">
                         <span class="svg-icon svg-icon-2">

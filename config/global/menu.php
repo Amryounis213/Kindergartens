@@ -589,7 +589,7 @@ return array(
         // الثوابث
         array(
             'title' => 'الثوابث',
-            'permission' => array('orders.show', 'orders.create', 'orders.edit', 'orders.delete'),
+            'permission' => array('constant.show', 'constant.create', 'constant.edit', 'constant.delete'),
             'icon' => array(
                 'svg' => theme()->getSvgIcon("demo1/media/icons/duotune/general/gen055.svg", "svg-icon-2"),
                 'font' => '<i class="bi bi-person fs-2"></i>',
@@ -606,30 +606,30 @@ return array(
                         'title' => 'عرض المستويات التعليمية',
                         'path' => 'educational-level',
                         'classes' => array('item' => 'show-menu-bdg'),
-                        'permission' => 'childrens.show',
+                        'permission' => 'constant.show',
                         'bullet' => '<span class="bullet bullet-dot"></span>',
                     ),
                     array(
                         'title' => ' صلة القرابة لأولياء الامور',
-                        'permission' => 'childrens.show',
+                        'permission' => 'constant.show',
                         'path' => 'father-relations',
                         'bullet' => '<span class="bullet bullet-dot"></span>',
                     ),
                     array(
                         'title' => ' التخصصات',
-                        'permission' => 'childrens.create',
+                        'permission' => 'constant.create',
                         'path' => 'majors',
                         'bullet' => '<span class="bullet bullet-dot"></span>',
                     ),
                     array(
                         'title' => 'مهن أولياء الأمور',
-                        'permission' => 'childrens.create',
+                        'permission' => 'constant.create',
                         'path' => 'father-jobs',
                         'bullet' => '<span class="bullet bullet-dot"></span>',
                     ),
                     array(
                         'title' => 'عرض المسميات الوظيفية ',
-                        'permission' => 'childrens.delete',
+                        'permission' => 'constant.create',
                         'path' => 'job-titles',
                         'bullet' => '<span class="bullet bullet-dot"></span>',
                     ),

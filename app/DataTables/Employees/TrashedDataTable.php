@@ -59,7 +59,9 @@ class TrashedDataTable extends DataTable
     {
         if(Auth::user()->kindergarten_id != null)
         {
-            return $model->onlyTrashed()->where('kindergartens' , Auth::user()->kindergarten_id)->newQuery();
+            return $model->onlyTrashed()->whereHas('JobPlacement' , function($query){
+                $query->where('kindergarten_id'  , Auth::user()->kindergarten_id);
+            })->newQuery();
         }
         return $model->onlyTrashed()->newQuery();
     }

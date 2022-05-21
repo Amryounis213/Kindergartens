@@ -65,12 +65,13 @@ class KindergardenController extends Controller
     }
 
     //////////////////////////////////////////////////
-    public function destroy(int $id): \Illuminate\Http\JsonResponse
+    public function destroy(int $id)
     {
+        
         $patient = Kindergarten::find($id);
-        // if ($patient) {
+        // if ($patient->Children->count() > 0) {
            
-        //         return response()->json(['status' => 'error', 'message' => 'لا يمكن حذف ملف المريض لوجود طلبات فعالة!']);
+        //         return response()->json(['status' => 'error', 'message' => 'لا يمكن حذف الروضة لوجود طلاب فيها!']);
         //     }
         $patient->delete();
        

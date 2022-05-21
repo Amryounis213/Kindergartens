@@ -74,14 +74,12 @@ class ChildrensDataTable extends DataTable
         }
 
         if (Auth::user()->kindergarten_id != null) {
-            $model1 = $model->where('kindergarten_id', Auth::user()->kindergarten_id);
 
-            $model2 = $model->whereHas('ClassPlacement', function ($query) {
+            $model->where('kindergarten_id', Auth::user()->kindergarten_id)
+            ->orWhereHas('ClassPlacement' ,function($query){
                 $query->where('kindergarten_id', Auth::user()->kindergarten_id);
-            });
-
-            $merged = $model1->merge($model2);
-            $model2->newQuery();
+            })->get();
+            return $model->newQuery();
         }
         return $model->newQuery();
     }

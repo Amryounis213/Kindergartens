@@ -85,6 +85,7 @@ array_walk($menu, function ($val) {
     }
 });
 
+Route::middleware('auth')->group(function () {
 
 
 //الروضات
@@ -200,7 +201,7 @@ Route::post('expense/status', [ExpensesController::class, 'status'])->name('expe
 Route::resource('expenses-pay' , ExpensesPayController::class);
 Route::get('print/expenses-pay/{id}', [ExpensesPayController::class, 'print'])->name('expense-pay.print');
 
-
+});
 
 
 

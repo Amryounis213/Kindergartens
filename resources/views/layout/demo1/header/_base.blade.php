@@ -45,7 +45,7 @@
 
 			<!--begin::Topbar-->
 	        <div class="d-flex align-items-stretch flex-shrink-0">
-                <div style="padding-top: 25px"><h4>{{ __(auth()->user()->name) }}</h4></div>
+                <div style="padding-top: 25px"><h4>{{ __(auth()->user()->name ?? '') }}</h4></div>
 
                 {{ theme()->getView('layout/topbar/_base') }}
 			</div>

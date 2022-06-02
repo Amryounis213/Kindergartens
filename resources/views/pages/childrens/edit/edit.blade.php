@@ -151,7 +151,36 @@
                                 <!--end::Col-->
                             </div>
                             <!--end::Input group-->
+                            <div class="row mb-2">
+                                <!--begin::Col-->
+                                <div class="col-lg-12">
+                                    <!--begin::Row-->
+                                    <div class="row">
+                                        <label
+                                            class="col-lg-2 col-form-label required fw-bold fs-6">ولي أمر الطالب</label>
+                                        <div class="col-lg-4">
+                                            <input type="text" name="father_name"
+                                                class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 address typeahead"
+                                                placeholder="اسم ولي الأمر" value="{{ $children->Father->name }}" />
+                                        </div>
 
+
+                                        <label class="col-lg-2 col-form-label  fw-bold fs-6">رقم المحمول
+                                            لولي أمر الطفل </label>
+
+                                        <div class="col-lg-4">
+                                            <input type="text" name="father_mob"
+                                                class="form-control form-control-lg form-control-solid mobile"
+                                                placeholder="  رقم المحمول لولي أمر الطفل" value="{{ $children->Father->mobile ?? '' }}">
+                                            <div class="fv-plugins-message-container invalid-feedback">
+                                            </div>
+                                        </div>
+                                      
+                                    </div>
+                                    <!--end::Row-->
+                                </div>
+                                <!--end::Col-->
+                            </div>
     
 
                             <!--begin::Order info-->
@@ -162,7 +191,7 @@
                                     aria-controls="kt_order_profile_details">
                                     <!--begin::Card title-->
                                     <div class="card-title m-0">
-                                        <h3 class="fw-bolder m-0">{{ __('info') }} اضافية </h3>
+                                        <h3 class="fw-bolder m-0">بيانات ولي الأمر</h3>
                                     </div>
                                     <!--end::Card title-->
                                 </div>
@@ -176,7 +205,7 @@
                                             <div class="col-lg-12">
 
                                 
-                                                <!--begin::Row-->
+                                                {{-- <!--begin::Row-->
                                                 <div class="row mb-2">
                                                     <label class="col-lg-2 col-form-label required fw-bold fs-6">ولي امر
                                                         الطالب</label>
@@ -224,7 +253,7 @@
                                                         <div class="fv-plugins-message-container invalid-feedback">
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </div> --}}
                                                 <!--begin::Row-->
                                                 <div class="row mb-3">
                                                     <label class="col-lg-2 col-form-label  fw-bold fs-6">مهنة ولي
@@ -232,7 +261,7 @@
                                                     <div class="col-lg-4">
                                                         <input type="text" name="occupation"
                                                             class="form-control form-control-lg form-control-solid mobile"
-                                                            placeholder="مهنة ولي أمر الطفل" value="{{$father->occupation}}">
+                                                            placeholder="مهنة ولي أمر الطفل" value="{{$father->occupation ?? ''}}">
                                                     </div>
                                                     <label class="col-lg-2 col-form-label  fw-bold fs-6">رقم هوية
                                                         لولي أمر </label>
@@ -240,7 +269,7 @@
                                                     <div class="col-lg-4">
                                                         <input type="text" name="father_identity"
                                                             class="form-control form-control-lg form-control-solid mobile"
-                                                            placeholder="رقم هوية لولي أمر الطفل" value="{{$father->identity}}">
+                                                            placeholder="رقم هوية لولي أمر الطفل" value="{{$father->identity ?? ''}}">
                                                         <div class="fv-plugins-message-container invalid-feedback">
                                                         </div>
                                                     </div>
@@ -253,7 +282,7 @@
                                                     <div class="col-lg-4">
                                                         <input type="text" name="town"
                                                             class="form-control form-control-lg form-control-solid mobile"
-                                                            placeholder="اسم البلدة " value="{{$father->town}}">
+                                                            placeholder="اسم البلدة " value="{{$father->town ?? ''}}">
                                                     </div>
                                                     <label class="col-lg-2 col-form-label  fw-bold fs-6"> صلة قرابة ولي
                                                         الأمر

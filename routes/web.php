@@ -116,6 +116,8 @@ Route::resource('childrens' , ChildrenController::class);
 Route::post('childrens/status', [ChildrenController::class, 'status'])->name('childrens.status');
 Route::get('trashed-children' , [ChildrenController::class ,'getTrashed'])->name('children.trashed'); // صفحة الطلاب المحذوفين
 Route::get('restore-children/{id}' , [ChildrenController::class , 'RestoreTrashed'])->name('children.restore');
+Route::get('father-autocomplete' , [ChildrenController::class , 'autocomplete'])->name('father-autocomplete');
+
 
 
 
@@ -147,6 +149,7 @@ Route::get('GetDiscountData/{id}', [FormAjaxController::class, 'GetDiscountData'
 Route::get('GetFeeData/{id}', [FormAjaxController::class, 'GetFeeData'])->name('GetFeeData');
 Route::get('GetEmployeeByKindergarten/{id}', [FormAjaxController::class, 'GetEmployeeByKindergarten'])->name('GetEmployeeByKindergarten');
 Route::get('GetFatherData/{id}' , [FormAjaxController::class , 'GetFatherData'])->name('GetFatherData');
+Route::get('GetFatherData2/{id}' , [FormAjaxController::class , 'GetFatherData2'])->name('GetFatherData2');
 
 
 Route::get('GetIcomeRevData/{id}', [FormAjaxController::class, 'GetIcomeRevData'])->name('GetIcomeRevData');

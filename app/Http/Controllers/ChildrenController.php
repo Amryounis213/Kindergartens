@@ -46,9 +46,7 @@ class ChildrenController extends Controller
     public function create()
     {
         $fathers = Father::select('id', 'name')->get();
-
         $kinder = Kindergarten::select('id', 'name')->get();
-
         if (Auth::user()->kindergarten_id != null) {
             $kinder = Kindergarten::select('id', 'name')->where('id', Auth::user()->kindergarten_id)->get();
         }
@@ -78,24 +76,42 @@ class ChildrenController extends Controller
 
         if($request->father_name)
         {
-            $father = new Father();
-            $father->name =$request->father_name;
-            $father->town =$request->town;
-            $father->identity =$request->father_identity;
-            $father->occupation =$request->occupation;
-            $father->mobile =$request->father_mob;
-            $father->save();
-        }else{
-            $father = Father::find($request->father_id);
-            
-            $father->town =$request->town;
-            $father->identity =$request->father_identity;
-            $father->occupation =$request->occupation;
-            $father->mobile =$request->father_mob;
-            $father->save();
+            $father_exists = Father::where('name' , $request->father_name)->exists();
+            if($father_exists)
+            {
+                $id = Father::where('name' , $request->father_name)->first()->id ;
+                $father = Father::find($id);
+                $father->name =$request->father_name;
+                $father->town =$request->town;
+                $father->identity =$request->father_identity;
+                $father->occupation =$request->occupation;
+                $father->mobile =$request->father_mob;
+                $father->save();
+            }
+            else{
+                $father = new Father();
+                $father->name =$request->father_name;
+                $father->town =$request->town;
+                $father->identity =$request->father_identity;
+                $father->occupation =$request->occupation;
+                $father->mobile =$request->father_mob;
+                $father->save();
+            }
+           
         }
+        // else{
+        //     $father = Father::find($request->father_id);
+            
+        //     $father->town =$request->town;
+        //     $father->identity =$request->father_identity;
+        //     $father->occupation =$request->occupation;
+        //     $father->mobile =$request->father_mob;
+        //     $father->save();
+        // }
 
-
+        $request->merge([
+            'father_id' => $father->id ,
+        ]);
         Children::create($request->all());
         return redirect()->route('childrens.index');
     }
@@ -151,6 +167,37 @@ class ChildrenController extends Controller
 
             'added_by' => Auth::guard('web')->id(),
             'status' => 1,
+        ]);
+
+
+
+        if($request->father_name)
+        {
+            $father_exists = Father::where('name' , $request->father_name)->exists();
+            if($father_exists)
+            {
+                $id = Father::where('name' , $request->father_name)->first()->id ;
+                $father = Father::find($id);
+                $father->name =$request->father_name;
+                $father->town =$request->town;
+                $father->identity =$request->father_identity;
+                $father->occupation =$request->occupation;
+                $father->mobile =$request->father_mob;
+                $father->save();
+            }
+            else{
+                $father = new Father();
+                $father->name =$request->father_name;
+                $father->town =$request->town;
+                $father->identity =$request->father_identity;
+                $father->occupation =$request->occupation;
+                $father->mobile =$request->father_mob;
+                $father->save();
+            }
+           
+        }
+        $request->merge([
+            'father_id' => $father->id ,
         ]);
         $child->update($request->all());
         return redirect()->route('childrens.index');
@@ -255,5 +302,12 @@ class ChildrenController extends Controller
         $children->deleted_at = null;
         $children->save();
         return redirect()->back()->with('success', 'تم استرجاع الطالب بنجاح');
+    }
+
+    public function autocomplete(Request $request)
+    {
+        $query = $request->get('terms');
+        $data = Father::where('name', 'LIKE', '%'. $query. '%')->get();
+        return response()->json($data);
     }
 }

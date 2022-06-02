@@ -111,5 +111,14 @@ class FormAjaxController extends Controller
     }
 
 
+
+    public function GetFatherData2($name)
+    {
+        $emp =Father::where('name' ,'LIKE' ,  '%' .$name . '%')->get();
+        return response()->json($emp);
+
+    }
+
+
     
 }

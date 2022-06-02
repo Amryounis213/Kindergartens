@@ -147,6 +147,41 @@
                                 </div>
                                 <!--end::Col-->
                             </div>
+
+                            <div class="row mb-2">
+                                <!--begin::Col-->
+                                <div class="col-lg-12">
+                                    <!--begin::Row-->
+                                    <div class="row">
+                                        <label class="col-lg-2 col-form-label required fw-bold fs-6">ولي أمر
+                                            الطالب</label>
+                                        <div class="col-lg-4">
+                                            <input type="text" name="father_name"
+                                                class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 address typeahead"
+                                                placeholder="اسم ولي الأمر" value="{{ old('father_name') }}" />
+                                        </div>
+                                        {{-- <div class="col-lg-1">
+                                            <input type="button" id="getfatherdata" value="اضافة"
+                                                class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 btn-secondary " />
+                                        </div> --}}
+
+
+                                        <label class="col-lg-2 col-form-label  fw-bold fs-6">رقم المحمول
+                                            لولي أمر الطفل </label>
+
+                                        <div class="col-lg-4">
+                                            <input type="text" name="father_mob"
+                                                class="form-control form-control-lg form-control-solid mobile"
+                                                placeholder="  رقم المحمول لولي أمر الطفل" value="">
+                                            <div class="fv-plugins-message-container invalid-feedback">
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <!--end::Row-->
+                                </div>
+                                <!--end::Col-->
+                            </div>
                             <!--end::Input group-->
 
 
@@ -258,7 +293,7 @@
                                     aria-controls="kt_order_profile_details">
                                     <!--begin::Card title-->
                                     <div class="card-title m-0">
-                                        <h3 class="fw-bolder m-0">{{ __('info') }} اضافية </h3>
+                                        <h3 class="fw-bolder m-0">بيانات ولي الأمر</h3>
                                     </div>
                                     <!--end::Card title-->
                                 </div>
@@ -272,10 +307,10 @@
                                             <!--begin::Col-->
                                             <div class="col-lg-12">
 
-                                
+
                                                 <!--begin::Row-->
                                                 <div class="row mb-2">
-                                                    <label class="col-lg-2 col-form-label required fw-bold fs-6">ولي امر
+                                                    {{-- <label class="col-lg-2 col-form-label required fw-bold fs-6">ولي امر
                                                         الطالب</label>
 
                                                     <div class="col-lg-4">
@@ -309,9 +344,9 @@
                                                             class="fv-plugins-message-container text-primary hint-father2 add_father ">
                                                             <a id="add_father2" href="#father_id">الرجوع الى قائمة</a>
                                                         </div>
-                                                    </div>
+                                                    </div> --}}
 
-                                                    <label class="col-lg-2 col-form-label  fw-bold fs-6">رقم المحمول
+                                                    {{-- <label class="col-lg-2 col-form-label  fw-bold fs-6">رقم المحمول
                                                         لولي أمر الطفل </label>
 
                                                     <div class="col-lg-4">
@@ -320,7 +355,7 @@
                                                             placeholder="  رقم المحمول لولي أمر الطفل" value="">
                                                         <div class="fv-plugins-message-container invalid-feedback">
                                                         </div>
-                                                    </div>
+                                                    </div> --}}
                                                 </div>
                                                 <!--begin::Row-->
                                                 <div class="row mb-3">
@@ -465,6 +500,9 @@
                 integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA=="
                 crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.2/bootstrap3-typeahead.min.js"
+                integrity="sha512-HWlJyU4ut5HkEj0QsK/IxBCY55n5ZpskyjVlAoV9Z7XQwwkqXoYdCIC93/htL3Gu5H3R4an/S0h2NXfbZk3g7w=="
+                crossorigin="anonymous"></script>
         <script type="text/javascript">
             $(".flatpickr-input").flatpickr({
                 // enableTime: true,
@@ -472,65 +510,96 @@
                 dateFormat: 'd/m/Y ',
             });
         </script>
+
+        {{-- <script>
+    let x = document.getElementsByClassName('typeahead');
+    
+    var path = "{{ route('father-autocomplete') }}";
+    $('input.typeahead').typeahead({
+        source: function(terms, process) {
+            return $.get(path, {
+                terms: terms
+            }, function(data) {
+                
+
+                return process(data);
+            });
+        }
+    });
+    </script> --}}
         <script>
-            $(document).on("DOMSubtreeModified", "#select2-doctor_id-container", function() {
-                let identity = document.getElementById("gov_identity").value;
-                if (identity != '') {
-                    let e = document.getElementById("doctor_id");
-                    let id = e.value;
+            $('input[name=father_name]').autocomplete({
+                source: function(request, cb) {
                     $.ajax({
-                        url: "{{ route('order.patient.doctor') }}",
+                        url: "/GetFatherData2/" + $('input[name=father_name]').val(),
                         method: 'GET',
                         data: {
-                            'doctor_id': id,
-                            'identity': identity,
+                            // 'doctor_id': id,
+                            // 'identity': identity,
                         },
                         dataType: "JSON",
                         success: function(data) {
-                            if (data != null) {
-                                $("#visit_date").val(data.message);
-                                if (data.pass) {
-                                    $("#type").val("1").change();
-                                    $("#type").prop('disabled', true);
-                                } else {
-                                    $("#type").prop('disabled', false);
-                                }
+                            
+                            let result;
+                            result = [{
+                                'label': 'جاري البحث عن نتائج',
+                                'value': '',
+                            }];
+                           
+                            if (data.length) {
+                                result = $.map(data, function(obj) {
+                                    return {
+                                        'label': obj.name,
+                                        'value': obj.name,
+                                        'data': obj,
+                                    }
+                                });
                             }
+
+                           return cb(result);
                         }
+
                     });
+                },
+                select: function(e, selectedData) {
+                   if(selectedData.item.data)
+                   {
+                    $('input[name=father_mob]').val(selectedData.item.data.mobile);
+                     $('input[name=occupation]').val(selectedData.item.data.occupation);
+                     $('input[name=father_identity]').val(selectedData.item.data.identity);
+                     $('input[name=town]').val(selectedData.item.data.town);
+                   }
+
                 }
-            });
-            ////////////////////////////////////////////////
-            $(document).on("DOMSubtreeModified", "#select2-clinic_id-container", function() {
-                var e = document.getElementById("clinic_id");
-                var id = e.value;
-                $.ajax({
-                    url: "{{ route('doctors.getByClinic') }}",
-                    method: 'GET',
-                    data: {
-                        'id': id
-                    },
-                    dataType: "JSON",
-                    success: function(data) {
-                        $("#doctor_id").empty();
-                        if (data.length > 0) {
-                            $("#doctor_id").append('<option value=""> اختر الطبيب</option>');
-                            for (var i = 0; i < data.length; i++) {
-                                if ($('#doctor_id').find("option[value='" + data[i]['id'] + "']").length) {
-                                    $('#doctor_id').val(data[i]['id']).trigger('change');
-                                } else {
-                                    var newOption = new Option(data[i]['first_name'] + " " + data[i][
-                                        'last_name'
-                                    ], data[i]['id']);
-                                    $('#doctor_id').append(newOption).trigger('change');
-                                }
-                            }
-                        }
-                    }
-                });
+
             });
 
 
+            //     $('#getfatherdata').on('click' , function(){
+
+
+            //         $.ajax({
+            //             url: "/GetFatherData2/" + $('input[name=father_name]').val(),
+            //             method: 'GET',
+            //             data: {
+            //                 // 'doctor_id': id,
+            //                 // 'identity': identity,
+            //             },
+            //             dataType: "JSON",
+            //             success: function(data) {
+
+            //                 console.log(data);
+            //                 if (data != null) {
+            //                     $('input[name=father_mob]').val(data.mobile);
+            //                     $('input[name=occupation]').val(data.occupation);
+            //                     $('input[name=father_identity]').val(data.identity);
+            //                     $('input[name=town]').val(data.town);
+            //                 }
+            //             }   
+
+            //     });
+
+            // });
 
             $('#add_father').on('click', function() {
                 $('#father_id').attr('hidden', true);
@@ -564,31 +633,54 @@
 
             });
 
+            // $('input[name=father_name]').keydown(function(){
+            //     $.ajax({
+            //         url: "/GetFatherData2/" + $('input[name=father_name]').val(),
+            //         method: 'GET',
+            //         data: {
+            //             // 'doctor_id': id,
+            //             // 'identity': identity,
+            //         },
+            //         dataType: "JSON",
+            //         success: function(data) {
+
+            //             console.log(data);
+            //             if (data != null) {
+            //                 $('input[name=father_mob]').val(data.mobile);
+            //                 $('input[name=occupation]').val(data.occupation);
+            //                 $('input[name=father_identity]').val(data.identity);
+            //                 $('input[name=town]').val(data.town);
+            //             }
+            //         }
+            //     });
+
+            //    });
 
 
-            $('#father_id').change(function() {
-                let id = this.value;
 
-                $.ajax({
-                    url: "/GetFatherData/" + id,
-                    method: 'GET',
-                    data: {
-                        // 'doctor_id': id,
-                        // 'identity': identity,
-                    },
-                    dataType: "JSON",
-                    success: function(data) {
+            // $('#father_id').change(function() {
+            //     let id = this.value;
 
-                        console.log(data);
-                        if (data != null) {
-                            $('input[name=father_mob]').val(data.mobile);
-                            $('input[name=occupation]').val(data.occupation);
-                            $('input[name=father_identity]').val(data.identity);
-                            $('input[name=town]').val(data.town);
-                        }
-                    }
-                });
-            });
+            //     $.ajax({
+            //         url: "/GetFatherData/" + id,
+            //         method: 'GET',
+            //         data: {
+            //             // 'doctor_id': id,
+            //             // 'identity': identity,
+            //         },
+            //         dataType: "JSON",
+            //         success: function(data) {
+
+            //             console.log(data);
+            //             if (data != null) {
+            //                 $('input[name=father_mob]').val(data.mobile);
+            //                 $('input[name=occupation]').val(data.occupation);
+            //                 $('input[name=father_identity]').val(data.identity);
+            //                 $('input[name=town]').val(data.town);
+            //             }
+            //         }
+            //     });
+            // });
         </script>
 
 
@@ -620,23 +712,24 @@
                                     },
                                 },
                             },
-                            father_identity: {
+
+                            mobile: {
                                 validators: {
                                     notEmpty: {
-                                        message: 'رقم الهوية مطلوب',
+                                        message: 'رقم الجوال مطلوب',
                                     },
                                     stringLength: {
-                                        min: 9,
-                                        max: 9,
-                                        message: 'رقم الهوية يتكون من 9 خانات',
+                                        min: 10,
+                                        max: 10,
+                                        message: 'رقم الجوال يتكون من 10 خانات',
                                     },
                                     regexp: {
                                         regexp: /^[0-9]+$/,
-                                        message: 'رقم الهوية فقط أرقام',
+                                        message: 'رقم الجوال فقط أرقام',
                                     },
                                 },
                             },
-                            mobile: {
+                            father_name: {
                                 validators: {
                                     notEmpty: {
                                         message: 'رقم الجوال مطلوب',
@@ -675,20 +768,7 @@
                                     },
                                 },
                             },
-                            father_id: {
-                                validators: {
-                                    notEmpty: {
-                                        message: 'ولي الأمر مطلوب',
-                                    },
-                                },
-                            },
-                            father_rel: {
-                                validators: {
-                                    notEmpty: {
-                                        message: 'صلة القرابة مطلوبة',
-                                    },
-                                },
-                            },
+
 
                             gender: {
                                 validators: {
@@ -711,13 +791,7 @@
                                     },
                                 },
                             },
-                            occupation: {
-                                validators: {
-                                    notEmpty: {
-                                        message: 'المهنة مطلوبة',
-                                    },
-                                },
-                            },
+
                         },
                         plugins: {
                             trigger: new FormValidation.plugins.Trigger(),
@@ -727,127 +801,6 @@
                         },
                     });
             });
-        </script>
-        <script>
-            let enableSRB = false;
-            ////////////////////////////////////////
-            $(document).on("click", "#kt_gov_data_submit", function() {
-                let number = $("#gov_identity").val();
-                let length = number.toString().length;
-                if (enableSRB && length == 9) {
-                    var e = document.getElementById("gov_identity");
-                    var govIdentity = e.value;
-                    if (govIdentity != '') {
-                        $('.loader-pub').show();
-                        $('.search-title').hide();
-                        $.ajax({
-                            url: "{{ route('order.gov.data') }}",
-                            method: 'GET',
-                            data: {
-                                'gov_identity': govIdentity
-                            },
-                            dataType: "JSON",
-                            success: function(data) {
-                                $('.loader-pub').hide();
-                                $('.search-title').show();
-                                $(".item_no").val(data['DATA'][0]['IDNO']);
-                                $(".name").val(data['DATA'][0]['FNAME_ARB'] + " " + data['DATA'][0][
-                                    'SNAME_ARB'
-                                ] + " " + data['DATA'][0]['TNAME_ARB'] + " " + data['DATA'][0][
-                                    'LNAME_ARB'
-                                ]);
-                                $(".dob").val(data['DATA'][0]['BIRTH_DT']);
-                                $(".address").val(data['DATA'][0]['STREET_ARB']);
-                                let region_cd = data['DATA'][0]['REGION_CD'];
-                                let city_cd = data['DATA'][0]['CITY_CD'];
-                                setSelectValue($(".states_id"), region_cd, '.states_id');
-                                setSelectValue($(".cities_id"), city_cd, '.cities_id');
-                                let gender_id = data['DATA'][0]['SEX_CD'];
-                                if (gender_id == 1) {
-                                    $("#gender-male").prop("checked", true);
-
-                                } else {
-                                    $('#gender-female').prop("checked", true);
-                                }
-
-                            }
-                        });
-                    }
-                }
-
-            });
-            ////////////////////////////////////////
-            let options = {
-                source: function(request, response) {
-                    $.ajax({
-                        url: "{{ url('order/searchPatients') }}",
-                        data: request,
-                        success: function(data) {
-                            response(data);
-                            if (data.length === 0) {
-                                enableSRB = true;
-                                $('#kt_gov_data_submit').removeClass('btn-secondary');
-                                $('#kt_gov_data_submit').addClass('btn-success');
-                            } else {
-                                enableSRB = false;
-                                $('#kt_gov_data_submit').addClass('btn-secondary');
-                                $('#kt_gov_data_submit').removeClass('btn-success');
-                            }
-                        },
-                        error: function() {
-                            response([]);
-                        }
-                    });
-                },
-                minLength: 1,
-                ///////////////////////////////////////////
-                focus: function(event, ui) {
-                    let val = $(this).closest('.item').find('.search-val');
-                    identity = $(this).closest('.item').find('.item_no');
-                    identity.val(ui.item.label);
-                    val.val(ui.item.value);
-                    return false;
-                },
-                ///////////////////////////////////////////
-                select: function(event, ui) {
-                    let val = $(this).closest('.item').find('.search-val');
-                    identity = $(this).closest('.item').find('.item_no');
-                    let cname = $(this).closest('.item').find('.name');
-                    let mobile = $(this).closest('.item').find('.mobile');
-                    let dob = $(this).closest('.item').find('.dob');
-                    let states_id = $(this).closest('.item').find('.states_id');
-                    let cities_id = $(this).closest('.item').find('.cities_id');
-                    let address = $(this).closest('.item').find('.address');
-                    /////////////////////////////////////
-                    setSelectValue(states_id, ui.item.states_id, '.states_id');
-                    setSelectValue(cities_id, ui.item.cities_id, '.cities_id');
-
-                    identity.val(ui.item.label);
-                    val.val(ui.item.value);
-                    cname.val(ui.item.name);
-                    mobile.val(ui.item.mobile);
-                    dob.val(ui.item.dob);
-
-                    if (ui.item.gender == 1) {
-                        $("#gender-male").prop("checked", true);
-
-                    } else {
-                        $('#gender-female').prop("checked", true);
-                    }
-                    address.val(ui.item.address);
-                    // document.location.reload();
-                    return false;
-                }
-            };
-            ///////////////////////////////////////////
-            $(".patient_search").autocomplete(options);
-            ///////////////////////////////////////////
-            function setSelectValue(object, value, cls) {
-                object.val(value).trigger('change');
-                let title = $(cls + ' option:selected').text();
-                $(cls + ' .select2-selection__rendered').text(title);
-                $(cls + ' .select2-selection__rendered').attr('title', title);
-            }
         </script>
     @endsection
 </x-base-layout>

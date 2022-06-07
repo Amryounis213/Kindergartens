@@ -66,8 +66,9 @@ class ChildrenController extends Controller
      */
     public function store(Request $request)
     {
-
+       
         $request->merge([
+            'name'=> $request->name . ' ' . $request->father_name ,
             'bth_date' => Carbon::createFromFormat('d/m/Y', $request->bth_date)->format('Y-m-d'),
             'add_date' => Carbon::createFromFormat('d/m/Y', $request->add_date)->format('Y-m-d'),
             'added_by' => Auth::guard('web')->id(),
@@ -159,9 +160,10 @@ class ChildrenController extends Controller
      */
     public function update(Request $request, $id)
     {
+       
         $child = Children::find($id);
         $request->merge([
-
+            'name'=> $request->name . ' ' . $request->father_name ,
             'bth_date' => $request->bth_date,
             'add_date' => $request->add_date,
 

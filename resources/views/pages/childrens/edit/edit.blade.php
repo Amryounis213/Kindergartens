@@ -45,13 +45,23 @@
 {{--                                                <span class="search-title">{{ __('Search') }}</span>--}}
 {{--                                            </a>--}}
 {{--                                        </div>--}}
+
+                                        @php
+                                            $first_name =str_replace($children->Father->name , "", $children->name);
+                                            
+                                        @endphp
                                         <label
                                             class="col-lg-2 col-form-label required fw-bold fs-6">{{ __('Full Name') }}</label>
-                                        <div class="col-lg-4">
+                                        <div class="col-lg-2">
                                             <input type="text" name="name"
                                                 class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 name"
                                                 placeholder="{{ __('Full Name') }}"
-                                                value="{{ $children->name }}" />
+                                                value="{{ $first_name }}" />
+                                        </div>
+                                        <div class="col-lg-2">
+                                            <input type="text" name="father_name"
+                                                class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 address typeahead"
+                                                placeholder="اسم ولي الأمر" value="{{ $children->Father->name }}" />
                                         </div>
                                     </div>
                                     <!--end::Row-->
@@ -156,13 +166,13 @@
                                 <div class="col-lg-12">
                                     <!--begin::Row-->
                                     <div class="row">
-                                        <label
+                                        {{-- <label
                                             class="col-lg-2 col-form-label required fw-bold fs-6">ولي أمر الطالب</label>
                                         <div class="col-lg-4">
                                             <input type="text" name="father_name"
                                                 class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 address typeahead"
                                                 placeholder="اسم ولي الأمر" value="{{ $children->Father->name }}" />
-                                        </div>
+                                        </div> --}}
 
 
                                         <label class="col-lg-2 col-form-label  fw-bold fs-6">رقم المحمول
@@ -429,6 +439,52 @@
                 });
             });
             ////////////////////////////////////////////
+            $('input[name=father_name]').autocomplete({
+                source: function(request, cb) {
+                    $.ajax({
+                        url: "/GetFatherData2/" + $('input[name=father_name]').val(),
+                        method: 'GET',
+                        data: {
+                            // 'doctor_id': id,
+                            // 'identity': identity,
+                        },
+                        dataType: "JSON",
+                        success: function(data) {
+                            
+                            let result;
+                            result = [{
+                                'label': 'جاري البحث عن نتائج',
+                                'value': '',
+                            }];
+                           
+                            if (data.length) {
+                                result = $.map(data, function(obj) {
+                                    return {
+                                        'label': obj.name,
+                                        'value': obj.name,
+                                        'data': obj,
+                                    }
+                                });
+                            }
+
+                           return cb(result);
+                        }
+
+                    });
+                },
+                select: function(e, selectedData) {
+                   if(selectedData.item.data)
+                   {
+                    $('input[name=father_mob]').val(selectedData.item.data.mobile);
+                     $('input[name=occupation]').val(selectedData.item.data.occupation);
+                     $('input[name=father_identity]').val(selectedData.item.data.identity);
+                     $('input[name=town]').val(selectedData.item.data.town);
+                   }
+
+                }
+
+            });
+            ////////////////////////////////
             $('#add_father').on('click', function() {
                 $('#father_id').attr('hidden', true);
                 $('input[name=father_name]').removeAttr('hidden');
@@ -553,13 +609,7 @@
                                     },
                                 },
                             },
-                            father_rel: {
-                                validators: {
-                                    notEmpty: {
-                                        message: 'صلة القرابة مطلوبة',
-                                    },
-                                },
-                            },
+                           
 
                             gender: {
                                 validators: {

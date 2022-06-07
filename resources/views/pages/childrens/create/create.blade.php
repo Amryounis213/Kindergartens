@@ -47,11 +47,16 @@
                                         {{-- </a> --}}
                                         {{-- </div> --}}
                                         <label
-                                            class="col-lg-2 col-form-label required fw-bold fs-6">{{ __('Full Name') }}</label>
-                                        <div class="col-lg-4">
+                                            class="col-lg-2 col-form-label required fw-bold fs-6">الاسم</label>
+                                        <div class="col-lg-2">
                                             <input type="text" name="name"
                                                 class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 name"
-                                                placeholder="{{ __('Full Name') }}" value="{{ old('name') }}" />
+                                                placeholder="الاسم الاول" value="{{ old('name') }}" />
+                                        </div>
+                                        <div class="col-lg-2">
+                                            <input type="text" name="father_name"
+                                                class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 address typeahead"
+                                                placeholder="اسم ولي الأمر" value="{{ old('father_name') }}" />
                                         </div>
                                     </div>
                                     <!--end::Row-->
@@ -153,13 +158,13 @@
                                 <div class="col-lg-12">
                                     <!--begin::Row-->
                                     <div class="row">
-                                        <label class="col-lg-2 col-form-label required fw-bold fs-6">ولي أمر
+                                        {{-- <label class="col-lg-2 col-form-label required fw-bold fs-6">ولي أمر
                                             الطالب</label>
                                         <div class="col-lg-4">
                                             <input type="text" name="father_name"
                                                 class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 address typeahead"
                                                 placeholder="اسم ولي الأمر" value="{{ old('father_name') }}" />
-                                        </div>
+                                        </div> --}}
                                         {{-- <div class="col-lg-1">
                                             <input type="button" id="getfatherdata" value="اضافة"
                                                 class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 btn-secondary " />

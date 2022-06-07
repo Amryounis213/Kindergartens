@@ -732,17 +732,9 @@
                             father_name: {
                                 validators: {
                                     notEmpty: {
-                                        message: 'رقم الجوال مطلوب',
+                                        message: 'اسم ولي الامر مطلوب',
                                     },
-                                    stringLength: {
-                                        min: 10,
-                                        max: 10,
-                                        message: 'رقم الجوال يتكون من 10 خانات',
-                                    },
-                                    regexp: {
-                                        regexp: /^[0-9]+$/,
-                                        message: 'رقم الجوال فقط أرقام',
-                                    },
+                                    
                                 },
                             },
                             father_mob: {

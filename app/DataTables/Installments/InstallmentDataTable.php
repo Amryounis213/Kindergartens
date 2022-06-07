@@ -34,7 +34,7 @@ class InstallmentDataTable extends DataTable
                 return view('pages.installments.parts.pay_fee', compact('model'));
             })
             ->editColumn('year', function (Installment $model) {
-                return $model->Year;
+                return $model->Year ? $model->Year->name : '';
             })
             ->addColumn('status', function (Installment $model) {
                 return view('pages.installments.parts._status', compact('model'));

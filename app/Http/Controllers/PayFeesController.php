@@ -30,7 +30,7 @@ class PayFeesController extends Controller
              */
             $childrens = Children::whereDoesntHave('Installment' , function($query){
                 $query->where('status' , 'unpaid');
-            });
+            })->get();
             /**
              * =========================================
              * For Children Doesnt Have Any Installments

@@ -1,4 +1,6 @@
 <x-base-layout>
+    @include('.layout.error')
+
     <div id="kt_content" class="content d-flex flex-column flex-column-fluid">
         <div>
             <!--begin::Patient info-->
@@ -51,14 +53,14 @@
                                             
                                         @endphp
                                         <label
-                                            class="col-lg-2 col-form-label required fw-bold fs-6">{{ __('Full Name') }}</label>
+                                            class="col-lg-1 col-form-label required fw-bold fs-6">الاسم</label>
                                         <div class="col-lg-2">
                                             <input type="text" name="name"
                                                 class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 name"
-                                                placeholder="{{ __('Full Name') }}"
+                                                placeholder="الاسم"
                                                 value="{{ $first_name }}" />
                                         </div>
-                                        <div class="col-lg-2">
+                                        <div class="col-lg-3">
                                             <input type="text" name="father_name"
                                                 class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 address typeahead"
                                                 placeholder="اسم ولي الأمر" value="{{ $children->Father->name }}" />
@@ -87,8 +89,8 @@
                                             </div>
                                         </div>
                                         <label
-                                            class="col-lg-2 col-form-label required fw-bold fs-6">{{ __('dob') }}</label>
-                                        <div class="col-lg-4">
+                                            class="col-lg-1 col-form-label required fw-bold fs-6">{{ __('dob') }}</label>
+                                        <div class="col-lg-5">
                                             <div class="position-relative d-flex align-items-center">
                                                 {!! theme()->getSvgIcon('icons/duotune/general/gen014.svg', 'svg-icon svg-icon-2 position-absolute mx-4') !!}
                                                 <input class="form-control form-control-solid ps-12 flatpickr-input dob"
@@ -132,8 +134,8 @@
                                                 value="{{ $children->address }}" />
                                         </div>
                                         <label
-                                            class="col-lg-2 col-form-label required fw-bold fs-6">{{ __('Gender') }}</label>
-                                        <div class="col-lg-4">
+                                            class="col-lg-1 col-form-label required fw-bold fs-6">{{ __('Gender') }}</label>
+                                        <div class="col-lg-5">
                                             <!--begin::Options-->
                                             <div class="d-flex align-items-center mt-3">
                                                 <!--begin::Option-->

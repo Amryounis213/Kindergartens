@@ -46,14 +46,13 @@
                                         {{-- <span class="search-title">{{ __('Search') }}</span> --}}
                                         {{-- </a> --}}
                                         {{-- </div> --}}
-                                        <label
-                                            class="col-lg-2 col-form-label required fw-bold fs-6">الاسم</label>
+                                        <label class="col-lg-1 col-form-label required fw-bold fs-6">الاسم</label>
                                         <div class="col-lg-2">
                                             <input type="text" name="name"
                                                 class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 name"
                                                 placeholder="الاسم الاول" value="{{ old('name') }}" />
                                         </div>
-                                        <div class="col-lg-2">
+                                        <div class="col-lg-3">
                                             <input type="text" name="father_name"
                                                 class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 address typeahead"
                                                 placeholder="اسم ولي الأمر" value="{{ old('father_name') }}" />
@@ -81,8 +80,8 @@
                                             </div>
                                         </div>
                                         <label
-                                            class="col-lg-2 col-form-label required fw-bold fs-6">{{ __('dob') }}</label>
-                                        <div class="col-lg-4">
+                                            class="col-lg-1 col-form-label required fw-bold fs-6">{{ __('dob') }}</label>
+                                        <div class="col-lg-5">
                                             <div class="position-relative d-flex align-items-center">
                                                 {!! theme()->getSvgIcon('icons/duotune/general/gen014.svg', 'svg-icon svg-icon-2 position-absolute mx-4') !!}
                                                 <input class="form-control form-control-solid ps-12 flatpickr-input dob"
@@ -97,18 +96,7 @@
                             </div>
                             <!--end::Input group-->
                             <!--begin::Input group-->
-                            <div class="row mb-2">
-                                <!--begin::Col-->
-                                <div class="col-lg-12">
-                                    <!--begin::Row-->
-                                    <div class="row">
 
-
-                                    </div>
-                                    <!--end::Row-->
-                                </div>
-                                <!--end::Col-->
-                            </div>
                             <!--end::Input group-->
                             <!--begin::Input group-->
                             <div class="row mb-2">
@@ -124,8 +112,8 @@
                                                 placeholder="{{ __('Address') }}" value="{{ old('address') }}" />
                                         </div>
                                         <label
-                                            class="col-lg-2 col-form-label required fw-bold fs-6">{{ __('Gender') }}</label>
-                                        <div class="col-lg-4">
+                                            class="col-lg-1 col-form-label required fw-bold fs-6">{{ __('Gender') }}</label>
+                                        <div class="col-lg-5">
                                             <!--begin::Options-->
                                             <div class="d-flex align-items-center mt-3">
                                                 <!--begin::Option-->
@@ -177,7 +165,8 @@
                                         <div class="col-lg-4">
                                             <input type="text" name="father_mob"
                                                 class="form-control form-control-lg form-control-solid mobile"
-                                                placeholder="  رقم المحمول لولي أمر الطفل" value="">
+                                                placeholder="  رقم المحمول لولي أمر الطفل"
+                                                value="{{ old('father_mob') }}">
                                             <div class="fv-plugins-message-container invalid-feedback">
                                             </div>
                                         </div>
@@ -222,11 +211,22 @@
                                                             class="form-select form-select-solid form-select-lg fw-bold">
                                                             <option value="">{{ __('Select') }} الروضة...
                                                             </option>
-                                                            @foreach ($kindergartens as $item)
-                                                                <option value="{{ $item->id }}"
-                                                                    {{ $item->id == Auth::user()->kindergarten_id ? 'selected' : '' }}>
-                                                                    {{ $item->name }} </option>
-                                                            @endforeach
+
+                                                            @if (Auth::user()->kindergarten_id != null)
+                                                                @foreach ($kindergartens as $item)
+                                                                    <option value="{{ $item->id }}"
+                                                                        {{ $item->id == Auth::user()->kindergarten_id ? 'selected' : '' }}>
+                                                                        {{ $item->name }} </option>
+                                                                @endforeach
+                                                            @else
+                                                                @foreach ($kindergartens as $item)
+                                                                    <option value="{{ $item->id }}"
+                                                                        {{ $item->id == old('kindergarten_id') ? 'selected' : '' }}>
+                                                                        {{ $item->name }} </option>
+                                                                @endforeach
+                                                            @endif
+
+
                                                         </select>
                                                     </div>
 
@@ -497,7 +497,6 @@
             .select2-selection__placeholder {
                 color: #A1A5B7;
             }
-
         </style>
     @endsection
     @section('scripts')
@@ -544,13 +543,13 @@
                         },
                         dataType: "JSON",
                         success: function(data) {
-                            
+
                             let result;
                             result = [{
                                 'label': 'جاري البحث عن نتائج',
                                 'value': '',
                             }];
-                           
+
                             if (data.length) {
                                 result = $.map(data, function(obj) {
                                     return {
@@ -561,19 +560,18 @@
                                 });
                             }
 
-                           return cb(result);
+                            return cb(result);
                         }
 
                     });
                 },
                 select: function(e, selectedData) {
-                   if(selectedData.item.data)
-                   {
-                    $('input[name=father_mob]').val(selectedData.item.data.mobile);
-                     $('input[name=occupation]').val(selectedData.item.data.occupation);
-                     $('input[name=father_identity]').val(selectedData.item.data.identity);
-                     $('input[name=town]').val(selectedData.item.data.town);
-                   }
+                    if (selectedData.item.data) {
+                        $('input[name=father_mob]').val(selectedData.item.data.mobile);
+                        $('input[name=occupation]').val(selectedData.item.data.occupation);
+                        $('input[name=father_identity]').val(selectedData.item.data.identity);
+                        $('input[name=town]').val(selectedData.item.data.town);
+                    }
 
                 }
 
@@ -739,7 +737,7 @@
                                     notEmpty: {
                                         message: 'اسم ولي الامر مطلوب',
                                     },
-                                    
+
                                 },
                             },
                             father_mob: {

@@ -66,7 +66,12 @@ class ChildrenController extends Controller
      */
     public function store(Request $request)
     {
-       
+        $request->validate([
+            'identity'=> 'required|unique:childrens'
+        ] , 
+            ['identity.unique' => 'رقم الهوية موجود' ]
+    );
+        
         $request->merge([
             'name'=> $request->name . ' ' . $request->father_name ,
             'bth_date' => Carbon::createFromFormat('d/m/Y', $request->bth_date)->format('Y-m-d'),
@@ -114,7 +119,7 @@ class ChildrenController extends Controller
             'father_id' => $father->id ,
         ]);
         Children::create($request->all());
-        return redirect()->route('childrens.index');
+        return redirect()->route('childrens.index')->with('success' , 'تمت اضافة طفل بنجاح');
     }
 
     /**
@@ -160,8 +165,15 @@ class ChildrenController extends Controller
      */
     public function update(Request $request, $id)
     {
-       
         $child = Children::find($id);
+        $request->validate([
+            'identity'=> 'required|unique:childrens,identity,'.$child->id
+        ] , 
+            ['identity.unique' => 'رقم الهوية موجود' ]
+    );
+
+
+       
         $request->merge([
             'name'=> $request->name . ' ' . $request->father_name ,
             'bth_date' => $request->bth_date,

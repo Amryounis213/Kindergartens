@@ -39,8 +39,10 @@ class PayFeesController extends Controller
              */
             if(Auth::user()->kindergarten_id != null)
             {   
-                $childrens = $childrens->whereHas('ClassPlacement' , function($query){
+                $childrens = Children::whereHas('ClassPlacement' , function($query){
                     $query->where('kindergarten_id' , Auth::user()->kindergarten_id);
+                })->whereDoesntHave('Installment' , function($query){
+                    $query->where('status' , 'unpaid');
                 })->get();
             }
             return $datatable->render('pages.childrenpayment.index' , compact('childrens' , 'years'));

@@ -585,6 +585,53 @@ return array(
         ),
 
 
+        //التقارير
+        array(
+    'title' => 'التقارير',
+    'permission' => array('incomes.show', 'incomes.create', 'incomes.edit', 'incomes.delete'),
+    'icon' => array(
+        'svg' => theme()->getSvgIcon("demo1/media/icons/duotune/general/gen055.svg", "svg-icon-2"),
+        'font' => '<i class="bi bi-person fs-2"></i>',
+    ),
+    'classes' => array('item' => 'menu-accordion'),
+    'badge' => '',
+    'attributes' => array(
+        "data-kt-menu-trigger" => "click",
+    ),
+    'sub' => array(
+        'class' => 'menu-sub-accordion menu-active-bg',
+        'items' => array(
+            array(
+                'title' => 'تقارير الأطفال',
+                'path' => 'reports/childrens',
+                'classes' => array('item' => 'show-menu-bdg'),
+                'permission' => 'incomes.show',
+                'bullet' => '<span class="bullet bullet-dot"></span>',
+            ),
+            array(
+                'title' => 'تقارير الرسوم',
+                'permission' => 'incomes.create',
+                'path' => 'reports/fee',
+                'bullet' => '<span class="bullet bullet-dot"></span>',
+            ),
+            array(
+                'title' => ' تقارير الايرادات ',
+                'permission' => 'incomes.create',
+                'path' => 'reports/in',
+                'bullet' => '<span class="bullet bullet-dot"></span>',
+            ),
+            
+            array(
+                'title' => ' تقارير المصروفات ',
+                'permission' => 'incomes.create',
+                'path' => 'reports/out',
+                'bullet' => '<span class="bullet bullet-dot"></span>',
+            ),
+
+        ),
+    ),
+),
+
         
         // الثوابث
         array(

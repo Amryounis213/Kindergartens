@@ -42,6 +42,7 @@ use App\Http\Controllers\PagesController;
 use App\Http\Controllers\PatientsController;
 use App\Http\Controllers\PayFeesController;
 use App\Http\Controllers\PermissionsController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\SubscriptionsController;
 use App\Http\Controllers\UsersController;
@@ -332,6 +333,16 @@ Route::middleware('auth')->group(function () {
     Route::get('permission/assign', [PermissionsController::class, 'assign'])->name('permission.assign');
     Route::get('permission/revoke', [PermissionsController::class, 'revoke'])->name('permission.revoke');
     Route::resource('permission', PermissionsController::class);
+
+    //Reports
+    Route::prefix('reports')->group(function () {
+        Route::get('childrens' , [ReportController::class , 'ChildrenIndex']);
+        Route::get('fee' , [ReportController::class , 'FeeTotal']);
+        Route::get('in' , [ReportController::class , 'InComes']);
+        Route::get('out' , [ReportController::class , 'OutComes']);
+
+    });
+
 });
 
 
